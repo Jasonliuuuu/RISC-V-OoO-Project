@@ -183,12 +183,6 @@ module writeback
             endcase
         end
         assign regfilemux_out = rd_v;
-                
-    
-    
-      
-    
-     
     
     
     
