@@ -23,7 +23,7 @@ module bp
 
         //imput pc to access GShare
         input   logic   [31:0]  pc,     //this should be pc_late
-        input   logic           valid,  //from bp_decode
+        input   logic           valid,  //from bp_decode, indicate the current instruction is a branch/jump
 
         //update BP FIFO
         //signals from Reg
@@ -63,6 +63,7 @@ module bp
     // assign gshare_idx = pc_idx ^ history; //我們沒有用XOR, 因為少了XOR 效能比較好
     assign gshare_idx = pc_idx;
 
+    
     always_ff @( posedge clk ) begin 
         if (rst) begin
             history <= '0;
