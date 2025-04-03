@@ -61,8 +61,9 @@ set alib_library_analysis_path [getenv STD_CELL_ALIB]
 
 set symbol_library [list generic.sdb]
 set synthetic_library [list dw_foundation.sldb]
-set target_library [getenv STD_CELL_LIB]
-set link_library [list "*" $target_library $synthetic_library]
+set target_library $env(STD_CELL_LIB)
+set link_library "* $env(STD_CELL_LIB) $synthetic_library"
+
 
 set design_clock_pin clk
 set design_reset_pin rst
