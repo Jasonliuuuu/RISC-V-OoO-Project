@@ -73,7 +73,7 @@ Implements the **final out-of-order RISC-V processor**, including:
 
 ## ✍️ Author
 
-**Tsung-Yu Liu**  
+**Tsungyu Liu**  
 Rice University · Master of Electrical & Computer Engineering  
 Email: tl152@rice.edu
 GitHub: [@Jasonliuuuu](https://github.com/Jasonliuuuu)
