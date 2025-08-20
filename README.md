@@ -75,5 +75,5 @@ Implements the **final out-of-order RISC-V processor**, including:
 
 **Tsung-Yu Liu**  
 Rice University · Master of Electrical & Computer Engineering  
-Email: jason890418123@gmail.com  
+Email: tl152@rice.edu
 GitHub: [@Jasonliuuuu](https://github.com/Jasonliuuuu)
