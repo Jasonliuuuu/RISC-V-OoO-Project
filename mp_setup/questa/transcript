@@ -13,7 +13,7 @@
 # //  18 U.S.C. Section 1905.
 # //
 # vsim -debugDB -voptargs=""+acc"" alu_tb 
-# Start time: 21:41:34 on Apr 02,2025
+# Start time: 17:28:32 on Sep 17,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vsim-8611) Generating debug db.
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
@@ -36,5 +36,3 @@ run -all
 #    Time: 8 ns  Iteration: 0  Instance: /alu_tb
 # 1
 # Break in Module alu_tb at alu_tb.sv line 25
-# End time: 21:44:19 on Apr 02,2025, Elapsed time: 0:02:45
-# Errors: 2, Warnings: 3

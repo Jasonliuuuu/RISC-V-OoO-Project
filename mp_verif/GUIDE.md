@@ -1,7 +1,6 @@
 # ECE 411: mp_verif GUIDE
 
 ## Introduction to SystemVerilog and Verification
-
 > The software programs described in this document are confidential
 > and proprietary products of Synopsys Corp. or its licensors. The
 > terms and conditions governing the sale and licensing of Synopsys
