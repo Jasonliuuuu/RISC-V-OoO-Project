@@ -15,7 +15,8 @@ module decode
         // pipeline registers
         input  if_id_stage_reg_t if_id,
         //all the imemory data signal pass to next stage using struct id_ex_stage_reg_t
-        input logic flushing_inst
+        input logic flushing_inst, 
+        input logic imem_resp_id;
         output id_ex_stage_reg_t id_ex,
         
 
@@ -36,7 +37,7 @@ module decode
     // ****************Combinational transfer to id/ex stage****************************
      // pc, valid, 
 
-    assign id_ex.valid = (flushing_inst ? 1'b0:if_id.valid);
+    assign id_ex.valid = (!flushing_inst) && if_id.valid && imem_resp_id;
 
 
     //**********If the flushing_inst is one, then we need to flush the instr******

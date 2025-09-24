@@ -89,14 +89,39 @@ module cpu
     // instruction start to transfer
     //imem_response is the signal to tell you that this instruction is valid
     //Should send it with imem_rdata at the same time
-    //logic [31:0] imem_rdata_id;
+    
     logic        imem_resp_id, imem_resp_ex, imem_resp_mem, imem_resp_wb;
     always_ff@(posedge clk) begin
-        //imem_rdata_id <= imem_rdata;
-        imem_resp_id  <= imem_resp;
-        imem_resp_ex  <= imem_resp_id;
-        imem_resp_mem <=imem_resp_ex;
-        imem_resp_wb  <=imem_resp_mem;
+        if (rst) begin
+            imem_resp_id  <= 1'b0;
+            imem_resp_ex  <= 1'b0;
+            imem_resp_mem <= 1'b0;
+            imem_resp_wb  <= 1'b0;
+        
+        end
+        else if (freeze_stall || stall_signal) begin
+            //HOLD
+        end
+        else begin
+            imem_resp_id  <= imem_resp;
+            imem_resp_ex  <= imem_resp_id;
+            imem_resp_mem <=imem_resp_ex;
+            imem_resp_wb  <=imem_resp_mem;
+        end
+    end
+
+    logic [31:0] imem_rdata_id;
+
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            imem_rdata_id <= 32'h00000013; // NOP 作為安全初值
+        end
+        else if (freeze_stall || stall_signal) begin
+            // HOLD
+        end
+        else begin
+        imem_rdata_id <= imem_rdata;
+        end
     end
  
     decode decode(
@@ -110,7 +135,8 @@ module cpu
         .freeze_stall(freeze_stall),
         .if_id(if_id_reg),
         .flushing_inst(flushing_inst),
-        .id_ex(id_ex_reg_before)
+        .id_ex(id_ex_reg_before), 
+        .imem_resp_id(imem_resp_id)
     );
 
             
