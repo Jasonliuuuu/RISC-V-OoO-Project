@@ -72,14 +72,14 @@ module cpu
     fetch fetch(
         .clk(clk),
         .rst(rst),
-        .if_id_reg_before(if_id_reg_before),
-        .imem_addr(imem_addr),
-        .imem_rmask(imem_rmask),
         .br_en(br_en_out),
         .branch_pc(branch_pc),
+        .imem_addr(imem_addr),
+        .imem_rmask(imem_rmask),
         .stall_signal(stall_signal),
         //.imem_resp(imem_resp),
         .freeze_stall(freeze_stall)
+        .if_id_reg_before(if_id_reg_before),
     );
 
  
@@ -103,19 +103,19 @@ module cpu
         .clk(clk),
         .rst(rst),
         .imem_rdata_id(imem_rdata),
-        .if_id(if_id_reg),
-        .id_ex(id_ex_reg_before), 
+        .stall_signal(stall_signal),
         .rd_v(regfilemux_out),
         .rd_s_back(rd_s_back),
         .regf_we_back(regf_we_wb),
-        .flushing_inst(flushing_inst),
         .freeze_stall(freeze_stall),
-        .stall_signal(stall_signal)
+        .if_id(if_id_reg),
+        .flushing_inst(flushing_inst),
+        .id_ex(id_ex_reg_before)
     );
 
             
 
-//*********************add forwarding
+//***************add forwarding
     execute execute(
         .id_ex (id_ex_reg),
         .ex_mem (ex_mem_reg_before),

@@ -1,7 +1,6 @@
 module writeback
     import rv32i_types::*;
     (   
-    
         input logic clk,
         input logic rst,
         input mem_wb_stage_reg_t mem_wb,
@@ -11,21 +10,22 @@ module writeback
         output  logic [31:0]    regfilemux_out,
         output  logic [4:0]     rd_s_back,
         output logic regf_we_back
-        
     );
     
     
     logic           commit;
     logic   [63:0]  order;
-    //*****************read enable signal*****************************************
-    /*always_comb begin
+    //**********read enable signal************************
+    /*
+    always_comb begin
         unique case(mem_wb.dmem_read) 
             1'b0 :  dmem_rdata = 0 ;
             1'b1 :  dmem_rdata = mem_wb.alu_out;
             default : dmem_rdata = 0 ;
         
         endcase
-    end*/
+    end
+    */
     
     
     
@@ -50,7 +50,7 @@ module writeback
     end
     
         
-    //*******************************send to json*********************
+    //************send to json****************
         
        
         logic          rvfi_valid ;
@@ -71,7 +71,7 @@ module writeback
         logic [31:0] rvfi_dmem_wdata;
         
     
-        //********************** Judge new address for jump/br ******************
+        //***** Judge new address for jump/br *****
         
         always_comb begin
             if((mem_wb.opcode == op_br) &&(mem_wb.br_en == 1'b1) ) begin
@@ -103,12 +103,7 @@ module writeback
         assign true_rs2_s = (mem_wb.opcode inside {op_br, op_store, op_reg}) ? mem_wb.rs2_s : 5'b0;
         assign true_rs1_v = (mem_wb.opcode inside {op_jalr, op_br, op_load, op_store, op_reg, op_imm}) ? mem_wb.rs1_v : 5'b0;
         assign true_rs2_v = (mem_wb.opcode inside {op_br, op_store, op_reg}) ? mem_wb.rs2_v : 5'b0;
-    
-    
-    
-    
-    
-                
+        
         
         assign rvfi_valid = commit;
         assign rvfi_order = order;
@@ -127,20 +122,15 @@ module writeback
         assign rvfi_dmem_rdata = dmem_rdata;
         assign rvfi_dmem_wdata = mem_wb.dmem_wdata;
     
-       
-    
     
         //registerfilemux
-        
-            
+
         /*lb : mem_wb.rd_v = {{24{dmem_rdata[7 +8 *mem_addr[1:0]]}}, dmem_rdata[8 *mem_wb.dmem_addr[1:0] +: 8 ]};
         lbu: mem_wb.rd_v = {{24{1'b0}}                          , dmem_rdata[8 *mem_wb.dmem_addr[1:0] +: 8 ]};
         lh : mem_wb.rd_v = {{16{dmem_rdata[15+16*mem_addr[1]  ]}}, dmem_rdata[16*mem_wb.dmem_addr[1]   +: 16]};
         lhu: mem_wb.rd_v = {{16{1'b0}}                          , dmem_rdata[16*mem_wb.dmem_addr[1]   +: 16]};
         lw : mem_wb.rd_v = dmem_rdata ;*/
-    
-    
-    
+
         always_comb begin
             if(mem_wb.opcode == op_load ) begin
                 regf_we_back = (dmem_resp ? 1'b1:1'b0);

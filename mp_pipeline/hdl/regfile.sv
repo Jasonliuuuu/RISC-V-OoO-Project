@@ -21,8 +21,8 @@ import rv32i_types::*;
             end else if (regf_we && (rd_s != 5'd0)) begin
                 data[rd_s] <= rd_v;
             end
-        end
-
+        end 
+    
     always_comb begin
         if(rs1_s == rd_s) rs1_v = (rs1_s != 5'd0) ? rd_v : '0;
         else rs1_v = (rs1_s != 5'd0) ? data [rs1_s] : '0;

@@ -35,7 +35,7 @@ module fetch
             end
         end
     end
-//***************fixing the imem_resp and imem_address***********
+//*****fixing the imem_resp and imem_address*******
 
     always_comb begin
         if(br_en) begin
@@ -53,6 +53,7 @@ module fetch
 //***********************send signal to next stage*******************
     assign if_id_reg_before.pc = pc;
     assign if_id_reg_before.valid = 1'b1;
+    //If a pipeline flush occurs (for example, due to a branch misprediction), the Decode stage overrides this valid bit to 0, meaning “this instruction is invalid—treat it as a bubble.”
 
    
 

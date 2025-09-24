@@ -13,7 +13,7 @@ module memory
     output logic   [31:0]      dmem_wdata,
     
     
-    //****************branch instruction**********************
+    //*********branch instruction********
     output logic          br_en_out,
     output logic   [31:0] branch_new_address,
     output logic flushing_inst,
@@ -31,7 +31,7 @@ module memory
     
 
    
-//*******************************load*******************************
+//*****************load******************
     always_comb begin
         mem_wb.dmem_rmask = 4'b000;
         mem_wb.dmem_addr = 32'd0;
@@ -57,7 +57,7 @@ module memory
             endcase
             unique case (ex_mem.funct3)
                 sb: mem_wb.dmem_wdata[8 *mem_wb.dmem_addr[1:0] +: 8 ] = ex_mem.rs2_v[7 :0];
-                sh: mem_wb.dmem_wdata[16*mem_wb.dmem_addr[1]   +: 16] = ex_mem.rs2_v[15:0];
+                sh: mem_wb.dmem_wdata[16 *mem_wb.dmem_addr[1]   +: 16] = ex_mem.rs2_v[15:0];
                 sw: mem_wb.dmem_wdata = ex_mem.rs2_v;
                 default: mem_wb.dmem_wdata = 4'b0000;
             endcase
@@ -93,7 +93,7 @@ module memory
 
 
 
-//*********************br_en_out***********************************************
+//************br_en_out********************
     // fetch PCmuxselect signal
     //if br_en == 1'b0, means the branch is not taken
     always_comb begin
@@ -104,7 +104,7 @@ module memory
         else
             br_en_out = 1'b0;
       end
-//***********************branch new target****************************
+//***********branch new target****************
     always_comb begin
         if(ex_mem.opcode inside {op_jal, op_jalr})
             branch_new_address = ex_mem.alu_out & 32'hfffffffe;
@@ -132,7 +132,7 @@ module memory
             mem_wb.rd_s = ex_mem.rd_s;
     end
 
-//*********************send signal to write back**********************
+//************send signal to write back**********
     assign mem_wb.inst  =  ex_mem.inst;
     assign mem_wb.pc    =     ex_mem.pc;
     assign mem_wb.valid =  ex_mem.valid;
@@ -158,12 +158,6 @@ module memory
             
     
     assign mem_wb.opcode = ex_mem.opcode;
-        
-        
-
-
-
-
 
 
 endmodule 

@@ -5,24 +5,18 @@ module execute
     (
         input id_ex_stage_reg_t id_ex,
         output ex_mem_stage_reg_t ex_mem,
-      
-
-        //forwarding inputs
-        
         //from WB
         input logic [31:0]    regfilemux_out_forward,
         //from ex_mem
         input logic             ex_mem_br_en_forward,
         input logic [31:0]    ex_mem_alu_out_forward,
         input logic [31:0]              ex_mem_u_imm_forward,
-
         input forward_a_sel_t          forward_a_sel,
         input forward_b_sel_t          forward_b_sel,
-
         //*******Flushing signal***********
         input logic flushing_inst 
     );
-  //*****************Flushing ****************************************
+  //*********Flushing *************
       
     
     assign ex_mem.pc = id_ex.pc;
@@ -31,7 +25,7 @@ module execute
 
     logic [31:0] forward_amux_out;
     logic [31:0] forward_bmux_out; 
-  //*****************Forwarding Mux***************************
+  //**********Forwarding Mux**************
     always_comb begin 
       // forwarding rs1
       unique case (forward_a_sel) 
@@ -93,7 +87,7 @@ module execute
 
 
     //cmpmux
-     //cmp signal
+    //cmp signal
     logic   [31:0]  cmp_a, cmp_b;
     //logic           br_en ;
     assign cmp_a = forward_amux_out;
@@ -104,9 +98,7 @@ module execute
         default: cmp_b = 32'b0;
       endcase
     end
-    
 
-   
     //cmpop signal
 
 
@@ -119,7 +111,7 @@ module execute
 
     
 
-  //***************flushing*************************
+  //***********flushing****************
     always_comb begin 
       if(flushing_inst) begin
           ex_mem.inst = 32'h00000013;
@@ -187,18 +179,9 @@ module execute
     /*
     assign ex_mem.funct7 = id_ex.funct7;
     assign ex_mem.funct3 = id_ex.funct3;
-    assign ex_mem.opcode = id_ex.opcode;*/
+    assign ex_mem.opcode = id_ex.opcode;
+    */
 
-   
-    
-    
-   
-
-
-    
-    
-    
-    
     endmodule
     
     

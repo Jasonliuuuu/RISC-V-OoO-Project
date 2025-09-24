@@ -4,7 +4,7 @@ module decode
         input logic clk,
         input logic rst,
         //from Instruction memory
-        input logic [31:0]  imem_rdata_id,
+        input logic [31:0]  imem_rdata_id, //這是一個instruction 
         input logic stall_signal,
     
         //the value come from write back
@@ -15,8 +15,9 @@ module decode
         // pipeline registers
         input  if_id_stage_reg_t if_id,
         //all the imemory data signal pass to next stage using struct id_ex_stage_reg_t
-        output id_ex_stage_reg_t id_ex,
         input logic flushing_inst
+        output id_ex_stage_reg_t id_ex,
+        
 
     );
 
@@ -158,16 +159,13 @@ regfile regfile(
         if(id_ex.opcode inside {op_lui, op_auipc, op_jal, op_jalr, op_br, op_load, op_store}) begin
             id_ex.alu_m2_sel = 1;
         end
-        else if ((id_ex.opcode == op_imm)&&(id_ex.funct3 inside {add, slt, sltu, axor, aor, aand, sll})) 
-        begin
+        else if ((id_ex.opcode == op_imm)&&(id_ex.funct3 inside {add, slt, sltu, axor, aor, aand, sll})) begin
             id_ex.alu_m2_sel = 1;
         end
-        else if ((id_ex.opcode == op_imm)&&(id_ex.alu_op inside{alu_srl, alu_sra}))
-        begin
+        else if ((id_ex.opcode == op_imm)&&(id_ex.alu_op inside{alu_srl, alu_sra})) begin
             id_ex.alu_m2_sel = 1;
         end
-        else if ((id_ex.opcode == op_reg)&&(id_ex.alu_op inside{alu_srl, alu_sra}))
-        begin
+        else if ((id_ex.opcode == op_reg)&&(id_ex.alu_op inside{alu_srl, alu_sra})) begin
             id_ex.alu_m2_sel = 0;
         end
         else 
