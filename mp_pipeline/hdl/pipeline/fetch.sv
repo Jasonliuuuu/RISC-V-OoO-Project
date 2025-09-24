@@ -4,17 +4,28 @@ module fetch
 (
     input logic clk,
     input logic rst,
-    //**********For branch and jump*************
+    //********** BNEZ / JUMP *************
     input logic br_en,
-    input logic [31:0] branch_pc,
+    input logic [31:0]  branch_pc,
+    //********** I-mem 介面回傳 ***********
+    input logic [31:0]  imem_rdata,
+    input  logic        imem_resp,
+    // ********* Pipeline control ********
+    input  logic        stall_signal,
+    input  logic        freeze_stall,
+    input  logic        flushing_inst,  // 由後級決定的 flush（誤取/跳躍等）
+    // ********* 給I-mem 的請求
     output logic [31:0] imem_addr,
-    output logic [3:0] imem_rmask,
-    input logic stall_signal,
-    //input logic imem_resp,
-    input logic freeze_stall,
-    output if_id_stage_reg_t  if_id_reg_before
-
+    output logic [3:0]  imem_rmask,
+    // ********* 給decode的IF/ID **********
+    output var if_id_stage_reg_t  if_id_reg_before, 
+    output logic [31:0] imem_rdata_id, 
+    output logic        imem_resp_id
+    
 );
+    logic ce_ifid; //clock enable
+    assign ce_ifid = !(freeze_stall || stall_signal);
+
     logic [31:0] pc;
     //read signal always 1
     assign imem_rmask = 4'b1111;
@@ -50,10 +61,44 @@ module fetch
         end
     end
 
-//***********************send signal to next stage*******************
-    assign if_id_reg_before.pc = pc;
-    assign if_id_reg_before.valid = 1'b1;
-    //If a pipeline flush occurs (for example, due to a branch misprediction), the Decode stage overrides this valid bit to 0, meaning “this instruction is invalid—treat it as a bubble.”
+//******** IF -> ID: pc /valid *************
+    always_ff @(posedge clk) begin
+        if (rst) begin 
+            if_id_reg_before.pc <= '0; 
+            if_id_reg_before.valid <= 1'b0; // 表示這拍是bubble
+        end
+        else if (flushing_inst) begin
+            if_id_reg_before.valid <= 1'b0; //flush 注入bubble, remain the pc
+        end
+        else if (ce_ifid) begin
+            if_id_reg_before.pc <= pc; //傳送現在指令的PC
+            if_id_reg_befre.valid <= imem_resp; //這拍 I-mem 確認有效才為 1
+        end
+// =============== IF -> ID inst/resp ================
+    //把指令與有效為打一拍 條件與上面一致
+    // Flush 時把inst -> NOP, resp -> 0, 避免鬼指令
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            imem_rdata_id <= 32'h0000_0013; //NOP: ADDI x0, x0, 0
+            imem_resp_id <= 1'b0; 
+        end
+        else if (flushing_inst) begin
+            imem_rdata_id <= 32'h0000_0013; //無害化
+            imem_resp_id <= 1'b0; 
+        end
+        else if (ce_ifid) begin
+            imem_rdata_id <= imem_rdata; 
+            imem_resp_id <= imem_resp; 
+        end
+        //else: HOLD
+    end
+    
+        
+    end
+    
+
+
+    
 
    
 

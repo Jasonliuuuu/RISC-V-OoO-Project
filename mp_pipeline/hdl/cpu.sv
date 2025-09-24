@@ -2,10 +2,8 @@ module cpu
 
     import rv32i_types::*; 
     import forward_amux::*;
-    import forward_bmux::*;
-     
-
-    
+    import forward_bmux::*;   
+  
     (
         input   logic           clk,
         input   logic           rst,
@@ -22,7 +20,7 @@ module cpu
         output  logic   [31:0]  dmem_wdata,
         input   logic           dmem_resp
     );
-         //IF signals
+        //IF signals
         //logic [31:0] branch_pc;
         //logic PCSrc;
         logic [31:0] regfilemux_out ;
@@ -38,6 +36,8 @@ module cpu
         logic flushing_inst;
         logic stall_signal;
         logic freeze_stall;
+        logic [31:0] imem_rdata_id; //IF -> ID instruction
+        logic imem_resp_id;         //IF -> ID instruction valid bit
         
     //claim pipeline register ,  and then send the each stage signal into each pipeline register 
     if_id_stage_reg_t if_id_reg_before, if_id_reg;
@@ -74,60 +74,24 @@ module cpu
         .rst(rst),
         .br_en(br_en_out),
         .branch_pc(branch_pc),
-        .imem_addr(imem_addr),
-        .imem_rmask(imem_rmask),
+        .imem_rdata(imem_rdata),
+        .imem_resp(imem_resp), 
         .stall_signal(stall_signal),
-        //.imem_resp(imem_resp),
-        .freeze_stall(freeze_stall)
+        .freeze_stall(freeze_stall),
+        .flushing_inst(flushing_inst),
+        .imem_addr(imem_addr),
+        .imem_rmask(imem_rmask), 
         .if_id_reg_before(if_id_reg_before),
-    );
+        .imem_rdata_id(imem_rdata_id), 
+        .imem_resp_id(imem_resp_id)
+    ); 
 
- 
-
-        
-
-    // instruction start to transfer
-    //imem_response is the signal to tell you that this instruction is valid
-    //Should send it with imem_rdata at the same time
     
-    logic        imem_resp_id, imem_resp_ex, imem_resp_mem, imem_resp_wb;
-    always_ff@(posedge clk) begin
-        if (rst) begin
-            imem_resp_id  <= 1'b0;
-            imem_resp_ex  <= 1'b0;
-            imem_resp_mem <= 1'b0;
-            imem_resp_wb  <= 1'b0;
-        
-        end
-        else if (freeze_stall || stall_signal) begin
-            //HOLD
-        end
-        else begin
-            imem_resp_id  <= imem_resp;
-            imem_resp_ex  <= imem_resp_id;
-            imem_resp_mem <=imem_resp_ex;
-            imem_resp_wb  <=imem_resp_mem;
-        end
-    end
-
-    logic [31:0] imem_rdata_id;
-
-    always_ff @(posedge clk) begin
-        if (rst) begin
-            imem_rdata_id <= 32'h00000013; // NOP 作為安全初值
-        end
-        else if (freeze_stall || stall_signal) begin
-            // HOLD
-        end
-        else begin
-        imem_rdata_id <= imem_rdata;
-        end
-    end
  
     decode decode(
         .clk(clk),
         .rst(rst),
-        .imem_rdata_id(imem_rdata),
+        .imem_rdata_id(imem_rdata_id),
         .stall_signal(stall_signal),
         .rd_v(regfilemux_out),
         .rd_s_back(rd_s_back),
@@ -135,13 +99,14 @@ module cpu
         .freeze_stall(freeze_stall),
         .if_id(if_id_reg),
         .flushing_inst(flushing_inst),
-        .id_ex(id_ex_reg_before), 
-        .imem_resp_id(imem_resp_id)
+        .imem_resp_id(imem_resp_id),
+        .id_ex(id_ex_reg_before)
+        
     );
 
             
 
-//***************add forwarding
+//*********** add forwarding *********
     execute execute(
         .id_ex (id_ex_reg),
         .ex_mem (ex_mem_reg_before),
@@ -197,7 +162,6 @@ module cpu
     );
 
     stall stall(
-
         .id_ex(id_ex_reg_before),
         .ex_mem(ex_mem_reg_before),
         .stall_signal(stall_signal)
@@ -210,18 +174,5 @@ module cpu
         .freeze_stall(freeze_stall)
 
     );
-
-    
-    
-    
-
-    
-    
-    
-
-
-    
-    
-    
     
     endmodule : cpu

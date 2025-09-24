@@ -55,7 +55,7 @@ package regfilemux;
 endpackage
 
 
-//***************************forwarding mux***************************
+//**********forwarding mux********************
 package forward_bmux;
     typedef enum bit [2:0] {
         //from register file
@@ -158,7 +158,7 @@ package rv32i_types;
     } alu_ops;
 
 
-//******************************Pipeline register************************************
+//********Pipeline register************
     //if_id register
     typedef struct packed {
         logic [31:0] pc;
