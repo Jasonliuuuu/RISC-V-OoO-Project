@@ -4,20 +4,21 @@ module fetch
 (
     input logic clk,
     input logic rst,
-    //********** BNEZ / JUMP *************
+    //========== BNEZ / JUMP ==========
     input logic br_en,
     input logic [31:0]  branch_pc,
-    //********** I-mem 介面回傳 ***********
+    //========== I-mem 介面回傳 ==========
     input logic [31:0]  imem_rdata,
     input  logic        imem_resp,
-    // ********* Pipeline control ********
+    // ========== Pipeline control ==========
     input  logic        stall_signal,
     input  logic        freeze_stall,
-    input  logic        flushing_inst,  // 由後級決定的 flush（誤取/跳躍等）
-    // ********* 給I-mem 的請求
+    input  logic        flushing_inst,  
+    // A flush determined by a later pipeline stage (misfetch or branch/jump).
+    // ========== The requestment to I-mem ==========
     output logic [31:0] imem_addr,
     output logic [3:0]  imem_rmask,
-    // ********* 給decode的IF/ID **********
+    // ========== 給decode的IF/ID ====================
     output var if_id_stage_reg_t  if_id_reg_before, 
     output logic [31:0] imem_rdata_id, 
     output logic        imem_resp_id
