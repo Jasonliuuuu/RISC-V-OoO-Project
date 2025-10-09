@@ -1,10 +1,7 @@
-// This class generates random valid RISC-V instructions to test your
-// RISC-V cores.
+// This class generates random valid RISC-V instructions to test your RISC-V cores.
 
 class RandInst;
-  // You will increment this number as you generate more random instruction
-  // types. Once finished, NUM_TYPES should be 9, for each opcode type in
-  // rv32i_opcode.
+  // You will increment this number as you generate more random instruction types. Once finished, NUM_TYPES should be 9, for each opcode type in rv32i_opcode.
   localparam NUM_TYPES = 9;
 
   // You'll need this type to randomly generate variants of certain

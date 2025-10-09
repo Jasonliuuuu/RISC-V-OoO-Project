@@ -2,14 +2,15 @@
 module tb;
 import rv32i_types::*;
 
-  `include "../../hvl/randinst.svh"
+  `include "randinst.svh"
 
-  RandInst rg = new();
+  RandInst rg;
 
   int covered;
   int total;
 
   initial begin
+    rg = new(); 
     repeat (500) begin
       rg.randomize();
     end

@@ -1,3 +1,4 @@
+//monitor interface
 interface mon_itf(
     input   bit             clk,
     input   bit             rst

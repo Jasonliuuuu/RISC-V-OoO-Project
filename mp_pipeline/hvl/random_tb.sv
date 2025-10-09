@@ -27,8 +27,7 @@ module random_tb
       end
     endtask : init_register_state
   
-    // Note that this memory model is not consistent! It ignores
-    // writes and always reads out a random, valid instruction.
+    // Note that this memory model is not consistent! It ignores writes and always reads out a random, valid instruction.
     task run_random_instrs();
       repeat (60000) begin
   

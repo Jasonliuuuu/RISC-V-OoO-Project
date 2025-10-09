@@ -1,5 +1,7 @@
-// This class generates random valid RISC-V instructions to test your
-// RISC-V cores.
+// This class generates random valid RISC-V instructions to test your RISC-V cores.
+
+import rv32i_types::*;
+
 
 class RandInst;
   // You will increment this number as you generate more random instruction
@@ -75,7 +77,7 @@ class RandInst;
   } instr_t;
 
   rand instr_t instr;
-  rand bit [NUM_TYPES-1:0] instr_type; //[2:0] 
+  rand bit [NUM_TYPES-1:0] instr_type;
 
   // Make sure we have an even distribution of instruction types.
   constraint solve_order_c { solve instr_type before instr; }
@@ -164,7 +166,7 @@ class RandInst;
       }
       // TODO: Do all 9 types!
   }
-  `include "../../hvl/instr_cg.svh"
+  `include "instr_cg.svh"
 
   // Constructor, make sure we construct the covergroup.
   function new();
@@ -177,6 +179,7 @@ class RandInst;
   function void post_randomize();
     instr_cg.sample(this.instr);
   endfunction : post_randomize
+  //這行很關鍵，代表每次 .randomize() 後都會 自動更新 covergroup
  // void == no return value
  
   // A nice part of writing constraints is that we get constraint checking

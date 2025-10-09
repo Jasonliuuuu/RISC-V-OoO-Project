@@ -1,0 +1,53 @@
+# vsim -debugDB -voptargs=""+acc"" -c -coverage tb -do "run -all; coverage report -cvg -details -output coverage.txt; quit -f" 
+# Start time: 00:22:28 on Oct 09,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# //  Questa Sim-64
+# //  Version 2023.2 linux_x86_64 Apr 11 2023
+# //
+# //  Copyright 1991-2023 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.rv32i_types(fast)
+# Loading work.tb(fast)
+# ** Note: (vsim-8716) Reusing existing debug database vsim.dbg.
+# run -all
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.BR_FUNCT3' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LOAD_FUNCT3' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.STORE_FUNCT3' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JAL_FUNCT3' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.AUIPIC_FUNCT3' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LUI_FUNCT3' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_FUNT3' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.reg_funct7' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.reg_funct7_2' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.ignorevariant' in Covergroup instance '\/tb/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ns  Iteration: 0  Instance: /tb
+# all_opcodes: 9/9
+# all_funct7: 2/2
+# all_funct3: 8/8
+# all_regs_rs1: 32/32
+# all_regs_rs2: 32/32
+# funct3_cross: 55/72
+# funct7_cross: 0/0
+#  coverage report -cvg -details -output coverage.txt
+#  quit -f
+# End time: 00:22:29 on Oct 09,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 10
