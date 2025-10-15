@@ -3,18 +3,18 @@ module execute
   import forward_bmux::*;
   import rv32i_types::*;
     (
-        input id_ex_stage_reg_t id_ex,
-        output ex_mem_stage_reg_t ex_mem,
-        //from WB
-        input logic [31:0]    regfilemux_out_forward,
-        //from ex_mem
-        input logic             ex_mem_br_en_forward,
-        input logic [31:0]    ex_mem_alu_out_forward,
-        input logic [31:0]              ex_mem_u_imm_forward,
-        input forward_a_sel_t          forward_a_sel,
-        input forward_b_sel_t          forward_b_sel,
-        //*******Flushing signal***********
-        input logic flushing_inst 
+      input id_ex_stage_reg_t id_ex,
+      output ex_mem_stage_reg_t ex_mem,
+      //from WB
+      input logic [31:0]    regfilemux_out_forward,
+      //from ex_mem
+      input logic             ex_mem_br_en_forward,
+      input logic [31:0]    ex_mem_alu_out_forward,
+      input logic [31:0]              ex_mem_u_imm_forward,
+      input forward_a_sel_t          forward_a_sel,
+      input forward_b_sel_t          forward_b_sel,
+      //*******Flushing signal***********
+      input logic flushing_inst 
     );
   //*********Flushing *************
       

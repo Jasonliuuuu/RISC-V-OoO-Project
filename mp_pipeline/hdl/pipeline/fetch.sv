@@ -73,8 +73,9 @@ module fetch
         end
         else if (ce_ifid) begin
             if_id_reg_before.pc <= pc; //傳送現在指令的PC
-            if_id_reg_befre.valid <= imem_resp; //這拍 I-mem 確認有效才為 1
+            if_id_reg_before.valid <= imem_resp; //這拍 I-mem 確認有效才為 1
         end
+    end
 // =============== IF -> ID inst/resp ================
     //把指令與有效為打一拍 條件與上面一致
     // Flush 時把inst -> NOP, resp -> 0, 避免鬼指令
@@ -92,9 +93,6 @@ module fetch
             imem_resp_id <= imem_resp; 
         end
         //else: HOLD
-    end
-    
-        
     end
     
 

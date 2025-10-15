@@ -4,42 +4,46 @@ SHELL=/bin/bash -o pipefail
 PKG_SRCS := $(PWD)/../pkg/types.sv
 HDL_SRCS := $(shell find $(PWD)/../hdl -name '*.sv')
 HVL_SRCS := $(shell find $(PWD)/../hvl -name '*.sv' -o -name '*.v')
-HDRS     := $(shell find $(PWD)/../hvl -name '*.svh')
+HDRS := $(shell find $(PWD)/../hvl -name '*.svh')
 SRCS := $(PKG_SRCS) $(HDL_SRCS) $(HVL_SRCS)
 
-export VCS_ARCH_OVERRIDE=linux
-VCS_FLAGS= -full64 -lca -sverilog +lint=all,noNS -timescale=1ns/1ns -debug_acc+all -kdb -fsdb -suppress=LCA_FEATURES_ENABLED
+# QuestaSim/ModelSim 的路径
+VSIM = /clear/apps/elec8/bin/vsim
+VLOG = /clear/apps/elec8/bin/vlog
+VLIB = /clear/apps/elec8/bin/vlib
 
-sim/top_tb: $(SRCS) $(HDRS)
-	mkdir -p sim
+# Flags
+VLOG_FLAGS = -sv +acc -timescale 1ns/1ns
+VSIM_FLAGS = -voptargs=+acc -suppress 3829
+
+WORK_LIB = work
+
+.PHONY: create_lib
+create_lib:
+	@mkdir -p run
+	@if [ ! -d "$(WORK_LIB)" ]; then $(VLIB) $(WORK_LIB); fi
+
+run/top_tb: create_lib $(SRCS) $(HDRS)
 	python3 ../bin/rvfi_reference.py
-	cd sim && vcs $(SRCS) $(VCS_FLAGS) -msg_config=../vcs_warn.config -l top_tb_compile.log -top top_tb -o top_tb
-	bash check_compile_error.sh
+	$(VLOG) $(VLOG_FLAGS) -work $(WORK_LIB) $(SRCS) +incdir+../hvl +incdir+../pkg -l run/top_tb_compile.log
+	@echo "Compilation successful"
 
-.PHONY: run_top_tb
-run_top_tb: sim/top_tb $(PROG)
-	../bin/generate_memory_file.sh $(PROG)
-	rm -f sim/dump.fsdb
-	cd sim && ./top_tb -l top_tb_sim.log +ntb_random_seed=$$RANDOM
-	bash check_sim_error.sh
+.PHONY: run_random
+run_random: run/top_tb
+	$(VSIM) $(VSIM_FLAGS) -c -do "run -all; quit -f" work.top_tb -l run/random_tb_sim.log
 
-.PHONY: covrep
-covrep: sim/top_tb.vdb
-	cd sim && urg -dir top_tb.vdb
-
-.PHONY: verdi
-verdi:
-	mkdir -p verdi
-	cd verdi && $(VERDI_HOME)/bin/verdi -ssf $(PWD)/sim/dump.fsdb
-
-.PHONY: spike
-spike: $(ELF)
-	spike --isa=rv32i -m0x60000000:0x20000000 --log-commits $(ELF) |& tail -n +6 > sim/spike.log
-
-.PHONY: interactive_spike
-interactive_spike: $(ELF)
-	spike --isa=rv32i -m0x60000000:0x20000000 --log-commits -d $(ELF)
+.PHONY: run_random_gui
+run_random_gui: run/top_tb
+	$(VSIM) $(VSIM_FLAGS) work.top_tb
 
 .PHONY: clean
 clean:
-	rm -rf bin sim verdi
+	rm -rf work run transcript vsim.wlf *.log modelsim.ini
+
+.PHONY: help
+help:
+	@echo "Available targets:"
+	@echo "  make sim/top_tb      - Compile design"
+	@echo "  make run_random      - Run random testbench (no GUI)"
+	@echo "  make run_random_gui  - Run random testbench (with GUI)"
+	@echo "  make clean           - Clean all generated files"

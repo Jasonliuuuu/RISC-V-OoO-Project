@@ -1,0 +1,182 @@
+# vsim -debugDB -voptargs=""+acc"" -voptargs="+acc" -suppress 3829 -c -do "run -all; quit -f" work.top_tb -l run/random_tb_sim.log 
+# Start time: 14:54:29 on Oct 15,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Note: (vsim-8611) Generating debug db.
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv(6): (vopt-13314) Defaulting port 'mem_wb' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vopt-4301) Memory core inferred for signal 'buffer' width=241, depth=2, type=RAM at location /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v:400
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv(4): (vopt-13314) Defaulting port 'id_ex' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv(5): (vopt-13314) Defaulting port 'ex_mem' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vopt-4301) Memory core inferred for signal 'data' width=32, depth=32, type=RAM at location /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv:13
+# ** Warning: ../hvl/instr_cg.svh(79): (vopt-13185) Unexpected constant with_expr in bin 'OTHER_INSTS' of Cross funct7_cross.
+# ** Warning: ../hvl/instr_cg.svh(82): (vopt-13185) Unexpected constant with_expr in bin 'reg_funct7' of Cross funct7_cross.
+# ** Warning: ../hvl/instr_cg.svh(85): (vopt-13185) Unexpected constant with_expr in bin 'reg_funct7_2' of Cross funct7_cross.
+# ** Warning: ../hvl/instr_cg.svh(88): (vopt-13185) Unexpected constant with_expr in bin 'ignorevariant' of Cross funct7_cross.
+# ** Warning: ../hvl/instr_cg.svh(34): (vopt-13185) Unexpected constant with_expr in bin 'JAL_FUNCT3' of Cross funct3_cross.
+# ** Warning: ../hvl/instr_cg.svh(38): (vopt-13185) Unexpected constant with_expr in bin 'AUIPIC_FUNCT3' of Cross funct3_cross.
+# ** Warning: ../hvl/instr_cg.svh(39): (vopt-13185) Unexpected constant with_expr in bin 'LUI_FUNCT3' of Cross funct3_cross.
+# ** Warning: ../hvl/instr_cg.svh(49): (vopt-13185) Unexpected constant with_expr in bin 'BR_FUNCT3' of Cross funct3_cross.
+# ** Warning: ../hvl/instr_cg.svh(55): (vopt-13185) Unexpected constant with_expr in bin 'LOAD_FUNCT3' of Cross funct3_cross.
+# ** Warning: ../hvl/instr_cg.svh(59): (vopt-13185) Unexpected constant with_expr in bin 'STORE_FUNCT3' of Cross funct3_cross.
+# ** Warning: ../hvl/instr_cg.svh(63): (vopt-13185) Unexpected constant with_expr in bin 'JALR_FUNT3' of Cross funct3_cross.
+# ** Warning: ../hvl/instr_cg.svh(28): (vopt-2727) One of implicit coverpoints at line '28' is a duplicate of the explicitly declared coverpoint 'all_funct3' at line '16'. The coverage score may be skewed as a result.
+# ** Warning: ../hvl/instr_cg.svh(28): (vopt-2727) One of implicit coverpoints at line '28' is a duplicate of the explicitly declared coverpoint 'all_opcodes' at line '5'. The coverage score may be skewed as a result.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(18): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(36): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(47): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv(16): (vopt-13314) Defaulting port 'if_id' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv(4): (vopt-13314) Defaulting port 'ex_mem' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv(6): (vopt-13314) Defaulting port 'mem_wb_now' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv(6): (vopt-13314) Defaulting port 'mem_wb' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv(6): (vopt-13314) Defaulting port 'id_ex' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(7): (vopt-13314) Defaulting port 'id_ex' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(8): (vopt-13314) Defaulting port 'ex_mem' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(9): (vopt-13314) Defaulting port 'mem_wb' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=28.
+# //  Questa Sim-64
+# //  Version 2023.2 linux_x86_64 Apr 11 2023
+# //
+# //  Copyright 1991-2023 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.mem_itf(fast__1)
+# Loading work.mem_itf(fast__2)
+# Loading work.forward_bmux(fast)
+# Loading work.forward_amux(fast)
+# Loading work.regfilemux(fast)
+# Loading work.alumux(fast)
+# Loading work.cmpmux(fast)
+# Loading work.marmux(fast)
+# Loading work.pcmux(fast)
+# Loading work.rv32i_types(fast)
+# Loading work.random_tb(fast)
+# Loading work.mon_itf(fast__1)
+# Loading work.monitor(fast)
+# Loading work.riscv_formal_monitor_rv32imc(fast)
+# Loading work.riscv_formal_monitor_rv32imc_isa_spec(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_add(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_addi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_and(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_andi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_auipc(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_beq(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bge(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bgeu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_blt(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bltu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bne(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_add(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_addi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_addi16sp(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_addi4spn(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_and(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_andi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_beqz(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_bnez(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_j(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_jal(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_jalr(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_jr(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_li(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_lui(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_lw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_lwsp(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_mv(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_or(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_slli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_srai(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_srli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_sub(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_sw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_swsp(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_xor(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_div(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_divu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_jal(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_jalr(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lb(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lbu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lh(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lhu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lui(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mul(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mulh(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mulhsu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mulhu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_or(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_ori(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_rem(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_remu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sb(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sh(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sll(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_slli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_slt(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_slti(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sltiu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sltu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sra(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_srai(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_srl(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_srli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sub(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_xor(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_xori(fast)
+# Loading work.riscv_formal_monitor_rv32imc_rob(fast)
+# Loading work.cpu(fast)
+# Loading work.fetch(fast)
+# Loading work.decode(fast)
+# Loading work.regfile(fast)
+# Loading work.execute(fast)
+# Loading work.alu(fast)
+# Loading work.cmp(fast)
+# Loading work.memory(fast)
+# Loading work.writeback(fast)
+# Loading work.forward(fast)
+# Loading work.stall(fast)
+# Loading work.freeze(fast)
+# ** Note: (vsim-8900) Creating design debug database vsim.dbg.
+# run -all
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.BR_FUNCT3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LOAD_FUNCT3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.STORE_FUNCT3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JAL_FUNCT3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.AUIPIC_FUNCT3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LUI_FUNCT3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_FUNT3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.reg_funct7' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.reg_funct7_2' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.ignorevariant' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# dut commit No.                   0, rd_s: x 0, rd: 0x00000000
+# dut commit No.                1000, rd_s: x28, rd: 0x0e340000
+# dut commit No.                2000, rd_s: x 0, rd: 0x00000000
+# dut commit No.                3000, rd_s: x 2, rd: 0x00000000
+# dut commit No.                4000, rd_s: x 6, rd: 0xab184000
+# ** Note: $finish    : /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv(53)
+#    Time: 87585 ps  Iteration: 1  Instance: /top_tb
+# Monitor: Total IPC: 0.550634
+# Monitor: Total Time:                88000
+# End time: 14:54:36 on Oct 15,2025, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 38

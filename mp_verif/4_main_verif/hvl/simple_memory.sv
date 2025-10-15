@@ -1,6 +1,6 @@
 module simple_memory
 #(
-    parameter MEMFILE = "memory.lst",
+    parameter MEMFILE = "memory.lst", //Default name 
     parameter DELAY   = 3
 )(
     mem_itf.mem itf
@@ -10,7 +10,8 @@ module simple_memory
     timeprecision 1ns;
 
     logic [31:0] internal_memory_array [logic [31:2]];
-
+    
+    //itf = interface instance
     always @(posedge itf.clk) begin
         if (itf.rst === 1'b0) begin
             if ($isunknown(itf.read) || $isunknown(itf.write) || $isunknown(itf.wmask)) begin
