@@ -15,8 +15,8 @@ module top_tb;
     mem_itf mem_itf_i(.*);
     mem_itf mem_itf_d(.*);
     //magic_dual_port mem(.itf_i(mem_itf_i), .itf_d(mem_itf_d));
-    ordinary_dual_port mem(.itf_i(mem_itf_i), .itf_d(mem_itf_d));
-    //random_tb mem(.itf_i(mem_itf_i), .itf_d(mem_itf_d));
+    // ordinary_dual_port mem(.itf_i(mem_itf_i), .itf_d(mem_itf_d));
+    random_tb mem(.itf_i(mem_itf_i), .itf_d(mem_itf_d));
     mon_itf mon_itf(.*);    
     monitor monitor(.itf(mon_itf));
 
@@ -37,11 +37,12 @@ module top_tb;
         .dmem_resp      (mem_itf_d.resp)
     );
 
-    `include "../../hvl/rvfi_reference.svh"
+    `include "../hvl/rvfi_reference.svh"
 
     initial begin
-        $fsdbDumpfile("dump.fsdb");
-        $fsdbDumpvars(0, "+all");
+        // $fsdbDumpfile("dump.fsdb");
+        // $fsdbDumpvars(0, "+all");
+        // QuestaSIm don't need this, use GUI and do file to add waveform
         rst = 1'b1;
         repeat (2) @(posedge clk);
         rst <= 1'b0;

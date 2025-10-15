@@ -6,7 +6,7 @@ module random_tb
     mem_itf.mem itf_d
   );
   
-    `include "../../hvl/randinst.svh"
+    `include "../hvl/randinst.svh"
   
     RandInst gen = new();
   
@@ -16,12 +16,12 @@ module random_tb
           if (itf_i.rmask == 4'b1111) begin
           
           gen.randomize() with {
-              instr.j_type.opcode == op_lui;
-              instr.j_type.rd == i[4:0];
+              instr.j_type.opcode == op_lui; // generate LUI instruction
+              instr.j_type.rd == i[4:0]; // X0-X31
           };
   
           @(posedge itf_i.clk);
-          itf_i.rdata <= gen.instr.word;
+          itf_i.rdata <= gen.instr.word; // Send LUI back to CPU
           itf_i.resp <= 1'b1;
           end
       end

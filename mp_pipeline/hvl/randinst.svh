@@ -163,7 +163,7 @@ class RandInst;
       }
       // TODO: Do all 9 types!
   }
-  `include "../../hvl/instr_cg.svh"
+  `include "../hvl/instr_cg.svh"
 
   // Constructor, make sure we construct the covergroup.
   function new();

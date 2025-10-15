@@ -16,8 +16,8 @@ module decode
         input  if_id_stage_reg_t if_id,
         //all the imemory data signal pass to next stage using struct id_ex_stage_reg_t
         input logic flushing_inst, 
-        input logic imem_resp_id;
-        output id_ex_stage_reg_t id_ex,
+        input logic imem_resp_id,
+        output id_ex_stage_reg_t id_ex
         
 
     );

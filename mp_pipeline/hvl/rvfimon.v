@@ -5363,8 +5363,16 @@ module riscv_formal_monitor_rv32imc_insn_divu (
   wire misa_ok = 1;
 
   // DIVU instruction
-  wire [32-1:0] result = rvfi_rs2_rdata == 32'b0 ? {32{1'b1}} :
-                                         rvfi_rs1_rdata / rvfi_rs2_rdata;
+  // wire [32-1:0] result = rvfi_rs2_rdata == 32'b0 ? {32{1'b1}} :
+  //                                        rvfi_rs1_rdata / rvfi_rs2_rdata; // this is wrong
+  // Create a denominator that is never zero
+  wire [32-1:0] safe_divisor = (rvfi_rs2_rdata == 32'b0) ? 32'd1 : rvfi_rs2_rdata;
+
+  // Perform the division with the safe denominator
+  wire [32-1:0] division_result = rvfi_rs1_rdata / safe_divisor;
+
+  // Select the final result based on the original denominator
+  wire [32-1:0] result = (rvfi_rs2_rdata == 32'b0) ? 32'hFFFFFFFF : division_result;
   assign spec_valid = rvfi_valid && !insn_padding && insn_funct7 == 7'b 0000001 && insn_funct3 == 3'b 101 && insn_opcode == 7'b 0110011;
   assign spec_rs1_addr = insn_rs1;
   assign spec_rs2_addr = insn_rs2;
