@@ -11,10 +11,11 @@ SRCS := $(PKG_SRCS) $(HDL_SRCS) $(HVL_SRCS)
 VSIM = /clear/apps/elec8/bin/vsim
 VLOG = /clear/apps/elec8/bin/vlog
 VLIB = /clear/apps/elec8/bin/vlib
+VCOVER = /clear/apps/elec8/bin/vcover
 
 # Flags
-VLOG_FLAGS = -sv +acc -timescale 1ns/1ns
-VSIM_FLAGS = -voptargs=+acc -suppress 3829
+VLOG_FLAGS = -sv +acc -timescale 1ns/1ns -cover bcefst
+VSIM_FLAGS = -voptargs=+acc -suppress 3829 -coverage
 
 WORK_LIB = work
 
@@ -30,20 +31,52 @@ run/top_tb: create_lib $(SRCS) $(HDRS)
 
 .PHONY: run_random
 run_random: run/top_tb
-	$(VSIM) $(VSIM_FLAGS) -c -do "run -all; quit -f" work.top_tb -l run/random_tb_sim.log
+	@echo "Running random testbench with coverage..."
+	$(VSIM) $(VSIM_FLAGS) -c \
+		-onfinish stop \
+		-do "run -all; coverage save vsim.ucdb; quit -f" \
+		work.top_tb -l run/random_tb_sim.log
+	@if [ -f vsim.ucdb ]; then \
+		echo "Coverage database created: vsim.ucdb"; \
+	else \
+		echo "Warning: vsim.ucdb not created"; \
+	fi
 
 .PHONY: run_random_gui
 run_random_gui: run/top_tb
-	$(VSIM) $(VSIM_FLAGS) work.top_tb
+	$(VSIM) $(VSIM_FLAGS) work.top_tb \
+		-do "coverage save -onexit vsim.ucdb"
+
+.PHONY: coverage
+coverage:
+	@if [ ! -f vsim.ucdb ]; then \
+		echo "Error: vsim.ucdb not found. Run 'make run_random' first."; \
+		exit 1; \
+	fi
+	@echo "Generating coverage report..."
+	@rm -rf coverage_report
+	/clear/apps/elec8/bin/vsim -c -viewcov vsim.ucdb \
+		-do "coverage report -html -output coverage_report -detail -cvg; quit" 2>&1 | \
+		grep -v "^#" || true
+	@if [ -f coverage_report/index.html ]; then \
+		echo "✓ Coverage report generated: coverage_report/index.html"; \
+		echo "  Open with: firefox coverage_report/index.html"; \
+	else \
+		echo "HTML generation failed, creating text report..."; \
+		/clear/apps/elec8/bin/vsim -c -viewcov vsim.ucdb \
+			-do "coverage report -detail -cvg -output coverage.txt; quit"; \
+		echo "✓ Text report: coverage.txt"; \
+	fi
 
 .PHONY: clean
 clean:
-	rm -rf work run transcript vsim.wlf *.log modelsim.ini
+	rm -rf work run transcript vsim.wlf *.log modelsim.ini vsim.ucdb coverage_report
 
 .PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  make sim/top_tb      - Compile design"
-	@echo "  make run_random      - Run random testbench (no GUI)"
-	@echo "  make run_random_gui  - Run random testbench (with GUI)"
+	@echo "  make run/top_tb      - Compile design"
+	@echo "  make run_random      - Run random testbench with coverage"
+	@echo "  make run_random_gui  - Run random testbench (GUI mode)"
+	@echo "  make coverage        - Generate HTML coverage report"
 	@echo "  make clean           - Clean all generated files"

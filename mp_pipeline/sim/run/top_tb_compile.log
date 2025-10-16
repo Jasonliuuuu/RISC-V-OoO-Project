@@ -1,6 +1,6 @@
 QuestaSim-64 vlog 2023.2 Compiler 2023.04 Apr 11 2023
-Start time: 14:54:27 on Oct 15,2025
-vlog -sv "+acc" -timescale 1ns/1ns -work work /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/ir.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cmp.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/alu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/ordinary_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mem_itf.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/magic_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mon_itf.sv "+incdir+../hvl" "+incdir+../pkg" -l run/top_tb_compile.log 
+Start time: 20:26:14 on Oct 15,2025
+vlog -sv "+acc" -timescale 1ns/1ns -cover bcefst -work work /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/ir.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cmp.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/alu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/ordinary_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mem_itf.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/magic_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mon_itf.sv "+incdir+../hvl" "+incdir+../pkg" -l run/top_tb_compile.log 
 -- Compiling package pcmux
 -- Compiling package marmux
 -- Compiling package cmpmux
@@ -117,37 +117,37 @@ vlog -sv "+acc" -timescale 1ns/1ns -work work /nfs-share/tl152/ELEC411/RISC-V-Oo
 -- Compiling module random_tb
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(79): (vlog-13185) Unexpected constant with_expr in bin 'OTHER_INSTS' of Cross funct7_cross.
+** at ../hvl/instr_cg.svh(65): (vlog-13185) Unexpected constant with_expr in bin 'OTHER_INSTS' of Cross funct7_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(82): (vlog-13185) Unexpected constant with_expr in bin 'reg_funct7' of Cross funct7_cross.
+** at ../hvl/instr_cg.svh(68): (vlog-13185) Unexpected constant with_expr in bin 'reg_funct7' of Cross funct7_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(85): (vlog-13185) Unexpected constant with_expr in bin 'reg_funct7_2' of Cross funct7_cross.
+** at ../hvl/instr_cg.svh(71): (vlog-13185) Unexpected constant with_expr in bin 'reg_funct7_2' of Cross funct7_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(88): (vlog-13185) Unexpected constant with_expr in bin 'ignorevariant' of Cross funct7_cross.
+** at ../hvl/instr_cg.svh(74): (vlog-13185) Unexpected constant with_expr in bin 'ignorevariant' of Cross funct7_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(34): (vlog-13185) Unexpected constant with_expr in bin 'JAL_FUNCT3' of Cross funct3_cross.
+** at ../hvl/instr_cg.svh(31): (vlog-13185) Unexpected constant with_expr in bin 'JAL_FUNCT3' of Cross funct3_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(38): (vlog-13185) Unexpected constant with_expr in bin 'AUIPIC_FUNCT3' of Cross funct3_cross.
+** at ../hvl/instr_cg.svh(33): (vlog-13185) Unexpected constant with_expr in bin 'AUIPC_FUNCT3' of Cross funct3_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(39): (vlog-13185) Unexpected constant with_expr in bin 'LUI_FUNCT3' of Cross funct3_cross.
+** at ../hvl/instr_cg.svh(35): (vlog-13185) Unexpected constant with_expr in bin 'LUI_FUNCT3' of Cross funct3_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(49): (vlog-13185) Unexpected constant with_expr in bin 'BR_FUNCT3' of Cross funct3_cross.
+** at ../hvl/instr_cg.svh(39): (vlog-13185) Unexpected constant with_expr in bin 'BR_INVALID' of Cross funct3_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(55): (vlog-13185) Unexpected constant with_expr in bin 'LOAD_FUNCT3' of Cross funct3_cross.
+** at ../hvl/instr_cg.svh(43): (vlog-13185) Unexpected constant with_expr in bin 'LOAD_INVALID' of Cross funct3_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(59): (vlog-13185) Unexpected constant with_expr in bin 'STORE_FUNCT3' of Cross funct3_cross.
+** at ../hvl/instr_cg.svh(47): (vlog-13185) Unexpected constant with_expr in bin 'STORE_INVALID' of Cross funct3_cross.
 ** Warning: ** while parsing file included at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(9)
 ** while parsing file included at ../hvl/randinst.svh(166)
-** at ../hvl/instr_cg.svh(63): (vlog-13185) Unexpected constant with_expr in bin 'JALR_FUNT3' of Cross funct3_cross.
+** at ../hvl/instr_cg.svh(51): (vlog-13185) Unexpected constant with_expr in bin 'JALR_INVALID' of Cross funct3_cross.
 ** Warning: ../hvl/instr_cg.svh(28): (vlog-2727) One of implicit coverpoints at line '28' is a duplicate of the explicitly declared coverpoint 'all_funct3' at line '16'. The coverage score may be skewed as a result.
 ** Warning: ../hvl/instr_cg.svh(28): (vlog-2727) One of implicit coverpoints at line '28' is a duplicate of the explicitly declared coverpoint 'all_opcodes' at line '5'. The coverage score may be skewed as a result.
 ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv(18): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
@@ -168,5 +168,5 @@ Top level modules:
 	top_tb
 	ordinary_dual_port
 	magic_dual_port
-End time: 14:54:27 on Oct 15,2025, Elapsed time: 0:00:00
+End time: 20:26:15 on Oct 15,2025, Elapsed time: 0:00:01
 Errors: 0, Warnings: 30

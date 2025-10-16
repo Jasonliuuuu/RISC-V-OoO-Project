@@ -26,44 +26,30 @@ covergroup instr_cg with function sample(instr_t instr);
   // Now, cross coverage takes in the opcode context to correctly
   // figure out the /real/ coverage.
   funct3_cross : cross instr.i_type.opcode, instr.i_type.funct3 {
-
+    // 这些 opcode 不使用 funct3
+    ignore_bins JAL_FUNCT3 = funct3_cross with 
+        (instr.i_type.opcode == op_jal);
+    ignore_bins AUIPC_FUNCT3 = funct3_cross with
+        (instr.i_type.opcode == op_auipc);
+    ignore_bins LUI_FUNCT3 = funct3_cross with 
+        (instr.i_type.opcode == op_lui);
   
-  // We want to ignore the cases where funct3 isn't relevant.
-
-    // For example, for JAL, funct3 doesn't exist. Put it in an ignore_bins.
-    ignore_bins JAL_FUNCT3 = funct3_cross with (instr.i_type.opcode == op_jal);
+    // 以下全部改成 ignore_bins
+    ignore_bins BR_INVALID = funct3_cross with
+        (instr.i_type.opcode == op_br 
+         && !(instr.i_type.funct3 inside {beq, bne, blt, bge, bltu, bgeu}));
     
-    // TODO:  What other opcodes does funct3 not exist for? Put those in
-    // ignore_bins.
-    ignore_bins AUIPIC_FUNCT3 = funct3_cross with(instr.i_type.opcode == op_auipc);
-    ignore_bins LUI_FUNCT3 = funct3_cross with (instr.i_type.opcode == op_lui);
-  
+    ignore_bins LOAD_INVALID = funct3_cross with
+        (instr.i_type.opcode == op_load
+         && !(instr.i_type.funct3 inside {lb, lh, lw, lbu, lhu}));
 
-//--------------------- if you generate an instruction in an illegal bin, it will give you an error, if you generate an instruction in an ignore_bin it will ignore it-------------
+    ignore_bins STORE_INVALID = funct3_cross with
+        (instr.i_type.opcode == op_store
+         && !(instr.i_type.funct3 inside {sb, sh, sw}));
 
-
-    // Branch instructions use funct3, but only 6 of the 8 possible values
-    // are valid. Ignore the other two -- don't include them in the coverage
-    // report. In fact, if they're generated, that's an illegal instruction.
-    illegal_bins BR_FUNCT3 = funct3_cross with
-    (instr.i_type.opcode == op_br
-     && !(instr.i_type.funct3 inside {beq, bne, blt, bge, bltu, bgeu}));
-    //if you generate an instruction in an illegal bin, it will give you an error, if you generate an instruction in an ignore_bin it will ignore it
-    // TODO: You'll also have to ignore some funct3 cases in JALR, LOAD, and
-    // STORE. Write the illegal_bins/ignore_bins for those cases.
-    illegal_bins LOAD_FUNCT3 = funct3_cross with
-    (instr.i_type.opcode == op_load
-     && !(instr.i_type.funct3 inside {lb, lh, lw, lbu, lhu}));
-
-    illegal_bins STORE_FUNCT3 = funct3_cross with
-    (instr.i_type.opcode == op_store
-    && !(instr.i_type.funct3 inside{sb, sh, sw}));
-
-    ignore_bins JALR_FUNT3 = funct3_cross with
-    (instr.i_type.opcode == op_jalr
-    &&!(instr.i_type.funct3 == 0));
-  
-  }
+    ignore_bins JALR_INVALID = funct3_cross with
+        (instr.i_type.opcode == op_jalr && instr.i_type.funct3 != 0);
+}
   // Coverpoint to make separate bins for funct7.
   coverpoint instr.r_type.funct7 {
     bins range[] = {[0:$]};
