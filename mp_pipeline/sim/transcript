@@ -1,0 +1,6 @@
+# coverage read -dataset vsim vsim.ucdb
+# vsim.ucdb opened as coverage dataset "vsim"
+# coverage report -html -output coverage_report -detail -cvg
+# 
+# 
+#  quit

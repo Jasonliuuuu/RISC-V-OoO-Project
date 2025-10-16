@@ -50,7 +50,8 @@ module top_tb;
 
     always @(posedge clk) begin
         if (mon_itf.halt) begin
-            $finish;
+            // $finish;
+            $display("Halt detected, ending simulation");
         end
         if (timeout == 0) begin
             $error("TB Error: Timed out");
@@ -69,6 +70,12 @@ module top_tb;
             $finish;
         end
         timeout <= timeout - 1;
+    end
+
+    final begin
+        // 在 simulation 结束时自动保存 coverage
+        $system("echo 'Saving coverage...'");
+        // 注意：这个方法需要配合 -do 命令使用
     end
 
 endmodule

@@ -1,0 +1,2 @@
+var g_data = ["","../hvl/top_tb.sv","../hvl/rvfi_reference.svh","../hvl/mem_itf.sv","../pkg/types.sv","../hvl/random_tb.sv","../hvl/randinst.svh","../hvl/instr_cg.svh","../hvl/mon_itf.sv","../hvl/monitor.sv","../hvl/rvfimon.v","../hdl/cpu.sv","../hdl/pipeline/fetch.sv","../hdl/pipeline/decode.sv","../hdl/regfile.sv","../hdl/pipeline/execute.sv","../hdl/alu.sv","../hdl/cmp.sv","../hdl/pipeline/memstage.sv","../hdl/pipeline/writeback.sv","../hdl/Forward.sv","../hdl/Load_hazard_stall.sv","../hdl/freeze.sv"];
+processSrcNamesData(g_data);
