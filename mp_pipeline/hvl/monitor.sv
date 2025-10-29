@@ -176,22 +176,26 @@ module monitor (
     final $fclose(fd);
 
     always @ (posedge itf.clk) begin
-        if(itf.valid) begin
+        if(itf.valid) begin // When an instruction commits
+            //// Print progress to terminal every 1000 instructions
             if (itf.order % 1000 == 0) begin
                 $display("dut commit No.%d, rd_s: x%02d, rd: 0x%h", itf.order, itf.rd_addr, itf.rd_addr ? itf.rd_wdata : 5'd0);
             end
-            if (itf.inst[1:0] == 2'b11) begin
+            // 1. Write PC and instruction encoding to file
+            if (itf.inst[1:0] == 2'b11) begin //// 32-bit instruction
                 $fwrite(fd, "core   0: 3 0x%h (0x%h)", itf.pc_rdata, itf.inst);
-            end else begin
+            end else begin // 16-bit compressed instruction
                 $fwrite(fd, "core   0: 3 0x%h (0x%h)", itf.pc_rdata, itf.inst[15:0]);
             end
-            if (itf.rd_addr != 0) begin
+            // 2. If writing to a register, write register and value
+            if (itf.rd_addr != 0) begin // x0 is hardwired to zero
                 if (itf.rd_addr < 10)
                     $fwrite(fd, " x%0d  ", itf.rd_addr);
                 else
                     $fwrite(fd, " x%0d ", itf.rd_addr);
                 $fwrite(fd, "0x%h", itf.rd_wdata);
             end
+            // 3. If Load instruction, write memory address being read
             if (itf.mem_rmask != 0) begin
                 automatic int first_1 = 0;
                 for(int i = 0; i < 4; i++) begin
@@ -202,14 +206,17 @@ module monitor (
                 end
                 $fwrite(fd, " mem 0x%h", {itf.mem_addr[31:2], 2'b0} + first_1);
             end
+            // 4. If Store instruction, write memory address and data being written
             if (itf.mem_wmask != 0) begin
                 automatic int amount_o_1 = 0;
                 automatic int first_1 = 0;
+                // Count how many bytes are being written
                 for(int i = 0; i < 4; i++) begin
                     if(itf.mem_wmask[i]) begin
                         amount_o_1 += 1;
                     end
                 end
+                // Find the first byte being written
                 for(int i = 0; i < 4; i++) begin
                     if(itf.mem_wmask[i]) begin
                         first_1 = i;
@@ -217,16 +224,17 @@ module monitor (
                     end
                 end
                 $fwrite(fd, " mem 0x%h", {itf.mem_addr[31:2], 2'b0} + first_1);
+                // Write data based on number of bytes
                 case (amount_o_1)
-                    1: begin
+                    1: begin // SB (Store Byte)
                         automatic logic[7:0] wdata_byte = itf.mem_wdata[8*first_1 +: 8];
                         $fwrite(fd, " 0x%h", wdata_byte);
                     end
-                    2: begin
+                    2: begin // SH (Store Halfword)
                         automatic logic[15:0] wdata_half = itf.mem_wdata[8*first_1 +: 16];
                         $fwrite(fd, " 0x%h", wdata_half);
                     end
-                    4:
+                    4:  // SW (Store Word)
                         $fwrite(fd, " 0x%h", itf.mem_wdata);
                 endcase
             end
