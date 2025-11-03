@@ -1,5 +1,5 @@
 QuestaSim-64 vlog 2023.2 Compiler 2023.04 Apr 11 2023
-Start time: 20:26:14 on Oct 15,2025
+Start time: 02:34:15 on Oct 23,2025
 vlog -sv "+acc" -timescale 1ns/1ns -cover bcefst -work work /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/ir.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cmp.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/alu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/ordinary_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mem_itf.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/magic_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mon_itf.sv "+incdir+../hvl" "+incdir+../pkg" -l run/top_tb_compile.log 
 -- Compiling package pcmux
 -- Compiling package marmux
@@ -168,5 +168,5 @@ Top level modules:
 	top_tb
 	ordinary_dual_port
 	magic_dual_port
-End time: 20:26:15 on Oct 15,2025, Elapsed time: 0:00:01
+End time: 02:34:16 on Oct 23,2025, Elapsed time: 0:00:01
 Errors: 0, Warnings: 30

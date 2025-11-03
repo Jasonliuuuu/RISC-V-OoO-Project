@@ -1,4 +1,5 @@
 //monitor interface
+//定义 Interface 类型
 interface mon_itf(
     input   bit             clk,
     input   bit             rst
