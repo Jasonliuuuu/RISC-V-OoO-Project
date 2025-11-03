@@ -1,7 +1,18 @@
 module monitor (
     mon_itf itf
 );
+    // 1. Signal Integrity Check
+    // 2. Halt Detection
+    // 3. Golden Model verification
+    // 4. IPC monitor
+    // 5. Generate commit.log
 
+    // =====================================================
+    //使用 mon_itf 类型作为端口
+    // 1. Signal Integrity Check - Detect X (unknown) values
+    // =====================================================
+
+    // Check if valid signal contains X when not in reset
     always @(posedge itf.clk iff !itf.rst) begin
         if ($isunknown(itf.valid)) begin
             $error("RVFI Interface Error: valid is 1'bx");
@@ -9,6 +20,7 @@ module monitor (
         end
     end
 
+    // Check all RVFI signals for X values when instruction is valid
     always @(posedge itf.clk iff (!itf.rst && itf.valid)) begin
         if ($isunknown(itf.order)) begin
             $error("RVFI Interface Error: order contains 'x");
@@ -26,12 +38,14 @@ module monitor (
             $error("RVFI Interface Error: rs2_addr contains 'x");
             itf.error <= 1'b1;
         end
+        // Check rs1 data only if rs1 is used
         if (itf.rs1_addr != '0) begin
             if ($isunknown(itf.rs1_rdata)) begin
                 $error("RVFI Interface Error: rs1_rdata contains 'x");
                 itf.error <= 1'b1;
             end
         end
+        // Check rs2 data only if rs2 is used
         if (itf.rs2_addr != '0) begin
             if ($isunknown(itf.rs2_rdata)) begin
                 $error("RVFI Interface Error: rs2_rdata contains 'x");
@@ -42,6 +56,7 @@ module monitor (
             $error("RVFI Interface Error: rd_addr contains 'x");
             itf.error <= 1'b1;
         end
+        // Check rd data only if rd is written
         if (itf.rd_addr) begin
             if ($isunknown(itf.rd_wdata)) begin
                 $error("RVFI Interface Error: rd_wdata contains 'x");
@@ -64,12 +79,14 @@ module monitor (
             $error("RVFI Interface Error: mem_wmask contains 'x");
             itf.error <= 1'b1;
         end
+        // Check memory address only if memory is accessed
         if (|itf.mem_rmask || |itf.mem_wmask) begin
             if ($isunknown(itf.mem_addr)) begin
                 $error("RVFI Interface Error: mem_addr contains 'x");
                 itf.error <= 1'b1;
             end
         end
+        // Check memory read data byte-by-byte
         if (|itf.mem_rmask) begin
             for (int i = 0; i < 4; i++) begin
                 if (itf.mem_rmask[i]) begin
@@ -80,6 +97,7 @@ module monitor (
                 end
             end
         end
+        // Check memory write data byte-by-byte
         if (|itf.mem_wmask) begin
             for (int i = 0; i < 4; i++) begin
                 if (itf.mem_wmask[i]) begin
@@ -92,58 +110,31 @@ module monitor (
         end  
     end
 
+    // ================================================================
+    // 2. Halt Detection - Detect program termination
+    // ================================================================
     initial itf.halt = 1'b0;
     always @(posedge itf.clk) begin
-        if ((!itf.rst && itf.valid) && ((itf.pc_rdata == itf.pc_wdata) || (itf.inst == 32'h00000063) || (itf.inst == 32'h0000006f) || (itf.inst == 32'hF0002013))) begin
+        // Halt conditions:
+        // - PC doesn't change (infinite loop)
+        // - Special halt instructions
+        if ((!itf.rst && itf.valid) && ((itf.pc_rdata == itf.pc_wdata) // PC unchanged
+        || (itf.inst == 32'h00000063) //Special instruction
+        || (itf.inst == 32'h0000006f) //JAL to self
+        || (itf.inst == 32'hF0002013))) begin //Special marker
             itf.halt <= 1'b1;
         end
     end
 
+    // ================================================================
+    // 3. Golden Model Verification - Compare DUT with reference model
+    // ================================================================
+
     bit [15:0] errcode;
-    always @(posedge itf.clk) begin
-        if (errcode != 0) begin
-            $error("RVFI Monitor Error");
-            itf.error <= 1'b1;
-        end
-    end
-
-    longint inst_count = longint'(0);
-    longint cycle_count = longint'(0);
-    longint start_time = longint'(0);
-    longint total_time = longint'(0);
-    bit done_print_ipc = 1'b0;
-    real ipc = real'(0);
-    always @(posedge itf.clk) begin
-        if ((!itf.rst && itf.valid) && (itf.inst == 32'h00102013)) begin
-            inst_count = longint'(0);
-            cycle_count = longint'(0);
-            start_time = $time;
-            $display("Monitor: Segment Start time is %t",$time); 
-        end else begin
-            cycle_count += longint'(1);
-            if (!itf.rst && itf.valid) begin
-                inst_count += longint'(1);
-            end
-        end
-        if ((!itf.rst && itf.valid) && (itf.inst == 32'h00202013)) begin
-            $display("Monitor: Segment Stop time is %t",$time); 
-            done_print_ipc = 1'b1;
-            ipc = real'(inst_count) / cycle_count;
-            total_time = $time - start_time;
-            $display("Monitor: Segment IPC: %f", ipc);
-            $display("Monitor: Segment Time: %t", total_time);
-        end
-    end
-
-    final begin
-        if (!done_print_ipc) begin
-            ipc = real'(inst_count) / cycle_count;
-            total_time = $time - start_time;
-            $display("Monitor: Total IPC: %f", ipc);
-            $display("Monitor: Total Time: %t", total_time);
-        end
-    end
-
+    // Check Golden Model error code every cycle
+    // Golden Model Instantiation
+    // ================================================================
+    
     riscv_formal_monitor_rv32imc monitor(
         .clock              (itf.clk),
         .reset              (itf.rst),
@@ -170,6 +161,61 @@ module monitor (
         .rvfi_mem_extamo    (1'b0),
         .errcode            (errcode)
     );
+    
+    always @(posedge itf.clk) begin
+        if (errcode != 0) begin
+            $error("RVFI Monitor Error");
+            itf.error <= 1'b1;
+        end
+    end
+
+    // ================================================================
+    // 4. IPC Performance Monitoring
+    // ================================================================
+    longint inst_count = longint'(0);  // Count of committed instructions
+    longint cycle_count = longint'(0); // Count of committed instructions
+    longint start_time = longint'(0);  // Start time for measurement
+    longint total_time = longint'(0);  // Total time for measurement
+    bit done_print_ipc = 1'b0;         // Flag for segment IPC printing
+    real ipc = real'(0);               // Instructions per cycle
+    always @(posedge itf.clk) begin
+        if ((!itf.rst && itf.valid) && (itf.inst == 32'h00102013)) begin
+            inst_count = longint'(0);
+            cycle_count = longint'(0);
+            start_time = $time;
+            $display("Monitor: Segment Start time is %t",$time); 
+        end else begin
+            cycle_count += longint'(1);
+            if (!itf.rst && itf.valid) begin
+                inst_count += longint'(1);
+            end
+        end
+        if ((!itf.rst && itf.valid) && (itf.inst == 32'h00202013)) begin
+            $display("Monitor: Segment Stop time is %t",$time); 
+            done_print_ipc = 1'b1;
+            ipc = real'(inst_count) / cycle_count;
+            total_time = $time - start_time;
+            $display("Monitor: Segment IPC: %f", ipc);
+            $display("Monitor: Segment Time: %t", total_time);
+        end
+    end
+
+    // Instructions per cycle
+    final begin
+        if (!done_print_ipc) begin
+            ipc = real'(inst_count) / cycle_count;
+            total_time = $time - start_time;
+            $display("Monitor: Total IPC: %f", ipc);
+            $display("Monitor: Total Time: %t", total_time);
+        end
+    end
+
+    // ================================================================
+    
+
+    // ================================================================
+    // 5. Commit Log Generation - Record execution trace
+    // ================================================================
 
     int fd;
     initial fd = $fopen("./commit.log", "w");
