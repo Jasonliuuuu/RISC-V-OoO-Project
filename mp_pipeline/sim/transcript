@@ -1,6 +1,7 @@
-# coverage read -dataset vsim vsim.ucdb
-# vsim.ucdb opened as coverage dataset "vsim"
-# coverage report -html -output coverage_report -detail -cvg
-# 
-# 
-#  quit
+# vcover report vsim.ucdb -details -cvg -output coverage_summary.txt
+# QuestaSim-64 vcover 2023.2 Coverage Utility 2023.04 Apr 11 2023
+# Start time: 22:34:34 on Nov 03,2025
+# vcover report vsim.ucdb -details -cvg -output coverage_summary.txt 
+# End time: 22:34:34 on Nov 03,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+#  quit -f
