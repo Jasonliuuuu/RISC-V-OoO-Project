@@ -1,5 +1,5 @@
 QuestaSim-64 vlog 2023.2 Compiler 2023.04 Apr 11 2023
-Start time: 23:50:59 on Nov 05,2025
+Start time: 00:08:15 on Nov 06,2025
 vlog -sv "+acc" -timescale 1ns/1ns -cover bcefst -work work /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../pkg/types.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/regfile.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/pipeline/fetch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/functional_units/fu_load_store.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/functional_units/fu_alu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/functional_units/fu_multiplier.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/functional_units/fu_divider.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/functional_units/fu_branch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/cpu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/common_data_bus.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/scoreboard.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/instruction_queue.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/fu_interface.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/rvfimon.v /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/random_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/top_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/ordinary_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/mem_itf.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/magic_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/mon_itf.sv "+incdir+../hvl" "+incdir+../pkg" -l run/top_tb_compile.log 
 -- Compiling package rv32i_types
 -- Compiling module regfile
@@ -205,5 +205,5 @@ Top level modules:
 	top_tb
 	ordinary_dual_port
 	magic_dual_port
-End time: 23:51:00 on Nov 05,2025, Elapsed time: 0:00:01
+End time: 00:08:16 on Nov 06,2025, Elapsed time: 0:00:01
 Errors: 0, Warnings: 57

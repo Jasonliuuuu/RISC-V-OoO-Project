@@ -1,11 +1,6 @@
 # vsim -debugDB -voptargs=""+acc"" -voptargs="+acc" -suppress 3829 -coverage -c -onfinish stop -do "run -all; coverage save vsim.ucdb; quit -f" work.top_tb -l run/random_tb_sim.log 
-# Start time: 23:51:01 on Nov 05,2025
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vsim-8611) Generating debug db.
-# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
-# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/scoreboard.sv(36): (vopt-13314) Defaulting port 'iq_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/scoreboard.sv(56): (vopt-13314) Defaulting port 'cdb_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Start time: 00:08:17 on Nov 06,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # //  Questa Sim-64
 # //  Version 2023.2 linux_x86_64 Apr 11 2023
 # //
@@ -113,7 +108,7 @@
 # Loading work.fu_branch(fast)
 # Loading work.common_data_bus(fast)
 # Loading work.fu_interface(fast__1)
-# ** Note: (vsim-8900) Creating design debug database vsim.dbg.
+# ** Note: (vsim-8716) Reusing existing debug database vsim.dbg.
 # run -all
 # ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JAL_ALL' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
 #    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
@@ -539,5 +534,5 @@
 # ===========================================
 # Saving coverage...
 # Final instruction count: 10
-# End time: 23:51:07 on Nov 05,2025, Elapsed time: 0:00:06
-# Errors: 8, Warnings: 27
+# End time: 00:08:20 on Nov 06,2025, Elapsed time: 0:00:03
+# Errors: 8, Warnings: 24
