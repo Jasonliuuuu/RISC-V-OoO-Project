@@ -72,14 +72,28 @@ module fu_alu
     logic [31:0] alu_result;            // ALU 计算结果
     logic [31:0] operand_a, operand_b;  // 操作数
 
-    // 操作数 A：来自 Rs1 (Vj)
-    assign operand_a = current_inst.vj;
+    // 操作数 A：根据指令类型选择
+    // - AUIPC/JAL/JALR: 使用 PC
+    // - 其他: 使用 Rs1 (Vj)
+    assign operand_a = (current_inst.opcode == op_auipc ||
+                        current_inst.opcode == op_jal ||
+                        current_inst.opcode == op_jalr) ?
+                       current_inst.pc : current_inst.vj;
 
     // 操作数 B：根据指令类型选择
     // - R 型 (op_reg): 使用 Rs2 (Vk)
     // - I 型 (op_imm): 使用立即数 (imm)
-    assign operand_b = (current_inst.opcode == op_reg) ?
-                       current_inst.vk : current_inst.imm;
+    // - JAL/JALR: 使用 4 (link address offset)
+    // - 其他: 使用立即数
+    always_comb begin
+        if (current_inst.opcode == op_jal || current_inst.opcode == op_jalr) begin
+            operand_b = 32'd4;
+        end else if (current_inst.opcode == op_reg) begin
+            operand_b = current_inst.vk;
+        end else begin
+            operand_b = current_inst.imm;
+        end
+    end
 
     // ------------------------------------------------------------------------
     // ALU 操作执行
@@ -197,7 +211,18 @@ module fu_alu
             fu_if.complete_data.rs2_addr  = current_inst.fk;
             fu_if.complete_data.rs1_rdata = current_inst.vj;
             fu_if.complete_data.rs2_rdata = current_inst.vk;
-            fu_if.complete_data.pc_wdata  = current_inst.pc + 4;
+
+            // pc_wdata 根据指令类型计算
+            // JAL: PC + imm
+            // JALR: (Rs1 + imm) & ~1
+            // 其他: PC + 4
+            if (current_inst.opcode == op_jal) begin
+                fu_if.complete_data.pc_wdata = current_inst.pc + current_inst.imm;
+            end else if (current_inst.opcode == op_jalr) begin
+                fu_if.complete_data.pc_wdata = (current_inst.vj + current_inst.imm) & ~32'b1;
+            end else begin
+                fu_if.complete_data.pc_wdata = current_inst.pc + 4;
+            end
 
             // ALU 不访问内存
             fu_if.complete_data.mem_addr  = '0;

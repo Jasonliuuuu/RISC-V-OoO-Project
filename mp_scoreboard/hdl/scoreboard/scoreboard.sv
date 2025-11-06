@@ -179,23 +179,43 @@ module scoreboard
     logic [31:0]    operand_j, operand_k;   // 操作数值
     logic           ready_j, ready_k;       // 操作数是否就绪
     fu_id_t         producer_j, producer_k; // 操作数生产者 FU
+    logic [4:0]     actual_rs1, actual_rs2; // 实际使用的源寄存器
+
+    // 根据指令类型确定实际使用的源寄存器
+    // LUI, AUIPC, JAL 不读取源寄存器
+    always_comb begin
+        actual_rs1 = rs1;
+        actual_rs2 = rs2;
+
+        case (opcode)
+            op_lui, op_auipc, op_jal: begin
+                // 这些指令不读取源寄存器
+                actual_rs1 = 5'b0;
+                actual_rs2 = 5'b0;
+            end
+            default: begin
+                actual_rs1 = rs1;
+                actual_rs2 = rs2;
+            end
+        endcase
+    end
 
     // 寄存器堆读地址
-    assign rf_rs1_addr = rs1;
-    assign rf_rs2_addr = rs2;
+    assign rf_rs1_addr = actual_rs1;
+    assign rf_rs2_addr = actual_rs2;
 
     // Rs1 (Fj) 依赖检查
     always_comb begin
-        if (rs1 == 0) begin
+        if (actual_rs1 == 0) begin
             // x0 寄存器始终为 0
             ready_j = 1'b1;
             operand_j = 32'b0;
             producer_j = '0;
-        end else if (reg_result[rs1].pending) begin
+        end else if (reg_result[actual_rs1].pending) begin
             // RAW 冒险：Rs1 有待写入的结果
             ready_j = 1'b0;
             operand_j = 32'b0;
-            producer_j = reg_result[rs1].fu_id;
+            producer_j = reg_result[actual_rs1].fu_id;
         end else begin
             // 从寄存器堆读取
             ready_j = 1'b1;
@@ -206,14 +226,14 @@ module scoreboard
 
     // Rs2 (Fk) 依赖检查
     always_comb begin
-        if (rs2 == 0) begin
+        if (actual_rs2 == 0) begin
             ready_k = 1'b1;
             operand_k = 32'b0;
             producer_k = '0;
-        end else if (reg_result[rs2].pending) begin
+        end else if (reg_result[actual_rs2].pending) begin
             ready_k = 1'b0;
             operand_k = 32'b0;
-            producer_k = reg_result[rs2].fu_id;
+            producer_k = reg_result[actual_rs2].fu_id;
         end else begin
             ready_k = 1'b1;
             operand_k = rf_rs2_data;
@@ -257,8 +277,8 @@ module scoreboard
                 fu_status[target_fu].busy   <= 1'b1;
                 fu_status[target_fu].opcode <= opcode;
                 fu_status[target_fu].fi     <= rd;
-                fu_status[target_fu].fj     <= rs1;
-                fu_status[target_fu].fk     <= rs2;
+                fu_status[target_fu].fj     <= actual_rs1;
+                fu_status[target_fu].fk     <= actual_rs2;
                 fu_status[target_fu].qj     <= producer_j;
                 fu_status[target_fu].qk     <= producer_k;
                 fu_status[target_fu].rj     <= ready_j;
