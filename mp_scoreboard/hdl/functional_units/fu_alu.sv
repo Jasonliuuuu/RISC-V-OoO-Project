@@ -196,6 +196,13 @@ module fu_alu
         fu_if.complete_data = '0;
 
         if (valid) begin
+            // DEBUG: Trace LUI instruction completion
+            if (current_inst.opcode == op_lui) begin
+                $display("[DEBUG ALU] @%0t LUI Complete: inst=%h, opcode=%b, fj=%0d, fk=%0d, vj=%h, imm=%h, operand_a=%h, operand_b=%h, alu_result=%h",
+                         $time, current_inst.inst, current_inst.opcode, current_inst.fj, current_inst.fk,
+                         current_inst.vj, current_inst.imm, operand_a, operand_b, alu_result);
+            end
+
             // ----------------------------------------------------------------
             // 填充 CDB 数据
             // ----------------------------------------------------------------

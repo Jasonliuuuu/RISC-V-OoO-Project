@@ -274,6 +274,12 @@ module scoreboard
             // Issue 阶段：分配指令到 FU
             // ----------------------------------------------------------------
             if (can_issue) begin
+                // DEBUG: Trace LUI instruction issue
+                if (opcode == op_lui) begin
+                    $display("[DEBUG SCOREBOARD] @%0t LUI Issue: inst=%h, opcode=%b, rd=%0d, rs1=%0d, rs2=%0d, actual_rs1=%0d, actual_rs2=%0d, u_imm=%h",
+                             $time, iq_data.inst, opcode, rd, rs1, rs2, actual_rs1, actual_rs2, u_imm);
+                end
+
                 fu_status[target_fu].busy   <= 1'b1;
                 fu_status[target_fu].opcode <= opcode;
                 fu_status[target_fu].fi     <= rd;
