@@ -1,0 +1,543 @@
+# vsim -debugDB -voptargs=""+acc"" -voptargs="+acc" -suppress 3829 -coverage -c -onfinish stop -do "run -all; coverage save vsim.ucdb; quit -f" work.top_tb -l run/random_tb_sim.log 
+# Start time: 23:51:01 on Nov 05,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Note: (vsim-8611) Generating debug db.
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/scoreboard.sv(36): (vopt-13314) Defaulting port 'iq_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hdl/scoreboard/scoreboard.sv(56): (vopt-13314) Defaulting port 'cdb_data' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# //  Questa Sim-64
+# //  Version 2023.2 linux_x86_64 Apr 11 2023
+# //
+# //  Copyright 1991-2023 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.mem_itf(fast__1)
+# Loading work.mem_itf(fast__2)
+# Loading work.rv32i_types(fast)
+# Loading work.random_tb(fast)
+# Loading work.mon_itf(fast__1)
+# Loading work.monitor(fast)
+# Loading work.riscv_formal_monitor_rv32imc(fast)
+# Loading work.riscv_formal_monitor_rv32imc_isa_spec(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_add(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_addi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_and(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_andi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_auipc(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_beq(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bge(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bgeu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_blt(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bltu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_bne(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_add(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_addi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_addi16sp(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_addi4spn(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_and(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_andi(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_beqz(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_bnez(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_j(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_jal(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_jalr(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_jr(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_li(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_lui(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_lw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_lwsp(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_mv(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_or(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_slli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_srai(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_srli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_sub(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_sw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_swsp(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_c_xor(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_div(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_divu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_jal(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_jalr(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lb(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lbu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lh(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lhu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lui(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_lw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mul(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mulh(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mulhsu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_mulhu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_or(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_ori(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_rem(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_remu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sb(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sh(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sll(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_slli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_slt(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_slti(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sltiu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sltu(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sra(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_srai(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_srl(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_srli(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sub(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_sw(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_xor(fast)
+# Loading work.riscv_formal_monitor_rv32imc_insn_xori(fast)
+# Loading work.riscv_formal_monitor_rv32imc_rob(fast)
+# Loading work.cpu(fast)
+# Loading work.fetch(fast)
+# Loading work.instruction_queue(fast)
+# Loading work.regfile(fast)
+# Loading work.scoreboard(fast)
+# Loading work.fu_alu(fast)
+# Loading work.fu_multiplier(fast)
+# Loading work.fu_divider(fast)
+# Loading work.fu_load_store(fast)
+# Loading work.fu_branch(fast)
+# Loading work.common_data_bus(fast)
+# Loading work.fu_interface(fast__1)
+# ** Note: (vsim-8900) Creating design debug database vsim.dbg.
+# run -all
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JAL_ALL' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.AUIPC_ALL' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LUI_ALL' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_F3_1' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_F3_2' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_F3_3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_F3_4' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_F3_5' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_F3_6' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.JALR_F3_7' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.BR_F3_2' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.BR_F3_3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LOAD_F3_3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LOAD_F3_6' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.LOAD_F3_7' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.STORE_F3_3' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.STORE_F3_4' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.STORE_F3_5' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.STORE_F3_6' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct3_cross.STORE_F3_7' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.OTHER_INSTS' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.reg_funct7' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.reg_funct7_2' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# ** Warning: (vsim-8560) On evaluating the select expression of Cross bin 'funct7_cross.ignorevariant' in Covergroup instance '\/top_tb/mem/RandInst::instr_cg ', the bin is found to be empty since no cross products are selected.
+#    Time: 0 ps  Iteration: 0  Instance: /top_tb/mem
+# RandInst: Setting initial seed to 303379748
+# ==============================================
+# Random seed: -2071669239
+# To reproduce: +ntb_random_seed=-2071669239
+# ==============================================
+# Info: Dynamically generated instruction at PC=0x60000000
+# ==============================================
+# Initializing registers with 32 LUI instructions...
+# ==============================================
+#   Initialized registers x0 - x7
+#   Initialized registers x8 - x15
+#   Initialized registers x16 - x23
+#   Initialized registers x24 - x31
+# Register initialization complete!
+# ==============================================
+# Generating 60,000 random instructions...
+# ==============================================
+#   Generated 10000 / 60000 instructions
+#   Generated 20000 / 60000 instructions
+#   Generated 30000 / 60000 instructions
+#   Generated 40000 / 60000 instructions
+#   Generated 50000 / 60000 instructions
+#   Generated 60000 / 60000 instructions
+# ==============================================
+# Instruction generation complete!
+# Total instructions in memory: 60,032
+# Address range: 0x60000000 - 0x6003aa00
+# ==============================================
+# 
+# ██████╗  █████╗ ███╗   ██╗██████╗  ██████╗ ███╗   ███╗
+# ██╔══██╗██╔══██╗████╗  ██║██╔══██╗██╔═══██╗████╗ ████║
+# ██████╔╝███████║██╔██╗ ██║██║  ██║██║   ██║██╔████╔██║
+# ██╔══██╗██╔══██║██║╚██╗██║██║  ██║██║   ██║██║╚██╔╝██║
+# ██║  ██║██║  ██║██║ ╚████║██████╔╝╚██████╔╝██║ ╚═╝ ██║
+# ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚═╝     ╚═╝
+# 
+# Starting CPU execution...
+# dut commit No.                   0, rd_s: x 6, rd: 0x00000000
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000002
+# rvfi_insn = ce9880b7
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 11
+# rvfi_rs2_addr = 09
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 01
+# rvfi_rd_wdata = 00000000
+# rvfi_pc_rdata = 60000008
+# rvfi_pc_wdata = 6000000c
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 01
+# spec_rd_wdata = ce988000
+# spec_pc_wdata = 6000000c
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000003
+# rvfi_insn = 3dd73137
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 0e
+# rvfi_rs2_addr = 1d
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 02
+# rvfi_rd_wdata = 00000000
+# rvfi_pc_rdata = 6000000c
+# rvfi_pc_wdata = 60000010
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 02
+# spec_rd_wdata = 3dd73000
+# spec_pc_wdata = 60000010
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000004
+# rvfi_insn = ec61f1b7
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 03
+# rvfi_rs2_addr = 06
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 03
+# rvfi_rd_wdata = 00000000
+# rvfi_pc_rdata = 60000010
+# rvfi_pc_wdata = 60000014
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 03
+# spec_rd_wdata = ec61f000
+# spec_pc_wdata = 60000014
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# ** Error: RVFI Monitor Error
+#    Time: 105 ps  Scope: top_tb.monitor File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv Line: 167
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000005
+# rvfi_insn = f17f8237
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 1f
+# rvfi_rs2_addr = 17
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 04
+# rvfi_rd_wdata = 3dd73000
+# rvfi_pc_rdata = 60000014
+# rvfi_pc_wdata = 60000018
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 04
+# spec_rd_wdata = f17f8000
+# spec_pc_wdata = 60000018
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# ** Error: RVFI Monitor Error
+#    Time: 115 ps  Scope: top_tb.monitor File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv Line: 167
+# ** Error: RVFI Monitor Error detected at instruction 6
+#    Time: 115 ps  Scope: top_tb File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/top_tb.sv Line: 84
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000006
+# rvfi_insn = 424992b7
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 13
+# rvfi_rs2_addr = 04
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 05
+# rvfi_rd_wdata = 00000000
+# rvfi_pc_rdata = 60000018
+# rvfi_pc_wdata = 6000001c
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 05
+# spec_rd_wdata = 42499000
+# spec_pc_wdata = 6000001c
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# ** Error: RVFI Monitor Error
+#    Time: 125 ps  Scope: top_tb.monitor File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv Line: 167
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000007
+# rvfi_insn = 9d6b8337
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 17
+# rvfi_rs2_addr = 16
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 06
+# rvfi_rd_wdata = f17f8000
+# rvfi_pc_rdata = 6000001c
+# rvfi_pc_wdata = 60000020
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 06
+# spec_rd_wdata = 9d6b8000
+# spec_pc_wdata = 60000020
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# ** Error: RVFI Monitor Error
+#    Time: 135 ps  Scope: top_tb.monitor File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv Line: 167
+# -------- RVFI Monitor error 132 in reordered channel 0: top_tb.monitor.monitor.ro0_handle_error_r at time 0 --------
+# Error message: mismatch with shadow rs2
+# rvfi_valid = 1
+# rvfi_order = 0000000000000006
+# rvfi_rs1_addr = 13
+# rvfi_rs2_addr = 04
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 05
+# rvfi_rd_wdata = 00000000
+# rvfi_pc_rdata = 60000018
+# rvfi_pc_wdata = 6000001c
+# rvfi_intr = 0
+# rvfi_trap = 0
+# shadow_rs1_valid = 0
+# shadow_rs1_rdata = xxxxxxxx
+# shadow_rs2_valid = 1
+# shadow_rs2_rdata = 3dd73000
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000008
+# rvfi_insn = 4cd8a3b7
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 11
+# rvfi_rs2_addr = 0d
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 07
+# rvfi_rd_wdata = 00000001
+# rvfi_pc_rdata = 60000020
+# rvfi_pc_wdata = 60000024
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 07
+# spec_rd_wdata = 4cd8a000
+# spec_pc_wdata = 60000024
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# ** Error: RVFI Monitor Error
+#    Time: 145 ps  Scope: top_tb.monitor File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv Line: 167
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 0000000000000009
+# rvfi_insn = 68219437
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 03
+# rvfi_rs2_addr = 02
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 08
+# rvfi_rd_wdata = 00000000
+# rvfi_pc_rdata = 60000024
+# rvfi_pc_wdata = 60000028
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 08
+# spec_rd_wdata = 68219000
+# spec_pc_wdata = 60000028
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# ** Error: RVFI Monitor Error
+#    Time: 155 ps  Scope: top_tb.monitor File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv Line: 167
+# -------- RVFI Monitor error 105 in channel 0: top_tb.monitor.monitor.ch0_handle_error at time 0 --------
+# Error message: mismatch in rd_wdata
+# rvfi_valid = 1
+# rvfi_order = 000000000000000a
+# rvfi_insn = 301cb4b7
+# rvfi_trap = 0
+# rvfi_halt = 0
+# rvfi_intr = 0
+# rvfi_rs1_addr = 19
+# rvfi_rs2_addr = 01
+# rvfi_rs1_rdata = 00000000
+# rvfi_rs2_rdata = 00000000
+# rvfi_rd_addr = 09
+# rvfi_rd_wdata = 00000001
+# rvfi_pc_rdata = 60000028
+# rvfi_pc_wdata = 6000002c
+# rvfi_mem_addr = 00000000
+# rvfi_mem_rmask = 0
+# rvfi_mem_wmask = 0
+# rvfi_mem_rdata = 00000000
+# rvfi_mem_wdata = 00000000
+# spec_valid = 1
+# spec_trap = 0
+# spec_rs1_addr = 00
+# spec_rs2_addr = 00
+# spec_rd_addr = 09
+# spec_rd_wdata = 301cb000
+# spec_pc_wdata = 6000002c
+# spec_mem_addr = 00000000
+# spec_mem_rmask = 0
+# spec_mem_wmask = 0
+# spec_mem_wdata = 00000000
+# ** Error: RVFI Monitor Error
+#    Time: 165 ps  Scope: top_tb.monitor File: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/monitor.sv Line: 167
+# ** Note: $finish    : /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/top_tb.sv(87)
+#    Time: 165 ps  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/top_tb.sv line 87
+# Stopped at /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_scoreboard/sim/../hvl/top_tb.sv line 87
+#  coverage save vsim.ucdb
+#  quit -f
+# Monitor: Total IPC: 0.647059
+# Monitor: Total Time:                    0
+# ===========================================
+# CDB Utilization Statistics:
+#   Total Cycles: 14
+#   CDB Busy Cycles: 10
+#   Utilization: 71.43%
+# ===========================================
+# Saving coverage...
+# Final instruction count: 10
+# End time: 23:51:07 on Nov 05,2025, Elapsed time: 0:00:06
+# Errors: 8, Warnings: 27
