@@ -1,0 +1,16 @@
+# QuestaSim/ModelSim build artifacts
+work/
+run/
+transcript
+vsim.wlf
+*.log
+modelsim.ini
+vsim.ucdb
+coverage_report/
+_opt*/
+*.vstf
+.*.vstf
+vsim.dbg
+
+# Simulation outputs
+commit.log
