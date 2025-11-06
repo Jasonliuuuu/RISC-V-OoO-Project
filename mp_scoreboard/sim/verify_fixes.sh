@@ -18,7 +18,8 @@ fi
 
 echo ""
 echo "3. Checking fu_alu.sv for corrected operand_a selection..."
-if grep -q "op_auipc.*op_jal.*op_jalr" ../hdl/functional_units/fu_alu.sv; then
+if grep -q "current_inst.opcode == op_auipc" ../hdl/functional_units/fu_alu.sv && \
+   grep -q "current_inst.pc : current_inst.vj" ../hdl/functional_units/fu_alu.sv; then
     echo "   ✓ Corrected operand_a selection for special instructions"
 else
     echo "   ✗ MISSING: operand_a fix for AUIPC/JAL/JALR"
@@ -26,7 +27,7 @@ fi
 
 echo ""
 echo "4. Checking fu_alu.sv for jump target calculation..."
-if grep -q "pc_wdata.*op_jal" ../hdl/functional_units/fu_alu.sv; then
+if grep -q "fu_if.complete_data.pc_wdata = current_inst.pc + current_inst.imm" ../hdl/functional_units/fu_alu.sv; then
     echo "   ✓ Jump target calculation logic present"
 else
     echo "   ✗ MISSING: Jump target calculation"
