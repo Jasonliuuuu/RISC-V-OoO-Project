@@ -69,11 +69,20 @@ module scoreboard
     fu_status_t     fu_status [NUM_FU];     // 功能单元状态表
     reg_status_t    reg_result [32];        // 寄存器结果状态表
 
+    // ========================================================================
+    // 中间信号数组 (用于在 always 块中访问接口数组)
+    // ========================================================================
+    logic fu_issue_ready [NUM_FU];          // FU issue ready 信号
+    logic fu_complete_valid [NUM_FU];       // FU complete valid 信号
+
     // 将 flush 信号传播到所有 FU
     genvar g;
     generate
         for (g = 0; g < NUM_FU; g++) begin : gen_flush
             assign fu_if[g].flush = flush;
+            // 连接中间信号
+            assign fu_issue_ready[g] = fu_if[g].issue_ready;
+            assign fu_complete_valid[g] = fu_if[g].complete_valid;
         end
     endgenerate
     assign flush_out = flush;
@@ -148,7 +157,7 @@ module scoreboard
             for (int i = 0; i < NUM_FU; i++) begin
                 if (fu_status[i].fu_type == required_fu_type &&
                     !fu_status[i].busy &&
-                    fu_if[i].issue_ready) begin
+                    fu_issue_ready[i]) begin
 
                     // 检查 WAW 冒险：目标寄存器是否有待写入
                     if (rd == 0 || !reg_result[rd].pending) begin
@@ -312,7 +321,7 @@ module scoreboard
             // 清除已完成的 FU
             // ----------------------------------------------------------------
             for (int i = 0; i < NUM_FU; i++) begin
-                if (fu_if[i].complete_valid) begin
+                if (fu_complete_valid[i]) begin
                     fu_status[i].busy  <= 1'b0;
                     fu_status[i].valid <= 1'b0;
                 end

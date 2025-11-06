@@ -64,6 +64,18 @@ package rv32i_types;
         sw = 3'b010   // 存储字
     } store_funct3_t;
 
+    // 算术/逻辑操作 funct3 (用于 op_imm 和 op_reg)
+    typedef enum bit [2:0] {
+        add  = 3'b000,  // 加法/减法 (check bit 30 for sub if op_reg opcode)
+        sll  = 3'b001,  // 逻辑左移
+        slt  = 3'b010,  // 有符号比较
+        sltu = 3'b011,  // 无符号比较
+        axor = 3'b100,  // 异或
+        sr   = 3'b101,  // 右移 (check bit 30 for logical/arithmetic)
+        aor  = 3'b110,  // 或
+        aand = 3'b111   // 与
+    } arith_funct3_t;
+
     // ========================================================================
     // Scoreboard 架构专用类型定义
     // ========================================================================

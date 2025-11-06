@@ -114,7 +114,8 @@ module common_data_bus
 
                 // 从当前轮询指针开始，循环查找有效请求
                 for (int offset = 0; offset < NUM_FU; offset++) begin
-                    int idx = (rr_pointer + offset) % NUM_FU;
+                    automatic int idx;
+                    idx = (rr_pointer + offset) % NUM_FU;
 
                     if (fu_complete_valid[idx]) begin
                         cdb_valid = 1'b1;
@@ -173,7 +174,8 @@ module common_data_bus
         // 在仿真结束时输出 CDB 利用率
         final begin
             if (total_cycles > 0) begin
-                real utilization = (real'(cdb_busy_cycles) / real'(total_cycles)) * 100.0;
+                automatic real utilization;
+                utilization = (real'(cdb_busy_cycles) / real'(total_cycles)) * 100.0;
                 $display("===========================================");
                 $display("CDB Utilization Statistics:");
                 $display("  Total Cycles: %0d", total_cycles);

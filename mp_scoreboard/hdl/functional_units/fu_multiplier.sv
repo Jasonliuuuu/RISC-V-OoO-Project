@@ -36,6 +36,15 @@ module fu_multiplier
     logic [63:0]    stage1_result, stage2_result, stage3_result;
 
     // ========================================================================
+    // 乘法器计算逻辑信号声明 (moved before use)
+    // ========================================================================
+    logic [63:0] mul_result;            // 64-bit 乘法结果
+    logic signed   [31:0] mul_a_signed;
+    logic signed   [31:0] mul_b_signed;
+    logic unsigned [31:0] mul_a_unsigned;
+    logic unsigned [31:0] mul_b_unsigned;
+
+    // ========================================================================
     // Ready 信号：只有 stage1 空闲才能接受新指令
     // ========================================================================
     assign fu_if.issue_ready = !stage1_valid;
@@ -90,14 +99,8 @@ module fu_multiplier
     end
 
     // ========================================================================
-    // 乘法器计算逻辑 (组合逻辑)
+    // 乘法器计算逻辑 (组合逻辑) - assignments
     // ========================================================================
-    logic [63:0] mul_result;            // 64-bit 乘法结果
-    logic signed   [31:0] mul_a_signed;
-    logic signed   [31:0] mul_b_signed;
-    logic unsigned [31:0] mul_a_unsigned;
-    logic unsigned [31:0] mul_b_unsigned;
-
     assign mul_a_signed   = signed'(fu_if.issue_data.vj);
     assign mul_b_signed   = signed'(fu_if.issue_data.vk);
     assign mul_a_unsigned = unsigned'(fu_if.issue_data.vj);
