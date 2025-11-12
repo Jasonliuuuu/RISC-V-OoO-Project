@@ -84,23 +84,23 @@ module fu_branch
                         3'b111: br_taken = (a_unsigned >= b_unsigned);       // BGEU
                         default: br_taken = 1'b0;
                     endcase
-                    // 确保4字节对齐（对于只支持32位指令的实现）
-                    target_addr = (current_inst.pc + current_inst.imm) & 32'hfffffffc;
+                    // B_imm 最低位已经是 0（2字节对齐），无需额外处理
+                    target_addr = current_inst.pc + current_inst.imm;
                 end
 
                 op_jal: begin
                     // JAL: 无条件跳转，目标地址 = PC + J_imm
-                    // 确保4字节对齐（对于只支持32位指令的实现）
+                    // J_imm 最低位已经是 0（2字节对齐），无需额外处理
                     br_taken = 1'b1;
-                    target_addr = (current_inst.pc + current_inst.imm) & 32'hfffffffc;
+                    target_addr = current_inst.pc + current_inst.imm;
                 end
 
                 op_jalr: begin
-                    // JALR: 无条件跳转，目标地址 = (rs1 + imm) & ~3
-                    // 注意：对于只支持32位指令的实现，必须4字节对齐（清除最低2位）
-                    // 如果支持压缩指令，则应该是 & ~1（2字节对齐）
+                    // JALR: 无条件跳转，目标地址 = (rs1 + imm) & ~1
+                    // 按 RISC-V ISA 规范，清除最低位确保2字节对齐
+                    // Memory model 会自动对齐到 4 字节边界
                     br_taken = 1'b1;
-                    target_addr = (current_inst.vj + current_inst.imm) & 32'hfffffffc;
+                    target_addr = (current_inst.vj + current_inst.imm) & 32'hfffffffe;
                 end
 
                 default: br_taken = 1'b0;
