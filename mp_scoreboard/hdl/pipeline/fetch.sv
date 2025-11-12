@@ -95,7 +95,8 @@ module fetch
     // ========================================================================
     // 指令队列入队逻辑
     // ========================================================================
-    assign iq_enq = imem_resp && !iq_full;
+    // 当分支跳转时，不能将已取出的错误指令入队
+    assign iq_enq = imem_resp && !iq_full && !branch_taken;
 
     always_comb begin
         iq_enq_data.inst  = imem_rdata;
