@@ -428,10 +428,10 @@ module scoreboard
                              fu_issue_ready[0], fu_issue_ready[1], fu_issue_ready[2],
                              fu_issue_ready[3], fu_issue_ready[4], fu_issue_ready[5]);
                     if (!iq_empty) begin
-                        $display("  Next Inst: pc=%h, inst=%h, opcode=%b, rd=%0d, required_fu_type=%0d",
+                        $display("  Next Inst: pc=%h, inst=%h, opcode=%b, rd=%0d, required_fu_type=%b",
                                  iq_data.pc, iq_data.inst, opcode, rd, required_fu_type);
                         if (rd != 0) begin
-                            $display("  RAT[rd=%0d]: pending=%b, producer=%0d",
+                            $display("  RAT[rd=%0d]: pending=%b, producer=%b",
                                      rd, reg_result[rd].pending, reg_result[rd].producer);
                         end
                     end
