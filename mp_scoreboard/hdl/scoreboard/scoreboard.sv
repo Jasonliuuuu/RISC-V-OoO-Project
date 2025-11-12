@@ -394,12 +394,11 @@ module scoreboard
     endgenerate
 
     // ========================================================================
-    // Debug: 处理器状态监控 (每 1000 个周期输出一次状态)
+    // Debug: 处理器状态监控 (简化版本)
     // ========================================================================
     `ifndef SYNTHESIS
         longint debug_cycle_count;
         longint debug_last_complete_cycle;
-        logic debug_waw_hazard;
 
         always_ff @(posedge clk) begin
             if (rst) begin
@@ -415,36 +414,20 @@ module scoreboard
 
                 // 每 1000 个周期输出一次状态
                 if (debug_cycle_count % 1000 == 0) begin
-                    debug_waw_hazard = !iq_empty && (rd != 0 && reg_result[rd].pending);
-
-                    $display("[DEBUG SCOREBOARD] @%0t Cycle %0d:", $time, debug_cycle_count);
-                    $display("  IQ: empty=%b, deq_en=%b", iq_empty, iq_deq);
-                    $display("  Issue: can_issue=%b, target_fu=%0d, waw_hazard=%b",
-                             can_issue, target_fu, debug_waw_hazard);
-                    $display("  FU Busy: [0]=%b [1]=%b [2]=%b [3]=%b [4]=%b [5]=%b",
+                    $display("[DEBUG SCOREBOARD] Cycle %0d: iq_empty=%b can_issue=%b target_fu=%0d",
+                             debug_cycle_count, iq_empty, can_issue, target_fu);
+                    $display("  FU Busy: %b%b%b%b%b%b",
                              fu_status[0].busy, fu_status[1].busy, fu_status[2].busy,
                              fu_status[3].busy, fu_status[4].busy, fu_status[5].busy);
-                    $display("  FU Ready: [0]=%b [1]=%b [2]=%b [3]=%b [4]=%b [5]=%b",
+                    $display("  FU Ready: %b%b%b%b%b%b",
                              fu_issue_ready[0], fu_issue_ready[1], fu_issue_ready[2],
                              fu_issue_ready[3], fu_issue_ready[4], fu_issue_ready[5]);
-                    if (!iq_empty) begin
-                        $display("  Next Inst: pc=%h, inst=%h, opcode=%b, rd=%0d, required_fu_type=%b",
-                                 iq_data.pc, iq_data.inst, opcode, rd, required_fu_type);
-                        if (rd != 0) begin
-                            $display("  RAT[rd=%0d]: pending=%b, producer=%b",
-                                     rd, reg_result[rd].pending, reg_result[rd].producer);
-                        end
-                    end
                 end
 
-                // 检测长时间卡住 (超过 10000 周期没有任何指令完成)
+                // 检测长时间卡住
                 if (debug_cycle_count > 10000 &&
                     (debug_cycle_count - debug_last_complete_cycle) > 10000) begin
-                    $display("[DEBUG SCOREBOARD] ERROR: No instruction completed in last 10000 cycles!");
-                    $display("  Possible deadlock detected at cycle %0d", debug_cycle_count);
-                    $display("  IQ empty=%b, All FUs busy=%b", iq_empty,
-                             fu_status[0].busy & fu_status[1].busy & fu_status[2].busy &
-                             fu_status[3].busy & fu_status[4].busy & fu_status[5].busy);
+                    $display("[DEBUG SCOREBOARD] ERROR: Deadlock at cycle %0d", debug_cycle_count);
                 end
             end
         end
