@@ -369,8 +369,8 @@ module scoreboard
                     fu_if[g].issue_data.busy   = 1'b1;
                     fu_if[g].issue_data.opcode = opcode;
                     fu_if[g].issue_data.fi     = rd;
-                    fu_if[g].issue_data.fj     = rs1;
-                    fu_if[g].issue_data.fk     = rs2;
+                    fu_if[g].issue_data.fj     = actual_rs1;  // 使用 actual_rs1 而不是 rs1
+                    fu_if[g].issue_data.fk     = actual_rs2;  // 使用 actual_rs2 而不是 rs2
                     fu_if[g].issue_data.qj     = producer_j;
                     fu_if[g].issue_data.qk     = producer_k;
                     fu_if[g].issue_data.rj     = ready_j;
@@ -382,6 +382,16 @@ module scoreboard
                     fu_if[g].issue_data.order  = iq_data.order;
                     fu_if[g].issue_data.funct3 = funct3;
                     fu_if[g].issue_data.funct7 = funct7;
+
+                    // 立即数选择：使用当前指令的立即数
+                    case (opcode)
+                        op_imm, op_load, op_jalr: fu_if[g].issue_data.imm = i_imm;
+                        op_store:                 fu_if[g].issue_data.imm = s_imm;
+                        op_br:                    fu_if[g].issue_data.imm = b_imm;
+                        op_lui, op_auipc:         fu_if[g].issue_data.imm = u_imm;
+                        op_jal:                   fu_if[g].issue_data.imm = j_imm;
+                        default:                  fu_if[g].issue_data.imm = 32'b0;
+                    endcase
                 end else begin
                     fu_if[g].issue_data = '0;
                 end
