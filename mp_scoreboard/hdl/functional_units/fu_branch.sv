@@ -68,8 +68,8 @@ module fu_branch
 
     always_comb begin
         br_taken = 1'b0;
-        target_addr = current_inst.pc + current_inst.imm;  // 默认：B-type 和 JAL
-        return_addr = current_inst.pc + 4;                 // JAL/JALR 返回地址
+        target_addr = current_inst.pc + 4;  // 默认：不跳转，继续下一条
+        return_addr = current_inst.pc + 4;  // JAL/JALR 返回地址
 
         if (valid) begin
             case (current_inst.opcode)
@@ -84,13 +84,15 @@ module fu_branch
                         3'b111: br_taken = (a_unsigned >= b_unsigned);       // BGEU
                         default: br_taken = 1'b0;
                     endcase
-                    target_addr = current_inst.pc + current_inst.imm;
+                    // 确保4字节对齐（对于只支持32位指令的实现）
+                    target_addr = (current_inst.pc + current_inst.imm) & 32'hfffffffc;
                 end
 
                 op_jal: begin
-                    // JAL: 无条件跳转
+                    // JAL: 无条件跳转，目标地址 = PC + J_imm
+                    // 确保4字节对齐（对于只支持32位指令的实现）
                     br_taken = 1'b1;
-                    target_addr = current_inst.pc + current_inst.imm;
+                    target_addr = (current_inst.pc + current_inst.imm) & 32'hfffffffc;
                 end
 
                 op_jalr: begin
