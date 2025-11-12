@@ -140,7 +140,10 @@ module scoreboard
             op_store: required_fu_type = FU_STORE;
             op_br:    required_fu_type = FU_BRANCH;
 
-            // JAL/JALR/LUI/AUIPC 也使用 ALU
+            // JAL/JALR 需要 Branch FU 来触发跳转
+            op_jal, op_jalr: required_fu_type = FU_BRANCH;
+
+            // LUI/AUIPC 使用 ALU
             default:  required_fu_type = FU_ALU_INT;
         endcase
     end
