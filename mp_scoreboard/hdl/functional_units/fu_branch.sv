@@ -96,7 +96,7 @@ module fu_branch
                 op_jalr: begin
                     // JALR: 无条件跳转，目标地址 = (rs1 + imm) & ~1
                     br_taken = 1'b1;
-                    target_addr = (current_inst.vj + current_inst.imm) & ~32'b1;
+                    target_addr = (current_inst.vj + current_inst.imm) & 32'hfffffffe;
                 end
 
                 default: br_taken = 1'b0;
