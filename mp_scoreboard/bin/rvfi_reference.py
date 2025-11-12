@@ -45,7 +45,18 @@ if not all([set(j[x]) <= allowed_char for x in j]):
     exit(1)
 
 with open("rvfi_reference.svh", 'w') as f:
-    f.write("always_comb begin\n")
+    # 注意：CPU 現在有 RVFI 輸出端口，直接在 top_tb.sv 中連接到 mon_itf
+    # 因此此文件不再需要驅動邏輯，只生成註釋以維持兼容性
+    f.write("// ============================================================================\n")
+    f.write("// RVFI Reference Connection\n")
+    f.write("// ============================================================================\n")
+    f.write("// 注意：此文件之前用於通過訪問 CPU 內部信號 (dut.monitor_*) 來驅動 mon_itf\n")
+    f.write("// 現在 CPU 已經有 RVFI 輸出端口，直接在 top_tb.sv 中連接到 mon_itf\n")
+    f.write("// 因此此文件不再需要驅動邏輯，保留為空以維持 include 兼容性\n")
+    f.write("// ============================================================================\n")
+    f.write("\n")
+    f.write("// 原本的自動生成邏輯已被註釋，因為 CPU 模塊現在有 RVFI 輸出端口：\n")
+    f.write("// always_comb begin\n")
     for x in j:
-        f.write(f"    mon_itf.{x} = {j[x]};\n")
-    f.write("end\n")
+        f.write(f"//     mon_itf.{x} = {j[x]};\n")
+    f.write("// end\n")
