@@ -230,4 +230,35 @@ module fu_load_store
         end
     end
 
+    // ========================================================================
+    // Debug: Load/Store FU 状态监控
+    // ========================================================================
+    `ifndef SYNTHESIS
+        always @(posedge clk) begin
+            if (!rst) begin
+                // 监控状态转换
+                if (state != next_state) begin
+                    $display("[DEBUG LS_FU] @%0t State: %s -> %s",
+                             $time,
+                             state == IDLE ? "IDLE" : state == ADDR_CALC ? "ADDR_CALC" : "MEM_ACCESS",
+                             next_state == IDLE ? "IDLE" : next_state == ADDR_CALC ? "ADDR_CALC" : "MEM_ACCESS");
+                end
+
+                // 监控在 MEM_ACCESS 状态卡住的情况
+                if (state == MEM_ACCESS && !dmem_resp) begin
+                    static int wait_cycles = 0;
+                    wait_cycles++;
+                    if (wait_cycles % 100 == 0) begin
+                        $display("[DEBUG LS_FU] @%0t Waiting for dmem_resp for %0d cycles", $time, wait_cycles);
+                        $display("  opcode=%b, addr=%h, rmask=%b, wmask=%b",
+                                 current_inst.opcode, dmem_addr, dmem_rmask, dmem_wmask);
+                    end
+                end else if (state == MEM_ACCESS && dmem_resp) begin
+                    static int wait_cycles = 0;
+                    $display("[DEBUG LS_FU] @%0t Memory response received, completing", $time);
+                end
+            end
+        end
+    `endif
+
 endmodule : fu_load_store

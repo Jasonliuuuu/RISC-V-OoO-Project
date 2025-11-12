@@ -274,12 +274,6 @@ module scoreboard
             // Issue 阶段：分配指令到 FU
             // ----------------------------------------------------------------
             if (can_issue) begin
-                // DEBUG: Trace LUI instruction issue
-                if (opcode == op_lui) begin
-                    $display("[DEBUG SCOREBOARD] @%0t LUI Issue: inst=%h, opcode=%b, rd=%0d, rs1=%0d, rs2=%0d, actual_rs1=%0d, actual_rs2=%0d, u_imm=%h",
-                             $time, iq_data.inst, opcode, rd, rs1, rs2, actual_rs1, actual_rs2, u_imm);
-                end
-
                 fu_status[target_fu].busy   <= 1'b1;
                 fu_status[target_fu].opcode <= opcode;
                 fu_status[target_fu].fi     <= rd;
@@ -398,5 +392,49 @@ module scoreboard
             end
         end
     endgenerate
+
+    // ========================================================================
+    // Debug: 处理器状态监控 (每 1000 个周期输出一次状态)
+    // ========================================================================
+    `ifndef SYNTHESIS
+        longint debug_cycle_count;
+
+        always_ff @(posedge clk) begin
+            if (rst) begin
+                debug_cycle_count <= 0;
+            end else begin
+                debug_cycle_count <= debug_cycle_count + 1;
+
+                // 每 1000 个周期输出一次状态
+                if (debug_cycle_count % 1000 == 0) begin
+                    $display("[DEBUG SCOREBOARD] @%0t Cycle %0d:", $time, debug_cycle_count);
+                    $display("  IQ: empty=%b, full=%b, deq_en=%b", iq_empty, iq_full, iq_deq);
+                    $display("  Issue: can_issue=%b, target_fu=%0d, waw_hazard=%b",
+                             can_issue, target_fu, waw_hazard);
+                    $display("  FU Busy: [0]=%b [1]=%b [2]=%b [3]=%b [4]=%b [5]=%b",
+                             fu_status[0].busy, fu_status[1].busy, fu_status[2].busy,
+                             fu_status[3].busy, fu_status[4].busy, fu_status[5].busy);
+                    if (!iq_empty) begin
+                        $display("  Next Inst: pc=%h, inst=%h, opcode=%b",
+                                 iq_data.pc, iq_data.inst, opcode);
+                    end
+                end
+
+                // 检测长时间卡住 (超过 10000 周期没有任何指令完成)
+                if (debug_cycle_count > 10000 && cdb_valid == 1'b0) begin
+                    static longint last_complete_cycle = 0;
+                    if (debug_cycle_count - last_complete_cycle > 10000) begin
+                        $display("[DEBUG SCOREBOARD] ERROR: No instruction completed in last 10000 cycles!");
+                        $display("  Possible deadlock detected at cycle %0d", debug_cycle_count);
+                        $display("  IQ empty=%b, All FUs busy=%b", iq_empty,
+                                 fu_status[0].busy & fu_status[1].busy & fu_status[2].busy &
+                                 fu_status[3].busy & fu_status[4].busy & fu_status[5].busy);
+                    end
+                end else if (cdb_valid) begin
+                    static longint last_complete_cycle = debug_cycle_count;
+                end
+            end
+        end
+    `endif
 
 endmodule : scoreboard

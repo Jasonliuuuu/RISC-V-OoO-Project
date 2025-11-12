@@ -104,4 +104,33 @@ module fetch
         iq_enq_data.valid = 1'b1;
     end
 
+    // ========================================================================
+    // Debug: Fetch 阶段监控
+    // ========================================================================
+    `ifndef SYNTHESIS
+        always @(posedge clk) begin
+            if (!rst) begin
+                // 监控指令队列满导致的阻塞
+                if (iq_full && imem_resp) begin
+                    static int stall_cycles = 0;
+                    stall_cycles++;
+                    if (stall_cycles % 100 == 0) begin
+                        $display("[DEBUG FETCH] @%0t IQ full, stalled for %0d cycles", $time, stall_cycles);
+                        $display("  PC=%h, waiting inst=%h", pc, imem_rdata);
+                    end
+                end
+
+                // 监控内存无响应的情况
+                if (!iq_full && !imem_resp) begin
+                    static int wait_cycles = 0;
+                    wait_cycles++;
+                    if (wait_cycles % 1000 == 0) begin
+                        $display("[DEBUG FETCH] @%0t Waiting for imem_resp for %0d cycles", $time, wait_cycles);
+                        $display("  PC=%h", pc);
+                    end
+                end
+            end
+        end
+    `endif
+
 endmodule : fetch
