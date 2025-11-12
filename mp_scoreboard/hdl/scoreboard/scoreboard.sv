@@ -398,13 +398,20 @@ module scoreboard
     // ========================================================================
     `ifndef SYNTHESIS
         longint debug_cycle_count;
+        longint debug_last_complete_cycle;
         logic debug_waw_hazard;
 
         always_ff @(posedge clk) begin
             if (rst) begin
                 debug_cycle_count <= 0;
+                debug_last_complete_cycle <= 0;
             end else begin
                 debug_cycle_count <= debug_cycle_count + 1;
+
+                // 更新最后完成指令的周期
+                if (cdb_valid) begin
+                    debug_last_complete_cycle <= debug_cycle_count;
+                end
 
                 // 每 1000 个周期输出一次状态
                 if (debug_cycle_count % 1000 == 0) begin
@@ -431,17 +438,13 @@ module scoreboard
                 end
 
                 // 检测长时间卡住 (超过 10000 周期没有任何指令完成)
-                if (debug_cycle_count > 10000 && cdb_valid == 1'b0) begin
-                    static longint last_complete_cycle = 0;
-                    if (debug_cycle_count - last_complete_cycle > 10000) begin
-                        $display("[DEBUG SCOREBOARD] ERROR: No instruction completed in last 10000 cycles!");
-                        $display("  Possible deadlock detected at cycle %0d", debug_cycle_count);
-                        $display("  IQ empty=%b, All FUs busy=%b", iq_empty,
-                                 fu_status[0].busy & fu_status[1].busy & fu_status[2].busy &
-                                 fu_status[3].busy & fu_status[4].busy & fu_status[5].busy);
-                    end
-                end else if (cdb_valid) begin
-                    static longint last_complete_cycle = debug_cycle_count;
+                if (debug_cycle_count > 10000 &&
+                    (debug_cycle_count - debug_last_complete_cycle) > 10000) begin
+                    $display("[DEBUG SCOREBOARD] ERROR: No instruction completed in last 10000 cycles!");
+                    $display("  Possible deadlock detected at cycle %0d", debug_cycle_count);
+                    $display("  IQ empty=%b, All FUs busy=%b", iq_empty,
+                             fu_status[0].busy & fu_status[1].busy & fu_status[2].busy &
+                             fu_status[3].busy & fu_status[4].busy & fu_status[5].busy);
                 end
             end
         end
