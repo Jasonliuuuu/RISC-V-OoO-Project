@@ -94,9 +94,11 @@ module fu_branch
                 end
 
                 op_jalr: begin
-                    // JALR: 无条件跳转，目标地址 = (rs1 + imm) & ~1
+                    // JALR: 无条件跳转，目标地址 = (rs1 + imm) & ~3
+                    // 注意：对于只支持32位指令的实现，必须4字节对齐（清除最低2位）
+                    // 如果支持压缩指令，则应该是 & ~1（2字节对齐）
                     br_taken = 1'b1;
-                    target_addr = (current_inst.vj + current_inst.imm) & 32'hfffffffe;
+                    target_addr = (current_inst.vj + current_inst.imm) & 32'hfffffffc;
                 end
 
                 default: br_taken = 1'b0;
