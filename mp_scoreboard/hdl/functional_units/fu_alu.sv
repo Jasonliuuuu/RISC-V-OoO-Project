@@ -111,8 +111,14 @@ module fu_alu
         alu_result = 32'b0;  // 默认值
 
         if (valid) begin
-            // 根据 funct3 选择操作
-            unique case (current_inst.funct3)
+            // LUI/AUIPC/JAL/JALR 总是执行加法，忽略 funct3
+            if (current_inst.opcode == op_lui || current_inst.opcode == op_auipc ||
+                current_inst.opcode == op_jal || current_inst.opcode == op_jalr) begin
+                // 这些指令总是: operand_a + operand_b
+                alu_result = au + bu;
+            end else begin
+                // 其他指令：根据 funct3 选择操作
+                unique case (current_inst.funct3)
                 // ============================================================
                 // ADD/SUB (funct3 = 000)
                 // ============================================================
@@ -182,7 +188,8 @@ module fu_alu
                 end
 
                 default: alu_result = 32'bx;  // 非法操作
-            endcase
+                endcase
+            end
         end
     end
 
