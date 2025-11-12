@@ -243,7 +243,10 @@ module cpu
     // 收集所有 FU 的完成信号
     generate
         for (i = 0; i < TOTAL_FU; i++) begin : gen_cdb_collect
-            assign fu_complete_data[i]  = fu_if[i].complete_data;
+            always_comb begin
+                fu_complete_data[i] = fu_if[i].complete_data;
+                fu_complete_data[i].fu_id = fu_id_t'(i);  // 设置 FU ID
+            end
             assign fu_complete_valid[i] = fu_if[i].complete_valid;
         end
     endgenerate
