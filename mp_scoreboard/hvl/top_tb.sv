@@ -30,7 +30,24 @@ module top_tb;
         .dmem_wmask (mem_itf_d.wmask),
         .dmem_rdata (mem_itf_d.rdata),
         .dmem_wdata (mem_itf_d.wdata),
-        .dmem_resp  (mem_itf_d.resp)
+        .dmem_resp  (mem_itf_d.resp),
+        // RVFI 验证接口
+        .rvfi_valid     (mon_itf.valid),
+        .rvfi_order     (mon_itf.order),
+        .rvfi_inst      (mon_itf.inst),
+        .rvfi_rs1_addr  (mon_itf.rs1_addr),
+        .rvfi_rs2_addr  (mon_itf.rs2_addr),
+        .rvfi_rs1_rdata (mon_itf.rs1_rdata),
+        .rvfi_rs2_rdata (mon_itf.rs2_rdata),
+        .rvfi_rd_addr   (mon_itf.rd_addr),
+        .rvfi_rd_wdata  (mon_itf.rd_wdata),
+        .rvfi_pc_rdata  (mon_itf.pc_rdata),
+        .rvfi_pc_wdata  (mon_itf.pc_wdata),
+        .rvfi_mem_addr  (mon_itf.mem_addr),
+        .rvfi_mem_rmask (mon_itf.mem_rmask),
+        .rvfi_mem_wmask (mon_itf.mem_wmask),
+        .rvfi_mem_rdata (mon_itf.mem_rdata),
+        .rvfi_mem_wdata (mon_itf.mem_wdata)
     );
 
     `include "../hvl/rvfi_reference.svh"

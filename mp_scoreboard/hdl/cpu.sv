@@ -43,7 +43,27 @@ module cpu
         output logic [3:0]  dmem_wmask,     // 写掩码
         input  logic [31:0] dmem_rdata,     // 读数据
         output logic [31:0] dmem_wdata,     // 写数据
-        input  logic        dmem_resp       // 内存响应
+        input  logic        dmem_resp,      // 内存响应
+
+        // ====================================================================
+        // RVFI (RISC-V Formal Interface) 验证接口
+        // ====================================================================
+        output logic        rvfi_valid,     // 指令完成有效
+        output logic [63:0] rvfi_order,     // 指令序号
+        output logic [31:0] rvfi_inst,      // 指令编码
+        output logic [4:0]  rvfi_rs1_addr,  // 源寄存器1地址
+        output logic [4:0]  rvfi_rs2_addr,  // 源寄存器2地址
+        output logic [31:0] rvfi_rs1_rdata, // 源寄存器1数据
+        output logic [31:0] rvfi_rs2_rdata, // 源寄存器2数据
+        output logic [4:0]  rvfi_rd_addr,   // 目标寄存器地址
+        output logic [31:0] rvfi_rd_wdata,  // 目标寄存器写入数据
+        output logic [31:0] rvfi_pc_rdata,  // 当前PC
+        output logic [31:0] rvfi_pc_wdata,  // 下一条PC
+        output logic [31:0] rvfi_mem_addr,  // 内存地址
+        output logic [3:0]  rvfi_mem_rmask, // 内存读掩码
+        output logic [3:0]  rvfi_mem_wmask, // 内存写掩码
+        output logic [31:0] rvfi_mem_rdata, // 内存读数据
+        output logic [31:0] rvfi_mem_wdata  // 内存写数据
     );
 
     // ========================================================================
@@ -306,5 +326,23 @@ module cpu
     assign monitor_mem_wmask = cdb_data.mem_wmask;
     assign monitor_mem_rdata = cdb_data.mem_rdata;
     assign monitor_mem_wdata = cdb_data.mem_wdata;
+
+    // 连接到 RVFI 输出端口
+    assign rvfi_valid     = monitor_valid;
+    assign rvfi_order     = monitor_order;
+    assign rvfi_inst      = monitor_inst;
+    assign rvfi_rs1_addr  = monitor_rs1_addr;
+    assign rvfi_rs2_addr  = monitor_rs2_addr;
+    assign rvfi_rs1_rdata = monitor_rs1_rdata;
+    assign rvfi_rs2_rdata = monitor_rs2_rdata;
+    assign rvfi_rd_addr   = monitor_rd_addr;
+    assign rvfi_rd_wdata  = monitor_rd_wdata;
+    assign rvfi_pc_rdata  = monitor_pc_rdata;
+    assign rvfi_pc_wdata  = monitor_pc_wdata;
+    assign rvfi_mem_addr  = monitor_mem_addr;
+    assign rvfi_mem_rmask = monitor_mem_rmask;
+    assign rvfi_mem_wmask = monitor_mem_wmask;
+    assign rvfi_mem_rdata = monitor_mem_rdata;
+    assign rvfi_mem_wdata = monitor_mem_wdata;
 
 endmodule : cpu
