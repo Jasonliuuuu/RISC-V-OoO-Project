@@ -54,9 +54,12 @@ module fetch
     always_ff @(posedge clk) begin
         if (rst) begin
             pc <= PC_RESET_VALUE;
+        end else if (branch_taken) begin
+            // 分支跳转时立即更新 PC，优先级最高
+            pc <= branch_target;
         end else if (!iq_full && imem_resp) begin
-            // 只有队列不满且内存响应时才更新 PC
-            pc <= next_pc;
+            // 正常情况：队列不满且内存响应时更新 PC
+            pc <= pc + 4;
         end
     end
 
