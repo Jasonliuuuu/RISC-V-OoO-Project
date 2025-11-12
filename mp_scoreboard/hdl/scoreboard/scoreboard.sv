@@ -407,16 +407,19 @@ module scoreboard
 
                 // 每 1000 个周期输出一次状态
                 if (debug_cycle_count % 1000 == 0) begin
+                    logic waw_hazard_detected;
+                    waw_hazard_detected = !iq_empty && (rd != 0 && reg_result[rd].pending);
+
                     $display("[DEBUG SCOREBOARD] @%0t Cycle %0d:", $time, debug_cycle_count);
-                    $display("  IQ: empty=%b, full=%b, deq_en=%b", iq_empty, iq_full, iq_deq);
+                    $display("  IQ: empty=%b, deq_en=%b", iq_empty, iq_deq);
                     $display("  Issue: can_issue=%b, target_fu=%0d, waw_hazard=%b",
-                             can_issue, target_fu, waw_hazard);
+                             can_issue, target_fu, waw_hazard_detected);
                     $display("  FU Busy: [0]=%b [1]=%b [2]=%b [3]=%b [4]=%b [5]=%b",
                              fu_status[0].busy, fu_status[1].busy, fu_status[2].busy,
                              fu_status[3].busy, fu_status[4].busy, fu_status[5].busy);
                     if (!iq_empty) begin
-                        $display("  Next Inst: pc=%h, inst=%h, opcode=%b",
-                                 iq_data.pc, iq_data.inst, opcode);
+                        $display("  Next Inst: pc=%h, inst=%h, opcode=%b, rd=%0d",
+                                 iq_data.pc, iq_data.inst, opcode, rd);
                     end
                 end
 
