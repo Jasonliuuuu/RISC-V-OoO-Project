@@ -4,6 +4,7 @@
  * ============================================================================
  * 功能：
  * - 执行 RISC-V 分支指令 (BEQ, BNE, BLT, BGE, BLTU, BGEU)
+ * - 执行 JAL 和 JALR 无条件跳转指令
  * - 计算分支条件是否满足
  * - 计算分支目标地址
  * - 单周期执行
@@ -11,6 +12,7 @@
  * 输出：
  * - 分支是否跳转
  * - 分支目标地址 (通过 flush 信号传递给 Fetch)
+ * - 返回地址 (对于 JAL/JALR)
  * ============================================================================
  */
 
@@ -56,6 +58,8 @@ module fu_branch
     logic br_taken;
     logic signed   [31:0] a_signed, b_signed;
     logic unsigned [31:0] a_unsigned, b_unsigned;
+    logic [31:0] target_addr;
+    logic [31:0] return_addr;
 
     assign a_signed   = signed'(current_inst.vj);
     assign b_signed   = signed'(current_inst.vk);
@@ -64,23 +68,45 @@ module fu_branch
 
     always_comb begin
         br_taken = 1'b0;
+        target_addr = current_inst.pc + current_inst.imm;  // 默认：B-type 和 JAL
+        return_addr = current_inst.pc + 4;                 // JAL/JALR 返回地址
 
         if (valid) begin
-            case (current_inst.funct3)
-                3'b000: br_taken = (a_unsigned == b_unsigned);       // BEQ
-                3'b001: br_taken = (a_unsigned != b_unsigned);       // BNE
-                3'b100: br_taken = (a_signed < b_signed);            // BLT
-                3'b101: br_taken = (a_signed >= b_signed);           // BGE
-                3'b110: br_taken = (a_unsigned < b_unsigned);        // BLTU
-                3'b111: br_taken = (a_unsigned >= b_unsigned);       // BGEU
+            case (current_inst.opcode)
+                op_br: begin
+                    // 条件分支指令
+                    case (current_inst.funct3)
+                        3'b000: br_taken = (a_unsigned == b_unsigned);       // BEQ
+                        3'b001: br_taken = (a_unsigned != b_unsigned);       // BNE
+                        3'b100: br_taken = (a_signed < b_signed);            // BLT
+                        3'b101: br_taken = (a_signed >= b_signed);           // BGE
+                        3'b110: br_taken = (a_unsigned < b_unsigned);        // BLTU
+                        3'b111: br_taken = (a_unsigned >= b_unsigned);       // BGEU
+                        default: br_taken = 1'b0;
+                    endcase
+                    target_addr = current_inst.pc + current_inst.imm;
+                end
+
+                op_jal: begin
+                    // JAL: 无条件跳转
+                    br_taken = 1'b1;
+                    target_addr = current_inst.pc + current_inst.imm;
+                end
+
+                op_jalr: begin
+                    // JALR: 无条件跳转，目标地址 = (rs1 + imm) & ~1
+                    br_taken = 1'b1;
+                    target_addr = (current_inst.vj + current_inst.imm) & ~32'b1;
+                end
+
                 default: br_taken = 1'b0;
             endcase
         end
     end
 
-    // 分支目标地址 = PC + B_imm
+    // 输出分支/跳转信号
     assign branch_taken = valid && br_taken;
-    assign branch_target = current_inst.pc + current_inst.imm;
+    assign branch_target = target_addr;
 
     // ========================================================================
     // Complete 阶段
@@ -92,8 +118,6 @@ module fu_branch
 
         if (valid) begin
             fu_if.complete_data.valid     = 1'b1;
-            fu_if.complete_data.rd        = 5'b0;  // 分支不写寄存器
-            fu_if.complete_data.data      = 32'b0;
             fu_if.complete_data.pc        = current_inst.pc;
             fu_if.complete_data.inst      = current_inst.inst;
             fu_if.complete_data.order     = current_inst.order;
@@ -101,7 +125,18 @@ module fu_branch
             fu_if.complete_data.rs2_addr  = current_inst.fk;
             fu_if.complete_data.rs1_rdata = current_inst.vj;
             fu_if.complete_data.rs2_rdata = current_inst.vk;
-            fu_if.complete_data.pc_wdata  = br_taken ? branch_target : (current_inst.pc + 4);
+
+            // JAL/JALR 写返回地址到 rd，分支不写寄存器
+            if (current_inst.opcode == op_jal || current_inst.opcode == op_jalr) begin
+                fu_if.complete_data.rd   = current_inst.fi;
+                fu_if.complete_data.data = return_addr;  // PC + 4
+            end else begin
+                fu_if.complete_data.rd   = 5'b0;  // 分支不写寄存器
+                fu_if.complete_data.data = 32'b0;
+            end
+
+            // pc_wdata: 下一条指令的 PC
+            fu_if.complete_data.pc_wdata = br_taken ? target_addr : (current_inst.pc + 4);
         end
     end
 
