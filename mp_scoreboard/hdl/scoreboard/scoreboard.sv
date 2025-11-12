@@ -422,6 +422,17 @@ module scoreboard
                     $display("  FU Ready: %b%b%b%b%b%b",
                              fu_issue_ready[0], fu_issue_ready[1], fu_issue_ready[2],
                              fu_issue_ready[3], fu_issue_ready[4], fu_issue_ready[5]);
+                    $display("  FU Types: [0]=%b [1]=%b [2]=%b [3]=%b [4]=%b [5]=%b",
+                             fu_status[0].fu_type, fu_status[1].fu_type, fu_status[2].fu_type,
+                             fu_status[3].fu_type, fu_status[4].fu_type, fu_status[5].fu_type);
+                    if (!iq_empty) begin
+                        $display("  Next: pc=%h inst=%h opcode=%b rd=%0d",
+                                 iq_data.pc, iq_data.inst, opcode, rd);
+                        $display("  Required FU type=%b", required_fu_type);
+                        if (rd != 0) begin
+                            $display("  WAW: reg_result[%0d].pending=%b", rd, reg_result[rd].pending);
+                        end
+                    end
                 end
 
                 // 检测长时间卡住
