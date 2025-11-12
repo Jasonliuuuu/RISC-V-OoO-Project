@@ -244,8 +244,11 @@ module cpu
     generate
         for (i = 0; i < TOTAL_FU; i++) begin : gen_cdb_collect
             always_comb begin
-                fu_complete_data[i] = fu_if[i].complete_data;
-                fu_complete_data[i].fu_id = fu_id_t'(i);  // 设置 FU ID
+                // 使用临时变量避免多重赋值冲突
+                cdb_entry_t temp_complete_data;
+                temp_complete_data = fu_if[i].complete_data;
+                temp_complete_data.fu_id = fu_id_t'(i);  // 设置 FU ID
+                fu_complete_data[i] = temp_complete_data;
             end
             assign fu_complete_valid[i] = fu_if[i].complete_valid;
         end
