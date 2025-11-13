@@ -47,9 +47,14 @@ module fetch
     // 程序计数器 (PC)
     // ========================================================================
     logic [31:0] pc, next_pc;
+    logic [31:0] pc_increment;  // PC 增量：2 (compressed) 或 4 (standard)
 
     // PC 初始值：RISC-V 规范要求从 0x60000000 开始
     localparam logic [31:0] PC_RESET_VALUE = 32'h60000000;
+
+    // 判断指令长度：inst[1:0] != 2'b11 表示 compressed instruction (2-byte)
+    //              inst[1:0] == 2'b11 表示 standard instruction (4-byte)
+    assign pc_increment = (imem_rdata[1:0] != 2'b11) ? 32'd2 : 32'd4;
 
     always_ff @(posedge clk) begin
         if (rst) begin
@@ -58,8 +63,8 @@ module fetch
             // 分支跳转时立即更新 PC，优先级最高
             pc <= branch_target;
         end else if (!iq_full && imem_resp) begin
-            // 正常情况：队列不满且内存响应时更新 PC
-            pc <= pc + 4;
+            // 正常情况：根据指令长度增加 PC (+2 或 +4)
+            pc <= pc + pc_increment;
         end
     end
 
