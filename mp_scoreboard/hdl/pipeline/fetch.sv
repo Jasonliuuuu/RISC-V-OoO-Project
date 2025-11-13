@@ -48,13 +48,28 @@ module fetch
     // ========================================================================
     logic [31:0] pc, next_pc;
     logic [31:0] pc_increment;  // PC 增量：2 (compressed) 或 4 (standard)
+    logic [31:0] current_inst;  // 当前指令（处理 2-byte aligned PC）
 
     // PC 初始值：RISC-V 规范要求从 0x60000000 开始
     localparam logic [31:0] PC_RESET_VALUE = 32'h60000000;
 
-    // 判断指令长度：inst[1:0] != 2'b11 表示 compressed instruction (2-byte)
-    //              inst[1:0] == 2'b11 表示 standard instruction (4-byte)
-    assign pc_increment = (imem_rdata[1:0] != 2'b11) ? 32'd2 : 32'd4;
+    // 处理 2-byte aligned 但非 4-byte aligned 的 PC
+    // Memory 总是返回 4-byte aligned 的 word，所以需要根据 PC[1] 选择正确的部分
+    // - 如果 PC[1] = 0: 指令在 imem_rdata[15:0] (可能是 16-bit) 或 imem_rdata[31:0] (32-bit)
+    // - 如果 PC[1] = 1: 指令在 imem_rdata[31:16] (只能是 16-bit compressed)
+    always_comb begin
+        if (pc[1]) begin
+            // PC 是 2-byte aligned 但不是 4-byte aligned
+            // 指令必定是 16-bit compressed (在高半部分)
+            current_inst = {16'h0, imem_rdata[31:16]};
+            pc_increment = 32'd2;
+        end else begin
+            // PC 是 4-byte aligned
+            // 检查指令长度：inst[1:0] != 2'b11 表示 16-bit, == 2'b11 表示 32-bit
+            current_inst = imem_rdata;
+            pc_increment = (imem_rdata[1:0] != 2'b11) ? 32'd2 : 32'd4;
+        end
+    end
 
     always_ff @(posedge clk) begin
         if (rst) begin
@@ -107,7 +122,7 @@ module fetch
     assign iq_enq = imem_resp && !iq_full && !branch_taken;
 
     always_comb begin
-        iq_enq_data.inst  = imem_rdata;
+        iq_enq_data.inst  = current_inst;  // 使用处理过的指令（考虑 PC[1]）
         iq_enq_data.pc    = pc;
         iq_enq_data.order = instruction_order;
         iq_enq_data.valid = 1'b1;
