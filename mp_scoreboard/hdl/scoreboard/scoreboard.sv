@@ -136,8 +136,8 @@ module scoreboard
                 end
             end
 
-            op_load:  required_fu_type = FU_LOAD;
-            op_store: required_fu_type = FU_STORE;
+            // Load/Store 共用同一个 FU，都映射到 FU_LOAD
+            op_load, op_store: required_fu_type = FU_LOAD;
             op_br:    required_fu_type = FU_BRANCH;
 
             // JAL/JALR 需要 Branch FU 来触发跳转

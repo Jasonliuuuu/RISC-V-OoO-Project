@@ -220,15 +220,15 @@ module fu_alu
             fu_if.complete_data.rs2_rdata = current_inst.vk;
 
             // pc_wdata 根据指令类型计算
-            // JAL: PC + imm
+            // JAL: PC + imm (注意：现在 JAL/JALR 应该路由到 Branch FU)
             // JALR: (Rs1 + imm) & ~1
-            // 其他: PC + 4
+            // 其他: 根据指令长度 (+2 或 +4)
             if (current_inst.opcode == op_jal) begin
                 fu_if.complete_data.pc_wdata = current_inst.pc + current_inst.imm;
             end else if (current_inst.opcode == op_jalr) begin
                 fu_if.complete_data.pc_wdata = (current_inst.vj + current_inst.imm) & ~32'b1;
             end else begin
-                fu_if.complete_data.pc_wdata = current_inst.pc + 4;
+                fu_if.complete_data.pc_wdata = calc_next_pc(current_inst.pc, current_inst.inst);
             end
 
             // ALU 不访问内存

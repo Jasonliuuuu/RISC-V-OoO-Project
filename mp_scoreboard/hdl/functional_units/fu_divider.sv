@@ -143,7 +143,7 @@ module fu_divider
             fu_if.complete_data.rs2_addr  = current_inst.fk;
             fu_if.complete_data.rs1_rdata = current_inst.vj;
             fu_if.complete_data.rs2_rdata = current_inst.vk;
-            fu_if.complete_data.pc_wdata  = current_inst.pc + 4;
+            fu_if.complete_data.pc_wdata  = calc_next_pc(current_inst.pc, current_inst.inst);
         end
     end
 

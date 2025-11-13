@@ -214,7 +214,7 @@ module fu_load_store
                 // Load: 写回寄存器
                 fu_if.complete_data.rd        = current_inst.fi;
                 fu_if.complete_data.data      = load_result;
-                fu_if.complete_data.pc_wdata  = current_inst.pc + 4;
+                fu_if.complete_data.pc_wdata  = calc_next_pc(current_inst.pc, current_inst.inst);
                 fu_if.complete_data.mem_addr  = mem_address;
                 fu_if.complete_data.mem_rmask = dmem_rmask;
                 fu_if.complete_data.mem_rdata = dmem_rdata;
@@ -222,7 +222,7 @@ module fu_load_store
                 // Store: 不写回寄存器
                 fu_if.complete_data.rd        = 5'b0;
                 fu_if.complete_data.data      = 32'b0;
-                fu_if.complete_data.pc_wdata  = current_inst.pc + 4;
+                fu_if.complete_data.pc_wdata  = calc_next_pc(current_inst.pc, current_inst.inst);
                 fu_if.complete_data.mem_addr  = mem_address;
                 fu_if.complete_data.mem_wmask = dmem_wmask;
                 fu_if.complete_data.mem_wdata = dmem_wdata;

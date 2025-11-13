@@ -224,4 +224,17 @@ package rv32i_types;
     localparam int LATENCY_STORE = 1;   // Store 1 周期
     localparam int LATENCY_BR    = 1;   // Branch 1 周期
 
+    // ------------------------------------------------------------------------
+    // 辅助函数：计算下一个 PC
+    // 根据指令长度 (compressed 或 standard) 计算正确的增量
+    // ------------------------------------------------------------------------
+    function automatic logic [31:0] calc_next_pc(
+        input logic [31:0] pc,
+        input logic [31:0] inst
+    );
+        // 如果 inst[1:0] != 2'b11，则是 16-bit compressed instruction (+2)
+        // 否则是 32-bit standard instruction (+4)
+        return pc + ((inst[1:0] != 2'b11) ? 32'd2 : 32'd4);
+    endfunction
+
 endpackage : rv32i_types

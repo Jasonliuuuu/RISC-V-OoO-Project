@@ -175,7 +175,7 @@ module fu_multiplier
             fu_if.complete_data.rs2_addr  = stage3_inst.fk;
             fu_if.complete_data.rs1_rdata = stage3_inst.vj;
             fu_if.complete_data.rs2_rdata = stage3_inst.vk;
-            fu_if.complete_data.pc_wdata  = stage3_inst.pc + 4;
+            fu_if.complete_data.pc_wdata  = calc_next_pc(stage3_inst.pc, stage3_inst.inst);
 
             // 乘法器不访问内存
             fu_if.complete_data.mem_addr  = '0;

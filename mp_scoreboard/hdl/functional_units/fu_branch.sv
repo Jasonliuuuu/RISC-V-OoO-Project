@@ -140,7 +140,8 @@ module fu_branch
             end
 
             // pc_wdata: 下一条指令的 PC
-            fu_if.complete_data.pc_wdata = br_taken ? target_addr : (current_inst.pc + 4);
+            // 如果跳转，使用目标地址；否则根据指令长度 (+2 或 +4)
+            fu_if.complete_data.pc_wdata = br_taken ? target_addr : calc_next_pc(current_inst.pc, current_inst.inst);
         end
     end
 
