@@ -101,8 +101,8 @@ module writeback
         assign true_rd_s = (mem_wb.opcode != op_store && mem_wb.opcode!= op_br) ? mem_wb.rd_s : 5'b0;
         assign true_rs1_s = (mem_wb.opcode inside {op_jalr, op_br, op_load, op_store, op_reg, op_imm}) ? mem_wb.rs1_s : 5'b0;
         assign true_rs2_s = (mem_wb.opcode inside {op_br, op_store, op_reg}) ? mem_wb.rs2_s : 5'b0;
-        assign true_rs1_v = (mem_wb.opcode inside {op_jalr, op_br, op_load, op_store, op_reg, op_imm}) ? mem_wb.rs1_v : 5'b0;
-        assign true_rs2_v = (mem_wb.opcode inside {op_br, op_store, op_reg}) ? mem_wb.rs2_v : 5'b0;
+        assign true_rs1_v = (mem_wb.opcode inside {op_jalr, op_br, op_load, op_store, op_reg, op_imm}) ? mem_wb.rs1_v : 32'b0;
+        assign true_rs2_v = (mem_wb.opcode inside {op_br, op_store, op_reg}) ? mem_wb.rs2_v : 32'b0;
         
         
         assign rvfi_valid = commit;

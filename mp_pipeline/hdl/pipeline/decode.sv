@@ -87,8 +87,15 @@ module decode
                 id_ex.b_imm  = {{20{data[31]}}, data[7], data[30:25], data[11:8], 1'b0};
                 id_ex.u_imm  = {data[31:12], 12'h000};
                 id_ex.j_imm  = {{12{data[31]}}, data[19:12], data[20], data[30:21], 1'b0};
-                id_ex.rs1_s  = data[19:15];
-                id_ex.rs2_s  = (id_ex.opcode == op_load) ? 5'b0 :data[24:20];
+
+                // rs1 is used by: jalr, br, load, store, imm, reg
+                id_ex.rs1_s  = (id_ex.opcode inside {op_jalr, op_br, op_load, op_store, op_imm, op_reg}) ?
+                               data[19:15] : 5'b0;
+
+                // rs2 is used by: br, store, reg
+                id_ex.rs2_s  = (id_ex.opcode inside {op_br, op_store, op_reg}) ?
+                               data[24:20] : 5'b0;
+
                 id_ex.rd_s   = data[11:7];
         end
     end
