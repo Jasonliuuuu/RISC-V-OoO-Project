@@ -1,0 +1,18 @@
+# Simulation artifacts
+/mp_pipeline/sim/work/
+/mp_pipeline/sim/transcript
+/mp_pipeline/sim/*.log
+/mp_pipeline/sim/*.vstf
+/mp_pipeline/sim/*.ucdb
+/mp_pipeline/sim/*.wlf
+/mp_pipeline/sim/core.*
+/mp_pipeline/sim/run/
+
+# Synopsys/Cadence artifacts
+*.svf
+*.ddc
+*.pvl
+*.syn
+*.mr
+*.pvl
+*.syn

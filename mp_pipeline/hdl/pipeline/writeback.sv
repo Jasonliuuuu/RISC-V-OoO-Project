@@ -66,19 +66,36 @@ module writeback
         endcase
     end
 
+    // Debug first instructions
+    integer commit_count = 0;
+    always @(posedge clk) begin
+        if (mem_wb.valid && !rst && regf_we_back) begin
+            commit_count++;
+            if (commit_count <= 10) begin
+                $display("[WB #%0d] PC=0x%h, inst=0x%h, opcode=0x%h, regfilemux_sel=%b, u_imm=0x%h, alu_out=0x%h, rd_v=0x%h",
+                         commit_count, mem_wb.pc, mem_wb.inst, mem_wb.opcode, 
+                         mem_wb.regfilemux_sel, mem_wb.u_imm, mem_wb.alu_out, rd_v);
+            end
+        end
+    end
+
     assign regfilemux_out = rd_v;
+
+    // Extract opcode directly from instruction to avoid timing issues
+    logic [6:0] wb_opcode;
+    assign wb_opcode = mem_wb.inst[6:0];
 
     // regfile write enable（architectural）
     always_comb begin
-        if (mem_wb.opcode == op_load)
+        if (wb_opcode == op_load)
             regf_we_back = dmem_resp ? 1'b1 : 1'b0;
-        else if (mem_wb.opcode inside {op_br, op_store})
+        else if (wb_opcode inside {op_br, op_store})
             regf_we_back = 1'b0;
         else
             regf_we_back = mem_wb.regf_we;
     end
 
-    assign rd_s_back = mem_wb.rd_s;
+    assign rd_s_back = mem_wb.dest_arch;
 
     // ================================
     // RVFI: order counter
@@ -93,18 +110,15 @@ module writeback
     // 使用 === 把 X/Z 當成 0
     assign commit     = (commit_raw === 1'b1);
 
+    assign rvfi_valid = commit;
+
     always_ff @(posedge clk) begin
         if (rst) begin
             order_q    <= 64'd0;
-            rvfi_valid <= 1'b0;
         end
         else begin
             if (commit) begin
-                rvfi_valid <= 1'b1;
                 order_q    <= order_q + 64'd1;
-            end
-            else begin
-                rvfi_valid <= 1'b0;
             end
         end
     end
@@ -115,14 +129,31 @@ module writeback
     // RVFI: basic info
     // ================================
     assign rvfi_inst      = mem_wb.inst;
-    assign rvfi_rs1_addr  = mem_wb.rs1_s;
-    assign rvfi_rs2_addr  = mem_wb.rs2_s;
-    assign rvfi_rs1_rdata = mem_wb.rs1_v;
-    assign rvfi_rs2_rdata = mem_wb.rs2_v;
+
+    // Zero out RS1/RS2 for instructions that don't use them
+    always_comb begin
+        // RS1: Used by JALR, BRANCH, LOAD, STORE, OP_IMM, OP_REG
+        if (wb_opcode inside {op_jalr, op_br, op_load, op_store, op_imm, op_reg}) begin
+            rvfi_rs1_addr  = mem_wb.rs1_arch;
+            rvfi_rs1_rdata = mem_wb.rs1_v;
+        end else begin
+            rvfi_rs1_addr  = 5'd0;
+            rvfi_rs1_rdata = 32'd0;
+        end
+
+        // RS2: Used by BRANCH, STORE, OP_REG
+        if (wb_opcode inside {op_br, op_store, op_reg}) begin
+            rvfi_rs2_addr  = mem_wb.rs2_arch;
+            rvfi_rs2_rdata = mem_wb.rs2_v;
+        end else begin
+            rvfi_rs2_addr  = 5'd0;
+            rvfi_rs2_rdata = 32'd0;
+        end
+    end
 
     // 若這條指令不寫 rd，就讓 rvfi_rd_addr/rvfi_rd_wdata 都是 0
-    assign rvfi_rd_addr  = regf_we_back ? mem_wb.rd_s : 5'd0;
-    assign rvfi_rd_wdata = regf_we_back ? rd_v        : 32'd0;
+    assign rvfi_rd_addr  = regf_we_back ? mem_wb.dest_arch : 5'd0;
+    assign rvfi_rd_wdata = regf_we_back ? rd_v            : 32'd0;
 
     assign rvfi_pc_rdata = mem_wb.pc;
 

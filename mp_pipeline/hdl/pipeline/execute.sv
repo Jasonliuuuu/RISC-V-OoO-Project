@@ -76,6 +76,7 @@ module execute
 
     // Copy fields
     always_comb begin
+        ex_mem.inst          = id_ex.inst;
         ex_mem.opcode        = id_ex.opcode;
         ex_mem.funct3        = id_ex.funct3;
         ex_mem.funct7        = id_ex.funct7;
@@ -91,6 +92,10 @@ module execute
         ex_mem.u_imm         = id_ex.u_imm;
 
         // PHYS
+        ex_mem.rs1_arch      = id_ex.rs1_arch;
+        ex_mem.rs2_arch      = id_ex.rs2_arch;
+        ex_mem.rs1_phys      = id_ex.rs1_phys;
+        ex_mem.rs2_phys      = id_ex.rs2_phys;
         ex_mem.dest_phys_new = id_ex.dest_phys_new;
         ex_mem.dest_phys_old = id_ex.dest_phys_old;
         ex_mem.dest_arch     = id_ex.dest_arch;

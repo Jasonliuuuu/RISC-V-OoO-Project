@@ -59,15 +59,30 @@ module decode
     end
 
     // ----------------------------------------
-    // 3. Basic decode fields
+    // 3. Basic decode fields from LATCHED instruction (for PRF lookup)
     // ----------------------------------------
-    logic [6:0] opcode = inst_dec[6:0];
-    logic [2:0] funct3 = inst_dec[14:12];
-    logic [6:0] funct7 = inst_dec[31:25];
+    logic [6:0] opcode;
+    logic [2:0] funct3;
+    logic [6:0] funct7;
+    logic [4:0] rs1_s;
+    logic [4:0] rs2_s;
+    logic [4:0] rd_s;
 
-    logic [4:0] rs1_s  = inst_dec[19:15];
-    logic [4:0] rs2_s  = inst_dec[24:20];
-    logic [4:0] rd_s   = inst_dec[11:7];
+    assign opcode = inst_dec[6:0];
+    assign funct3 = inst_dec[14:12];
+    assign funct7 = inst_dec[31:25];
+    assign rs1_s  = inst_dec[19:15];
+    assign rs2_s  = inst_dec[24:20];
+    assign rd_s   = inst_dec[11:7];
+
+    // CURRENT instruction fields (for decode logic - NO DELAY)
+    logic [6:0] curr_opcode;
+    logic [2:0] curr_funct3;
+    logic [6:0] curr_funct7;
+    
+    assign curr_opcode = imem_rdata_id[6:0];
+    assign curr_funct3 = imem_rdata_id[14:12];
+    assign curr_funct7 = imem_rdata_id[31:25];
 
     // ----------------------------------------
     // 4. Assign architectural indices
@@ -93,9 +108,11 @@ module decode
         id_ex.rs2_phys      = rs2_phys;
         id_ex.dest_phys_new = dest_phys_new;
         id_ex.dest_phys_old = dest_phys_old;
-        id_ex.dest_arch     = rd_s;
+        // Use CURRENT instruction for architectural indices
+        id_ex.rs1_arch      = imem_rdata_id[19:15];
+        id_ex.rs2_arch      = imem_rdata_id[24:20];
+        id_ex.dest_arch     = imem_rdata_id[11:7];
     end
-
     // ----------------------------------------
     // 6. PRF value → decode pipeline
     // ----------------------------------------
@@ -105,40 +122,37 @@ module decode
     end
 
     // ----------------------------------------
-    // 7. Immediate generation
+    // 7. Immediate generation from CURRENT instruction
     // ----------------------------------------
     always_comb begin
-        if (flushing_inst) begin
-            id_ex.opcode = '0;
-            id_ex.funct3 = '0;
-            id_ex.funct7 = '0;
-            id_ex.i_imm  = '0;
-            id_ex.s_imm  = '0;
-            id_ex.b_imm  = '0;
-            id_ex.u_imm  = '0;
-            id_ex.j_imm  = '0;
-        end
-        else begin
-            id_ex.opcode = opcode;
-            id_ex.funct3 = funct3;
-            id_ex.funct7 = funct7;
+        // Always use CURRENT instruction (no flushing logic for these)
+        id_ex.opcode = imem_rdata_id[6:0];
+        id_ex.funct3 = imem_rdata_id[14:12];
+        id_ex.funct7 = imem_rdata_id[31:25];
 
-            id_ex.i_imm = {{21{inst_dec[31]}}, inst_dec[30:20]};
-            id_ex.s_imm = {{21{inst_dec[31]}}, inst_dec[30:25], inst_dec[11:7]};
-            id_ex.b_imm = {{20{inst_dec[31]}}, inst_dec[7], inst_dec[30:25],
-                           inst_dec[11:8], 1'b0};
-            id_ex.u_imm = {inst_dec[31:12], 12'h000};
-            id_ex.j_imm = {{12{inst_dec[31]}}, inst_dec[19:12],
-                           inst_dec[20], inst_dec[30:21], 1'b0};
-        end
+        id_ex.i_imm = {{21{imem_rdata_id[31]}}, imem_rdata_id[30:20]};
+        id_ex.s_imm = {{21{imem_rdata_id[31]}}, imem_rdata_id[30:25], imem_rdata_id[11:7]};
+        id_ex.b_imm = {{20{imem_rdata_id[31]}}, imem_rdata_id[7], imem_rdata_id[30:25],
+                       imem_rdata_id[11:8], 1'b0};
+        id_ex.u_imm = {imem_rdata_id[31:12], 12'h000};
+        id_ex.j_imm = {{12{imem_rdata_id[31]}}, imem_rdata_id[19:12],
+                       imem_rdata_id[20], imem_rdata_id[30:21], 1'b0};
     end
 
+    // CRITICAL: Propagate instruction for RVFI/Debug
+    assign id_ex.inst = imem_rdata_id;
+
     // ----------------------------------------
-    // 8. imm_out selection (same as your original)
+    // 8. imm_out selection - use CURRENT opcode
     // ----------------------------------------
     always_comb begin
-        unique case (opcode)
-            op_lui, op_auipc: id_ex.imm_out = id_ex.u_imm;
+        unique case (curr_opcode)
+            op_lui: begin
+                id_ex.imm_out = id_ex.u_imm;
+            end
+            op_auipc: begin
+                id_ex.imm_out = id_ex.u_imm;
+            end
             op_jal          : id_ex.imm_out = id_ex.j_imm;
             op_jalr         : id_ex.imm_out = id_ex.i_imm;
             op_br           : id_ex.imm_out = id_ex.b_imm;
@@ -150,10 +164,54 @@ module decode
     end
 
     // ----------------------------------------
-    // 9. ALU operand mux
+    // 9. ALU operation decode - use CURRENT opcode/funct
     // ----------------------------------------
     always_comb begin
-        unique case(opcode)
+        unique case (curr_opcode)
+            op_lui  : id_ex.alu_op = alu_add;  // LUI: pass through
+            op_auipc: id_ex.alu_op = alu_add;  // AUIPC: pc + imm
+            op_imm  : begin
+                unique case (curr_funct3)
+                    3'b000: id_ex.alu_op = alu_add;   // ADDI
+                    3'b100: id_ex.alu_op = alu_xor;   // XORI
+                    3'b110: id_ex.alu_op = alu_or;    // ORI
+                    3'b111: id_ex.alu_op = alu_and;   // ANDI
+                    3'b001: id_ex.alu_op = alu_sll;   // SLLI
+                    3'b101: begin
+                        if (curr_funct7[5]) id_ex.alu_op = alu_sra;  // SRAI
+                        else                id_ex.alu_op = alu_srl;  // SRLI
+                    end
+                    // SLTI/SLTIU handled by CMP + MUX, ALU op doesn't matter
+                    default: id_ex.alu_op = alu_add;
+                endcase
+            end
+            op_reg  : begin
+                unique case (curr_funct3)
+                    3'b000: begin
+                        if (curr_funct7[5]) id_ex.alu_op = alu_sub;  // SUB
+                        else                id_ex.alu_op = alu_add;  // ADD
+                    end
+                    3'b100: id_ex.alu_op = alu_xor;   // XOR
+                    3'b110: id_ex.alu_op = alu_or;    // OR
+                    3'b111: id_ex.alu_op = alu_and;   // AND
+                    3'b001: id_ex.alu_op = alu_sll;   // SLL
+                    3'b101: begin
+                        if (curr_funct7[5]) id_ex.alu_op = alu_sra;  // SRA
+                        else                id_ex.alu_op = alu_srl;  // SRL
+                    end
+                    // SLT/SLTU handled by CMP + MUX
+                    default: id_ex.alu_op = alu_add;
+                endcase
+            end
+            default: id_ex.alu_op = alu_add;
+        endcase
+    end
+
+    // ----------------------------------------
+    // 10. ALU operand mux - use CURRENT opcode
+    // ----------------------------------------
+    always_comb begin
+        unique case(curr_opcode)
             op_auipc,
             op_br,
             op_jal:  id_ex.alu_m1_sel = 1'b1;
@@ -162,36 +220,66 @@ module decode
     end
 
     assign id_ex.alu_m2_sel =
-        (opcode inside {op_store, op_load, op_imm, op_jalr}) ? 1'b1 : 1'b0;
+        (curr_opcode inside {op_store, op_load, op_imm, op_jalr}) ? 1'b1 : 1'b0;
 
     // ----------------------------------------
-    // 10. cmp mux
+    // 11. cmp mux - use CURRENT opcode
     // ----------------------------------------
     assign id_ex.cmp_sel =
-        (opcode == op_br) ? 1'b0 :
-        (opcode == op_jalr) ? 1'b1 :
+        (curr_opcode == op_br) ? 1'b0 :
+        (curr_opcode == op_jalr) ? 1'b1 :
         1'b0;
 
-    assign id_ex.cmpop = funct3;
-
     // ----------------------------------------
-    // 11. regfile mux (same as original)
+    // 12. regfile write enable - use CURRENT opcode
     // ----------------------------------------
     always_comb begin
-        if (opcode inside {op_br, op_store})
+        if (curr_opcode inside {op_br, op_store})
             id_ex.regf_we = 1'b0;
         else
             id_ex.regf_we = 1'b1;
     end
 
+    // 12. regfile mux selection - use CURRENT opcode
+    // ----------------------------------------
     always_comb begin
-        id_ex.regfilemux_sel = regfilemux::regfilemux_sel_t'(
-            (opcode == op_lui   ) ? regfilemux::u_imm :
-            (opcode == op_jal   ) ? regfilemux::pc_plus4 :
-            (opcode == op_jalr  ) ? regfilemux::pc_plus4 :
-            (opcode == op_load  ) ? funct3 :
-            regfilemux::alu_out
-        );
+        casez (curr_opcode)
+            op_lui:     id_ex.regfilemux_sel = regfilemux::u_imm;
+            op_auipc:   id_ex.regfilemux_sel = regfilemux::alu_out; // AUIPC result from ALU
+            op_jal:     id_ex.regfilemux_sel = regfilemux::pc_plus4;
+            op_jalr:    id_ex.regfilemux_sel = regfilemux::pc_plus4;
+            op_load:    id_ex.regfilemux_sel = regfilemux::regfilemux_sel_t'(curr_funct3);
+            op_imm: begin
+                if (curr_funct3 == slt || curr_funct3 == sltu)
+                    id_ex.regfilemux_sel = regfilemux::br_en;
+                else
+                    id_ex.regfilemux_sel = regfilemux::alu_out;
+            end
+            op_reg: begin
+                if (curr_funct3 == slt || curr_funct3 == sltu)
+                    id_ex.regfilemux_sel = regfilemux::br_en;
+                else
+                    id_ex.regfilemux_sel = regfilemux::alu_out;
+            end
+            default:    id_ex.regfilemux_sel = regfilemux::alu_out;
+        endcase
+    end
+
+    // 13. cmpop decode
+    // ----------------------------------------
+    always_comb begin
+        if (curr_opcode == op_br) begin
+            id_ex.cmpop = branch_funct3_t'(curr_funct3);
+        end
+        else if ((curr_opcode == op_imm || curr_opcode == op_reg) && (curr_funct3 == slt)) begin
+            id_ex.cmpop = blt;
+        end
+        else if ((curr_opcode == op_imm || curr_opcode == op_reg) && (curr_funct3 == sltu)) begin
+            id_ex.cmpop = bltu;
+        end
+        else begin
+            id_ex.cmpop = beq; // default
+        end
     end
 
 endmodule

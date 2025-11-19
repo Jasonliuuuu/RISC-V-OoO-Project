@@ -46,6 +46,12 @@ module cpu
     logic br_en_out;
     logic [31:0] branch_pc;
 
+    // Forwarding signals from memory stage
+    logic        mem_wb_br_en_forward;
+    logic [31:0] mem_wb_alu_out_forward;
+    logic [31:0] mem_wb_u_imm_forward;
+
+
     // ============================================================
     // Rename + PRF wires
     // ============================================================
@@ -269,5 +275,31 @@ module cpu
         .dmem_resp(dmem_resp),
         .freeze_stall(freeze_stall)
     );
+
+    // ============================================================
+    // Pipeline Register Updates
+    // ============================================================
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            if_id_reg  <= '0;
+            id_ex_reg  <= '0;
+            ex_mem_reg <= '0;
+            mem_wb_reg <= '0;
+        end
+        else if (freeze_stall) begin
+            // When memory stalls, keep all registers unchanged
+            if_id_reg  <= if_id_reg;
+            id_ex_reg  <= id_ex_reg;
+            ex_mem_reg <= ex_mem_reg;
+            mem_wb_reg <= mem_wb_reg;
+        end
+        else begin
+            // Normal case: latch _before outputs into actual pipeline registers
+            if_id_reg  <= if_id_reg_before;
+            id_ex_reg  <= id_ex_reg_before;
+            ex_mem_reg <= ex_mem_reg_before;
+            mem_wb_reg <= mem_wb_reg_before;
+        end
+    end
 
 endmodule

@@ -90,9 +90,15 @@ module memory
             branch_new_address = 32'd0;
     end
 
-    assign flushing_inst =
-        (ex_mem.opcode inside {op_jal, op_jalr}) ||
-        ((ex_mem.opcode == op_br) && ex_mem.br_en);
+    always_comb begin
+        if (ex_mem.valid === 1'b1) begin
+            flushing_inst = (ex_mem.opcode inside {op_jal, op_jalr}) ||
+                           ((ex_mem.opcode == op_br) && ex_mem.br_en);
+        end
+        else begin
+            flushing_inst = 1'b0;
+        end
+    end
 
     // fill mem_wb struct
     assign mem_wb.inst  = ex_mem.inst;
@@ -119,6 +125,10 @@ module memory
     assign mem_wb.regfilemux_sel = ex_mem.regfilemux_sel;
 
     // PHYS
+    assign mem_wb.rs1_arch      = ex_mem.rs1_arch;
+    assign mem_wb.rs2_arch      = ex_mem.rs2_arch;
+    assign mem_wb.rs1_phys      = ex_mem.rs1_phys;
+    assign mem_wb.rs2_phys      = ex_mem.rs2_phys;
     assign mem_wb.dest_phys_new = ex_mem.dest_phys_new;
     assign mem_wb.dest_phys_old = ex_mem.dest_phys_old;
     assign mem_wb.dest_arch     = ex_mem.dest_arch;
