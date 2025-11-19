@@ -183,104 +183,150 @@ package rv32i_types;
 
     //id_ex register
     typedef struct packed {
-        logic [31:0]      inst;
-        logic   [31:0]      pc;
-        logic               valid;
-        
-        logic           regf_we;
-        logic   [2:0]   funct3;
-        logic   [6:0]   funct7;
-        logic   [6:0]   opcode;
-        logic   [31:0]  imm_out;
-        logic   [31:0]  i_imm;
-        logic   [31:0]  u_imm;
-        logic   [31:0]  j_imm;
-        logic   [31:0]  b_imm;
-        logic   [31:0]  s_imm;
-        //**********from register file********************
-        logic   [4:0]   rs1_s;
-        logic   [4:0]   rs2_s;
-        logic   [4:0]   rd_s;//this is what you wanna write back 
 
-        logic   [31:0]  rs1_v;
-        logic   [31:0]  rs2_v;
-        //logic   [31:0]  rd_v;//this is what you wanna write back value
-    
-        logic               alu_m1_sel;
-        logic               alu_m2_sel;
-        logic    [2:0]         alu_op;
-        logic      cmp_sel;
-        logic    [2:0]     cmpop;
-        logic  [3:0]    regfilemux_sel;
-    
-    } id_ex_stage_reg_t;
+    // Original
+    logic [31:0] inst;
+    logic [31:0] pc;
+    logic        valid;
+
+    logic        regf_we;
+    logic [2:0]  funct3;
+    logic [6:0]  funct7;
+    logic [6:0]  opcode;
+    logic [31:0] imm_out;
+    logic [31:0] i_imm;
+    logic [31:0] u_imm;
+    logic [31:0] j_imm;
+    logic [31:0] b_imm;
+    logic [31:0] s_imm;
+
+    // Architectural indices (consistent)
+    logic [4:0] rs1_arch;
+    logic [4:0] rs2_arch;
+    logic [4:0] dest_arch;
+
+    // Physical registers
+    logic [5:0] rs1_phys;
+    logic [5:0] rs2_phys;
+    logic [5:0] dest_phys_new;
+    logic [5:0] dest_phys_old;
+
+    // old fields (to be removed later)
+    logic [4:0] rs1_s;
+    logic [4:0] rs2_s;
+    logic [4:0] rd_s;
+    logic [31:0] rs1_v;
+    logic [31:0] rs2_v;
+
+    // Control signals
+    logic        alu_m1_sel;
+    logic        alu_m2_sel;
+    logic [2:0]  alu_op;
+    logic        cmp_sel;
+    logic [2:0]  cmpop;
+    logic [3:0]  regfilemux_sel;
+
+} id_ex_stage_reg_t;
+
+
     
     typedef struct packed {
-        logic   [31:0]                inst;
-        logic   [31:0]                  pc;
-        logic                        valid;
-        logic   [6:0]               opcode;
-       
-        
 
-        //logic                   dmem_write;
-        //logic                    dmem_read;
-        logic   [6:0]               funct7;
-        logic   [2:0]               funct3;
-        logic   [31:0]             imm_out;
-        logic   [31:0]               j_imm;
-        logic   [31:0]               b_imm;
-        logic   [31:0]               i_imm;
-        logic   [31:0]               s_imm;
-        logic   [31:0]               u_imm;
-        //for json file test
-        logic   [4:0]                rs1_s;
-        logic   [4:0]                rs2_s;
-        logic   [4:0]                 rd_s;
-        logic   [31:0]               rs1_v;
-        logic   [31:0]               rs2_v;
-        
-        // for write back data
-        logic                    br_en;
-        logic   [31:0]             alu_out;
-        // for wb signal
+    logic [31:0] inst;
+    logic [31:0] pc;
+    logic        valid;
 
-        logic                      regf_we;
-        logic  [3:0]    regfilemux_sel;
-    } ex_mem_stage_reg_t;
+    logic [6:0]  opcode;
+    logic [6:0]  funct7;
+    logic [2:0]  funct3;
+
+    logic [31:0] imm_out;
+    logic [31:0] j_imm;
+    logic [31:0] b_imm;
+    logic [31:0] i_imm;
+    logic [31:0] s_imm;
+    logic [31:0] u_imm;
+
+    // New: architectural indices
+    logic [4:0] rs1_arch;
+    logic [4:0] rs2_arch;
+    logic [4:0] dest_arch;
+
+    // New: physical registers
+    logic [5:0] rs1_phys;
+    logic [5:0] rs2_phys;
+    logic [5:0] dest_phys_new;
+    logic [5:0] dest_phys_old;
+
+    // EX results
+    logic [31:0] alu_out;
+    logic        br_en;
+
+    // old fields (remove later)
+    logic [4:0] rs1_s;
+    logic [4:0] rs2_s;
+    logic [4:0] rd_s;
+    logic [31:0] rs1_v;
+    logic [31:0] rs2_v;
+
+    // writeback
+    logic        regf_we;
+    logic [3:0]  regfilemux_sel;
+
+} ex_mem_stage_reg_t;
+
+
 
 
     typedef struct packed {
-        logic   [31:0]            inst;
-        logic   [31:0]              pc;
-        logic                    valid;
-        logic   [6:0]           opcode;
-        
-        //logic   [6:0]           funct7;
-        //for json file test
-        logic   [4:0]            rs1_s;
-        logic   [4:0]            rs2_s;
-        logic   [4:0]             rd_s;
-        logic   [31:0]           rs1_v;
-        logic   [31:0]           rs2_v;
-        logic   [31:0]           j_imm;
-        logic   [31:0]           b_imm;
-        logic   [31:0]           i_imm;
-        //input from ex-stage, for write back mux
-        logic   [31:0]           u_imm;          
-        logic                 br_en;
-        logic   [31:0]         alu_out;
-        //for wb signal
-        logic                  regf_we;
-    
-        //logic                   dmem_write;
-        //logic                    dmem_read;
-        logic   [31:0]       dmem_addr;
-        logic   [3:0]       dmem_rmask;
-        logic   [3:0]       dmem_wmask;
-        logic   [31:0]      dmem_wdata;
-        logic   [3:0] regfilemux_sel;
-    } mem_wb_stage_reg_t;
+
+    logic [31:0] inst;
+    logic [31:0] pc;
+    logic        valid;
+
+    logic [6:0] opcode;
+
+    // Architectural registers
+    logic [4:0] rs1_arch;
+    logic [4:0] rs2_arch;
+    logic [4:0] dest_arch;
+
+    // Physical registers
+    logic [5:0] rs1_phys;
+    logic [5:0] rs2_phys;
+    logic [5:0] dest_phys_new;
+    logic [5:0] dest_phys_old;
+
+    // immediates
+    logic [31:0] j_imm;
+    logic [31:0] b_imm;
+    logic [31:0] i_imm;
+    logic [31:0] u_imm;
+
+    // branch/calc
+    logic        br_en;
+    logic [31:0] alu_out;
+
+    // dmem
+    logic [31:0] dmem_addr;
+    logic [3:0]  dmem_rmask;
+    logic [3:0]  dmem_wmask;
+    logic [31:0] dmem_wdata;
+
+    // writeback
+    logic [3:0]  regfilemux_sel;
+    logic        regf_we;
+
+    // old (not used anymore)
+    logic [4:0]  rs1_s;
+    logic [4:0]  rs2_s;
+    logic [4:0]  rd_s;
+    logic [31:0] rs1_v;
+    logic [31:0] rs2_v;
+
+} mem_wb_stage_reg_t;
+
+
 
    
 

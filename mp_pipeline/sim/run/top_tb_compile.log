@@ -1,6 +1,6 @@
 QuestaSim-64 vlog 2023.2 Compiler 2023.04 Apr 11 2023
-Start time: 22:33:31 on Nov 03,2025
-vlog -sv "+acc" -timescale 1ns/1ns -cover bcefst -work work /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/ir.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cmp.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/alu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/ordinary_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mem_itf.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/magic_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mon_itf.sv "+incdir+../hvl" "+incdir+../pkg" -l run/top_tb_compile.log 
+Start time: 08:28:44 on Nov 19,2025
+vlog -sv "+acc" -timescale 1ns/1ns -cover bcefst -work work /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/prf.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/free_list.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/rename_unit.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/ir.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cmp.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/alu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/ordinary_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mem_itf.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/magic_dual_port.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mon_itf.sv "+incdir+../hvl" "+incdir+../pkg" -l run/top_tb_compile.log 
 -- Compiling package pcmux
 -- Compiling package marmux
 -- Compiling package cmpmux
@@ -19,19 +19,22 @@ vlog -sv "+acc" -timescale 1ns/1ns -cover bcefst -work work /nfs-share/tl152/ELE
 -- Compiling module regfile
 -- Importing package rv32i_types
 -- Compiling module forward
-** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(7): (vlog-13314) Defaulting port 'id_ex' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(8): (vlog-13314) Defaulting port 'ex_mem' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
-** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(9): (vlog-13314) Defaulting port 'mem_wb' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(6): (vlog-13314) Defaulting port 'id_ex' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(7): (vlog-13314) Defaulting port 'ex_mem' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv(8): (vlog-13314) Defaulting port 'mem_wb' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 -- Compiling module memory
 ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv(4): (vlog-13314) Defaulting port 'ex_mem' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv(6): (vlog-13314) Defaulting port 'mem_wb_now' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 -- Compiling module decode
-** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv(16): (vlog-13314) Defaulting port 'if_id' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv(11): (vlog-13314) Defaulting port 'if_id' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 -- Compiling module fetch
 -- Compiling module execute
 ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv(6): (vlog-13314) Defaulting port 'id_ex' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 -- Compiling module writeback
-** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv(6): (vlog-13314) Defaulting port 'mem_wb' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv(7): (vlog-13314) Defaulting port 'mem_wb' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+-- Compiling module prf
+-- Compiling module free_list
+-- Compiling module rename_unit
 -- Compiling module stall
 ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv(4): (vlog-13314) Defaulting port 'id_ex' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 ** Warning: /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv(5): (vlog-13314) Defaulting port 'ex_mem' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
@@ -204,9 +207,10 @@ vlog -sv "+acc" -timescale 1ns/1ns -cover bcefst -work work /nfs-share/tl152/ELE
 -- Compiling interface mon_itf
 
 Top level modules:
+	regfile
 	ir
 	top_tb
 	ordinary_dual_port
 	magic_dual_port
-End time: 22:33:31 on Nov 03,2025, Elapsed time: 0:00:00
+End time: 08:28:45 on Nov 19,2025, Elapsed time: 0:00:01
 Errors: 0, Warnings: 44

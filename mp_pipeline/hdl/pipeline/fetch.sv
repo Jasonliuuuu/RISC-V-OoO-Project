@@ -54,11 +54,7 @@ module fetch
             imem_addr = branch_pc;
         end
         else begin
-            if(stall_signal || freeze_stall) begin
-                imem_addr = pc;
-            end
-            else
-                imem_addr = pc + 4;
+            imem_addr = pc;
         end
     end
 
