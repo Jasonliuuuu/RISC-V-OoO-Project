@@ -66,20 +66,20 @@ module writeback
         endcase
     end
 
-    // Debug first instructions
-    integer commit_count = 0;
+    // Mux for output to regfile and RVFI
+    assign regfilemux_out = rd_v;
+
+    // Debug specific PC
     always @(posedge clk) begin
-        if (mem_wb.valid && !rst && regf_we_back) begin
-            commit_count++;
-            if (commit_count <= 10) begin
-                $display("[WB #%0d] PC=0x%h, inst=0x%h, opcode=0x%h, regfilemux_sel=%b, u_imm=0x%h, alu_out=0x%h, rd_v=0x%h",
-                         commit_count, mem_wb.pc, mem_wb.inst, mem_wb.opcode, 
-                         mem_wb.regfilemux_sel, mem_wb.u_imm, mem_wb.alu_out, rd_v);
-            end
+        if (mem_wb.valid && mem_wb.pc == 32'h60000080) begin
+            $display("[WB] PC=0x%h, opcode=0x%02x, regfilemux_sel=%0d", 
+                     mem_wb.pc, mem_wb.opcode, mem_wb.regfilemux_sel);
+            $display("     alu_out=0x%h, u_imm=0x%h, pc=0x%h", 
+                     mem_wb.alu_out, mem_wb.u_imm, mem_wb.pc);
+            $display("     rd_v(result)=0x%h", rd_v);
         end
     end
 
-    assign regfilemux_out = rd_v;
 
     // Extract opcode directly from instruction to avoid timing issues
     logic [6:0] wb_opcode;
@@ -165,15 +165,16 @@ module writeback
     always_comb begin
         pc_next = mem_wb.pc + 32'd4;  // default: sequential
 
-        if (mem_wb.opcode inside {op_jal, op_jalr}) begin
+        if (wb_opcode inside {op_jal, op_jalr}) begin
             pc_next = mem_wb.alu_out & 32'hffff_fffe;
         end
-        else if (mem_wb.opcode == op_br && mem_wb.br_en) begin
+        else if (wb_opcode == op_br && mem_wb.br_en) begin
             pc_next = mem_wb.alu_out;
         end
     end
 
     assign rvfi_pc_wdata = pc_next;
+
 
     // ================================
     // RVFI: memory interface

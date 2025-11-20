@@ -14,12 +14,13 @@ module execute
     input  forward_a_sel_t forward_a_sel,
     input  forward_b_sel_t forward_b_sel,
 
-    input  logic flushing_inst
+    input  logic flush_pipeline
 );
 
 
     assign ex_mem.pc    = id_ex.pc;
-    assign ex_mem.valid = id_ex.valid;
+    // Flush in-flight instruction when branch/jump detected
+    assign ex_mem.valid = flush_pipeline ? 1'b0 : id_ex.valid;
 
     // forward A
     logic [31:0] a_src;
@@ -56,12 +57,15 @@ module execute
         alu_b = id_ex.alu_m2_sel ? id_ex.imm_out : b_src;
     end
 
+    logic [31:0] alu_result;
     alu alu_i(
         .a(alu_a),
         .b(alu_b),
-        .f(ex_mem.alu_out),
-        .aluop(id_ex.alu_op)
+        .aluop(id_ex.alu_op),
+        .f(alu_result)
     );
+
+    assign ex_mem.alu_out = alu_result;
 
     // CMP
     logic [31:0] cmp_b;

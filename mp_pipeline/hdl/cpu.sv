@@ -30,7 +30,7 @@ module cpu
     ex_mem_stage_reg_t ex_mem_reg_before, ex_mem_reg;
     mem_wb_stage_reg_t mem_wb_reg_before, mem_wb_reg;
 
-    logic stall_signal, freeze_stall, flushing_inst;
+    logic stall_signal, freeze_stall, flush_pipeline;
 
     logic [31:0] imem_rdata_id;
     logic        imem_resp_id;
@@ -142,7 +142,7 @@ module cpu
         .imem_resp(imem_resp),
         .stall_signal(stall_signal),
         .freeze_stall(freeze_stall),
-        .flushing_inst(flushing_inst),
+        .flush_pipeline(flush_pipeline),
         .imem_addr(imem_addr),
         .imem_rmask(imem_rmask),
         .if_id_reg_before(if_id_reg_before),
@@ -160,7 +160,7 @@ module cpu
         .imem_resp_id(imem_resp_id),
         .stall_signal(stall_signal),
         .freeze_stall(freeze_stall),
-        .flushing_inst(flushing_inst),
+        .flush_pipeline(flush_pipeline),
 
         .rs1_phys(rs1_phys_decode),
         .rs2_phys(rs2_phys_decode),
@@ -185,7 +185,7 @@ module cpu
         .ex_mem_u_imm_forward(mem_wb_u_imm_forward),
         .forward_a_sel(forward_a_sel),
         .forward_b_sel(forward_b_sel),
-        .flushing_inst(flushing_inst)
+        .flush_pipeline(flush_pipeline)
     );
 
     // ============================================================
@@ -204,7 +204,7 @@ module cpu
         .mem_wb_u_imm(mem_wb_u_imm_forward),
         .br_en_out(br_en_out),
         .branch_new_address(branch_pc),
-        .flushing_inst(flushing_inst),
+        .flush_pipeline(flush_pipeline),
         .freeze_stall(freeze_stall)
     );
 
@@ -299,6 +299,16 @@ module cpu
             id_ex_reg  <= id_ex_reg_before;
             ex_mem_reg <= ex_mem_reg_before;
             mem_wb_reg <= mem_wb_reg_before;
+
+            // Debug AUIPC
+            if (id_ex_reg_before.valid && id_ex_reg_before.opcode == 7'h17) begin
+                $display("[CPU] AUIPC latching to ID/EX: PC=0x%h, alu_m1_sel=%b, imm=0x%h",
+                         id_ex_reg_before.pc, id_ex_reg_before.alu_m1_sel, id_ex_reg_before.imm_out);
+            end
+            if (ex_mem_reg_before.valid && ex_mem_reg_before.opcode == 7'h17) begin
+                $display("[CPU] AUIPC latching to EX/MEM: PC=0x%h, alu_out=0x%h",
+                         ex_mem_reg_before.pc, ex_mem_reg_before.alu_out);
+            end
         end
     end
 

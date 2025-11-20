@@ -12,9 +12,8 @@ module fetch
     input  logic        imem_resp,
     // ========== Pipeline control ==========
     input  logic        stall_signal,
-    input  logic        freeze_stall,
-    input  logic        flushing_inst,  
-    // A flush determined by a later pipeline stage (misfetch or branch/jump).
+    input  logic freeze_stall,
+    input  logic flush_pipeline,  // Required port (flush handled in decode stage)
     // ========== The requestment to I-mem ==========
     output logic [31:0] imem_addr,
     output logic [3:0]  imem_rmask,
@@ -64,12 +63,15 @@ module fetch
             if_id_reg_before.pc <= '0; 
             if_id_reg_before.valid <= 1'b0; // 表示這拍是bubble
         end
-        else if (flushing_inst) begin
-            if_id_reg_before.valid <= 1'b0; //flush 注入bubble, remain the pc
-        end
-        else if (ce_ifid) begin
-            if_id_reg_before.pc <= pc; //傳送現在指令的PC
-            if_id_reg_before.valid <= imem_resp; //這拍 I-mem 確認有效才為 1
+        else if(ce_ifid) begin
+            if(flush_pipeline) begin
+                if_id_reg_before.valid <= 1'b0; //flush inject bubble, remain the pc
+                if_id_reg_before.pc    <= pc;
+            end
+            else begin
+                if_id_reg_before.pc <= pc; //傳送現在指令的PC
+                if_id_reg_before.valid <= imem_resp; //這拍 I-mem 確認有效才為 1
+            end
         end
     end
 // =============== IF -> ID inst/resp ================
@@ -80,8 +82,8 @@ module fetch
             imem_rdata_id <= 32'h0000_0013; //NOP: ADDI x0, x0, 0
             imem_resp_id <= 1'b0; 
         end
-        else if (flushing_inst) begin
-            imem_rdata_id <= 32'h0000_0013; //無害化
+        else if (flush_pipeline) begin
+            imem_rdata_id <= 32'h0000_0013; //無害化 (NOP)
             imem_resp_id <= 1'b0; 
         end
         else if (ce_ifid) begin

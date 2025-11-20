@@ -18,7 +18,7 @@ module memory
 
     output logic br_en_out,
     output logic [31:0] branch_new_address,
-    output logic flushing_inst
+    output logic flush_pipeline
 );
 
     assign mem_wb_alu_out = ex_mem.alu_out;
@@ -92,18 +92,20 @@ module memory
 
     always_comb begin
         if (ex_mem.valid === 1'b1) begin
-            flushing_inst = (ex_mem.opcode inside {op_jal, op_jalr}) ||
+            flush_pipeline = (ex_mem.opcode inside {op_jal, op_jalr}) ||
                            ((ex_mem.opcode == op_br) && ex_mem.br_en);
         end
         else begin
-            flushing_inst = 1'b0;
+            flush_pipeline = 1'b0;
         end
     end
 
     // fill mem_wb struct
     assign mem_wb.inst  = ex_mem.inst;
     assign mem_wb.pc    = ex_mem.pc;
-    assign mem_wb.valid = ex_mem.valid;
+    // CRITICAL: Flush mem_wb.valid to prevent flushed instructions from committing
+    // When flush_pipeline is active, instructions that reach WB should not commit
+    assign mem_wb.valid = flush_pipeline ? 1'b0 : ex_mem.valid;
     assign mem_wb.opcode = ex_mem.opcode;
 
     assign mem_wb.rs1_s = ex_mem.rs1_s;

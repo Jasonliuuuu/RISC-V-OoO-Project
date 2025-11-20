@@ -16,7 +16,7 @@ module decode
     // ============================
     input  logic stall_signal,
     input  logic freeze_stall,
-    input  logic flushing_inst,
+    input  logic flush_pipeline,
 
     // ============================
     // From rename_unit (Option A)
@@ -39,10 +39,12 @@ module decode
 );
 
     // ----------------------------------------
-    // 1. Valid
+    // 1. Valid and PC assignment
     // ----------------------------------------
-    assign id_ex.valid = (!flushing_inst) && if_id.valid && imem_resp_id;
     assign id_ex.pc    = if_id.pc;
+    // Flush in-flight instruction when branch/jump detected
+    assign id_ex.valid = flush_pipeline ? 1'b0 : if_id.valid;
+
 
     // ----------------------------------------
     // 2. Latch instruction
@@ -88,7 +90,7 @@ module decode
     // 4. Assign architectural indices
     // ----------------------------------------
     always_comb begin
-        if (flushing_inst) begin
+        if (flush_pipeline) begin
             id_ex.rs1_s = '0;
             id_ex.rs2_s = '0;
             id_ex.rd_s  = '0;
@@ -122,7 +124,7 @@ module decode
     end
 
     // ----------------------------------------
-    // 7. Immediate generation from CURRENT instruction
+    // 6. Immediates calculation
     // ----------------------------------------
     always_comb begin
         // Always use CURRENT instruction (no flushing logic for these)
@@ -220,7 +222,7 @@ module decode
     end
 
     assign id_ex.alu_m2_sel =
-        (curr_opcode inside {op_store, op_load, op_imm, op_jalr}) ? 1'b1 : 1'b0;
+        (curr_opcode inside {op_auipc, op_store, op_load, op_imm, op_jalr}) ? 1'b1 : 1'b0;
 
     // ----------------------------------------
     // 11. cmp mux - use CURRENT opcode
