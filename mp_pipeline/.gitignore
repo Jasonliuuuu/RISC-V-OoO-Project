@@ -1,0 +1,24 @@
+# QuestaSim/ModelSim simulation files
+*.wlf
+*.vstf
+*.dbg
+*.ucdb
+vsim.dbg
+transcript
+work/
+
+# Log files
+*.log
+sim/*.txt
+sim/*.log
+
+# Coverage files
+*.ucdb
+
+# Waveform files  
+*.vcd
+*.fsdb
+
+# OS files
+.DS_Store
+*~
