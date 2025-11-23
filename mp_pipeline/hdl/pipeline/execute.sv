@@ -21,6 +21,8 @@ module execute
     assign ex_mem.pc    = id_ex.pc;
     // Flush in-flight instruction when branch/jump detected
     assign ex_mem.valid = flush_pipeline ? 1'b0 : id_ex.valid;
+    // Propagate speculative flag (will be overridden in cpu.sv pipeline register)
+    assign ex_mem.is_speculative = id_ex.is_speculative;
 
     // forward A
     logic [31:0] a_src;
@@ -78,24 +80,39 @@ module execute
         .br_en(ex_mem.br_en)
     );
 
-    // Copy fields
-    always_comb begin
-        ex_mem.inst          = id_ex.inst;
-        ex_mem.opcode        = id_ex.opcode;
-        ex_mem.funct3        = id_ex.funct3;
-        ex_mem.funct7        = id_ex.funct7;
-        ex_mem.rd_s          = id_ex.rd_s;
-        ex_mem.rs1_s         = id_ex.rs1_s;
-        ex_mem.rs2_s         = id_ex.rs2_s;
-        ex_mem.rs1_v         = a_src;
-        ex_mem.rs2_v         = b_src;
-        ex_mem.j_imm         = id_ex.j_imm;
-        ex_mem.b_imm         = id_ex.b_imm;
-        ex_mem.i_imm         = id_ex.i_imm;
-        ex_mem.s_imm         = id_ex.s_imm;
-        ex_mem.u_imm         = id_ex.u_imm;
+    // Propagate to EX/MEM register
+    assign ex_mem.inst        = id_ex.inst;
+    assign ex_mem.rs1_v       = a_src;
+    assign ex_mem.rs2_v       = b_src;
+    assign ex_mem.u_imm       = id_ex.u_imm;
+    assign ex_mem.opcode      = id_ex.opcode;
+    assign ex_mem.funct3      = id_ex.funct3;
+    assign ex_mem.funct7      = id_ex.funct7;
+    assign ex_mem.rd_s        = id_ex.rd_s;
+    assign ex_mem.rs1_s       = id_ex.rs1_s;
+    assign ex_mem.rs2_s       = id_ex.rs2_s;
+    assign ex_mem.j_imm       = id_ex.j_imm;
+    assign ex_mem.b_imm       = id_ex.b_imm;
+    assign ex_mem.i_imm       = id_ex.i_imm;
+    assign ex_mem.s_imm       = id_ex.s_imm;
 
-        // PHYS
+    // NEW: Pre-calculate branch target in EX stage for stable value
+    // This eliminates combinational glitches in MEM stage
+    logic [31:0] branch_target_calc;
+    always_comb begin
+        if (id_ex.opcode == op_jal)
+            branch_target_calc = alu_result;  // JAL: PC + imm
+        else if (id_ex.opcode == op_jalr)
+            branch_target_calc = alu_result & 32'hFFFF_FFFE;  // JALR: (rs1 + imm) & ~1
+        else if (id_ex.opcode == op_br)
+            branch_target_calc = alu_result;  // BRANCH: PC + imm
+        else
+            branch_target_calc = alu_result;  // Default
+    end
+    assign ex_mem.branch_target = branch_target_calc;
+
+    // Physical register assignment (rename)
+    always_comb begin
         ex_mem.rs1_arch      = id_ex.rs1_arch;
         ex_mem.rs2_arch      = id_ex.rs2_arch;
         ex_mem.rs1_phys      = id_ex.rs1_phys;

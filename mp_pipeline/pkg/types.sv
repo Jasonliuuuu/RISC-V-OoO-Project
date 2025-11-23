@@ -163,6 +163,7 @@ package rv32i_types;
     typedef struct packed {
         logic [31:0] pc;
         logic valid;
+        logic is_speculative;  // NEW: tracks if instruction was speculatively fetched
     } if_id_stage_reg_t;
 
     /*typedef struct packed {
@@ -188,6 +189,7 @@ package rv32i_types;
     logic [31:0] inst;
     logic [31:0] pc;
     logic        valid;
+    logic        is_speculative;  // NEW: tracks if this instruction was speculatively fetched and should not commit
 
     logic        regf_we;
     logic [2:0]  funct3;
@@ -231,10 +233,10 @@ package rv32i_types;
 
     
     typedef struct packed {
-
     logic [31:0] inst;
-    logic [31:0] pc;
+    logic [31:0] pc  ;
     logic        valid;
+    logic        is_speculative;  // NEW: tracks if this instruction was speculatively fetched
 
     logic [6:0]  opcode;
     logic [6:0]  funct7;
@@ -258,22 +260,20 @@ package rv32i_types;
     logic [5:0] dest_phys_new;
     logic [5:0] dest_phys_old;
 
-    // EX results
-    logic [31:0] alu_out;
-    logic        br_en;
-
-    // old fields (remove later)
+    // old fields (to be removed later)
+    logic [4:0] rd_s;
     logic [4:0] rs1_s;
     logic [4:0] rs2_s;
-    logic [4:0] rd_s;
     logic [31:0] rs1_v;
     logic [31:0] rs2_v;
+    logic [31:0] branch_target;  // NEW: Pre-calculated stable branch target from EX
+    logic [31:0] alu_out;
+    logic [31:0] u_imm_old;
+    logic        br_en;
 
-    // writeback
     logic        regf_we;
-    logic [3:0]  regfilemux_sel;
-
-} ex_mem_stage_reg_t;
+    regfilemux::regfilemux_sel_t regfilemux_sel;
+    } ex_mem_stage_reg_t;
 
 
 
@@ -283,6 +283,7 @@ package rv32i_types;
     logic [31:0] inst;
     logic [31:0] pc;
     logic        valid;
+    logic        is_speculative;  // NEW: tracks if this instruction was speculatively fetched and should not commit
 
     logic [6:0] opcode;
 

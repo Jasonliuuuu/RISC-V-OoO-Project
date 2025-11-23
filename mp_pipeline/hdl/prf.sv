@@ -21,6 +21,14 @@ module prf #(
     // read (combinational)
     assign rs1_val = prf_mem[rs1_phys];
     assign rs2_val = prf_mem[rs2_phys];
+    
+    // Debug PRF reads for specific physical registers
+    always_comb begin
+        if (rs2_phys == 6'd26 || rs2_phys == 6'd8 || rs2_phys == 6'd30) begin
+            $display("[PRF READ] rs2_phys=%0d → rs2_val=0x%h (prf_mem[%0d]=0x%h)",
+                     rs2_phys, rs2_val, rs2_phys, prf_mem[rs2_phys]);
+        end
+    end
 
     // write (sequential)
     always_ff @(posedge clk) begin

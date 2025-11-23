@@ -44,6 +44,8 @@ module decode
     assign id_ex.pc    = if_id.pc;
     // Flush in-flight instruction when branch/jump detected
     assign id_ex.valid = flush_pipeline ? 1'b0 : if_id.valid;
+    // Propagate speculative flag (will be overridden in cpu.sv pipeline register)
+    assign id_ex.is_speculative = if_id.is_speculative;
 
 
     // ----------------------------------------
@@ -121,6 +123,12 @@ module decode
     always_comb begin
         id_ex.rs1_v = rs1_val;
         id_ex.rs2_v = rs2_val;
+        
+        // Debug decode for specific PCs that have shadow rs2 errors
+        if (if_id.pc == 32'hdb0737f0 || if_id.pc == 32'hdb0737f8) begin
+            $display("[DECODE] PC=0x%h: imem[24:20]=%0d rs2_arch=%0d rs2_phys=%0d rs2_val(from PRF)=0x%h → id_ex.rs2_v=0x%h",
+                     if_id.pc, imem_rdata_id[24:20], id_ex.rs2_arch, rs2_phys, rs2_val, id_ex.rs2_v);
+        end
     end
 
     // ----------------------------------------
@@ -222,15 +230,18 @@ module decode
     end
 
     assign id_ex.alu_m2_sel =
-        (curr_opcode inside {op_auipc, op_store, op_load, op_imm, op_jalr}) ? 1'b1 : 1'b0;
+        (curr_opcode inside {op_auipc, op_store, op_load, op_imm, op_jalr, op_br, op_jal}) ? 1'b1 : 1'b0;
 
     // ----------------------------------------
     // 11. cmp mux - use CURRENT opcode
     // ----------------------------------------
+    // cmp_sel: 1 = use immediate, 0 = use rs2
     assign id_ex.cmp_sel =
-        (curr_opcode == op_br) ? 1'b0 :
-        (curr_opcode == op_jalr) ? 1'b1 :
-        1'b0;
+        (curr_opcode == op_br) ? 1'b0 :          // Branches use rs2
+        (curr_opcode == op_jalr) ? 1'b1 :        // JALR uses immediate
+        (curr_opcode == op_imm && (curr_funct3 == slt || curr_funct3 == sltu)) ? 1'b1 :  // SLTI/SLTIU use immediate
+        (curr_opcode == op_reg && (curr_funct3 == slt || curr_funct3 == sltu)) ? 1'b0 :  // SLT/SLTU use rs2
+        1'b0;  // Default
 
     // ----------------------------------------
     // 12. regfile write enable - use CURRENT opcode
@@ -250,7 +261,17 @@ module decode
             op_auipc:   id_ex.regfilemux_sel = regfilemux::alu_out; // AUIPC result from ALU
             op_jal:     id_ex.regfilemux_sel = regfilemux::pc_plus4;
             op_jalr:    id_ex.regfilemux_sel = regfilemux::pc_plus4;
-            op_load:    id_ex.regfilemux_sel = regfilemux::regfilemux_sel_t'(curr_funct3);
+            op_load: begin
+                // Map funct3 to correct load type
+                unique case (curr_funct3)
+                    3'b000: id_ex.regfilemux_sel = regfilemux::lb;   // LB
+                    3'b001: id_ex.regfilemux_sel = regfilemux::lh;   // LH
+                    3'b010: id_ex.regfilemux_sel = regfilemux::lw;   // LW
+                    3'b100: id_ex.regfilemux_sel = regfilemux::lbu;  // LBU
+                    3'b101: id_ex.regfilemux_sel = regfilemux::lhu;  // LHU
+                    default: id_ex.regfilemux_sel = regfilemux::lw;  // Default to LW
+                endcase
+            end
             op_imm: begin
                 if (curr_funct3 == slt || curr_funct3 == sltu)
                     id_ex.regfilemux_sel = regfilemux::br_en;

@@ -18,7 +18,8 @@ module memory
 
     output logic br_en_out,
     output logic [31:0] branch_new_address,
-    output logic flush_pipeline
+    output logic flush_pipeline,
+    input  logic flush_delayed  // NEW: flush from previous cycle
 );
 
     assign mem_wb_alu_out = ex_mem.alu_out;
@@ -81,31 +82,52 @@ module memory
             1'b0;
     end
 
+    // CRITICAL FIX: Use pre-calculated branch target from EX stage
+    // Branch target is now calculated in execute.sv and stored in ex_mem.branch_target
+    // This eliminates combinational glitches that occur when recalculating in MEM stage
+    assign branch_new_address = ex_mem.branch_target;
+
+    // Flush pipeline detection
+    assign flush_pipeline = (ex_mem.valid === 1'b1) &&
+                            ((ex_mem.opcode == op_jal) ||
+                             (ex_mem.opcode == op_jalr) ||
+                             ((ex_mem.opcode == op_br) && br_en_out));
+
+    // DEBUG: Track branch/jump execution and flush (combinational)
     always_comb begin
-        if (ex_mem.opcode inside {op_jal, op_jalr})
-            branch_new_address = ex_mem.alu_out & 32'hFFFF_FFFE;
-        else if ((ex_mem.opcode == op_br) && ex_mem.br_en)
-            branch_new_address = ex_mem.alu_out;
-        else
-            branch_new_address = 32'd0;
+        if (ex_mem.valid && flush_pipeline) begin
+            // Special attention to our problematic instructions
+            if (ex_mem.pc == 32'h60000084 || ex_mem.pc == 32'hdb139d42) begin
+                $display("[MEM @%0t] *** Critical branch: PC=0x%08x, target=0x%08x, flush=%b ***", 
+                         $time, ex_mem.pc, branch_new_address, flush_pipeline);
+            end
+            
+            // Check if we're producing the mysterious address
+            if (branch_new_address == 32'h6d333090) begin
+                $display("[MEM @%0t] !!! FOUND IT: Branch producing target 0x6d333090 from PC=0x%08x !!!", 
+                         $time, ex_mem.pc);
+            end
+        end
     end
 
-    always_comb begin
-        if (ex_mem.valid === 1'b1) begin
-            flush_pipeline = (ex_mem.opcode inside {op_jal, op_jalr}) ||
-                           ((ex_mem.opcode == op_br) && ex_mem.br_en);
-        end
-        else begin
-            flush_pipeline = 1'b0;
-        end
-    end
-
+    // ============================================================
+    // MEM/WB Stage Register Assignment
+    // ============================================================
+    
     // fill mem_wb struct
     assign mem_wb.inst  = ex_mem.inst;
     assign mem_wb.pc    = ex_mem.pc;
-    // CRITICAL: Flush mem_wb.valid to prevent flushed instructions from committing
-    // When flush_pipeline is active, instructions that reach WB should not commit
-    assign mem_wb.valid = flush_pipeline ? 1'b0 : ex_mem.valid;
+    
+    // CRITICAL FIX: Branch/jump instructions MUST commit before flushing!
+    // flush_pipeline indicates the CURRENT instruction in MEM stage causes a flush
+    // This instruction should commit, but instructions AFTER it should be flushed
+    // So we should NOT clear mem_wb.valid when flush happens
+    // The flush affects IF/ID, ID/EX, EX/MEM stages, not the MEM→WB transfer
+    assign mem_wb.valid = ex_mem.valid;  // Always pass through, let flush affect earlier stages
+    // Propagate speculative flag (will be overridden in cpu.sv pipeline register)
+    assign mem_wb.is_speculative = ex_mem.is_speculative;
+    
+    
     assign mem_wb.opcode = ex_mem.opcode;
 
     assign mem_wb.rs1_s = ex_mem.rs1_s;
