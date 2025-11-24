@@ -84,8 +84,9 @@ elaborate $design_toplevel
 current_design $design_toplevel
 check_design
 
-set_wire_load_model -name "5K_hvratio_1_1"
-set_wire_load_mode enclosed
+# Wire load model disabled for FreePDK45
+# set_wire_load_model -name "5K_hvratio_1_1"
+# set_wire_load_mode enclosed
 
 set clk_name $design_clock_pin
 set clk_period 2

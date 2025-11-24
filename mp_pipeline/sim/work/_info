@@ -12,10 +12,10 @@ Z0 !s99 nomlopt
 cModel Technology
 Z1 d/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim
 T_opt
-!s110 1762230814
-V_XHE:UmICTne69JF6OG@k1
+!s110 1763923774
+V4[h^TiA?_Zbg1a4MM=OX]3
 04 6 4 work top_tb fast 0
-=1-000ae431a4f1-6909821d-5f46b-21be3f
+=1-000ae431a4f1-6923573d-7911e-1d2c32
 R0
 !s12b OEM100
 !s124 OEM100
@@ -34,7 +34,7 @@ Z9 DXx4 work 10 regfilemux 0 22 zhYH?aPm@5mAmgHbM7EFl2
 Z10 DXx4 work 12 forward_amux 0 22 P:OkcIjf^^FQgP`3LcFlz1
 Z11 DXx4 work 12 forward_bmux 0 22 Bl4lIg[:S>HP=ggZj<eG:2
 Z12 DXx4 work 11 rv32i_types 0 22 ^VQ^N@V_fk_A7cjYo^o2U2
-Z13 !s110 1762230811
+Z13 !s110 1763923771
 !i10b 1
 !s100 ]42X_mJoB08fM=K5h?4TM1
 Ib?akL7BhdiNTZRdz;f1WS2
@@ -50,7 +50,7 @@ Z16 OL;L;2023.2;77
 r1
 !s85 0
 31
-Z17 !s108 1762230811.000000
+Z17 !s108 1763923771.000000
 Z18 !s107 ../hvl/rvfi_reference.svh|../hvl/instr_cg.svh|../hvl/randinst.svh|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mon_itf.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/magic_dual_port.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mem_itf.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/ordinary_dual_port.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/alu.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cmp.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/ir.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv|
 Z19 !s90 -sv|+acc|-timescale|1ns/1ns|-cover|bcefst|-work|work|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/regfile.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Load_hazard_stall.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/ir.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cmp.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/alu.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/freeze.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/rvfimon.v|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/random_tb.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/ordinary_dual_port.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mem_itf.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/magic_dual_port.sv|/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/mon_itf.sv|+incdir+../hvl|+incdir+../pkg|-l|run/top_tb_compile.log|
 !i113 0
@@ -67,7 +67,7 @@ R13
 I@j7Ze^=WGD26L9l7SQ>A]0
 S1
 R1
-Z23 w1758749122
+Z23 w1763923505
 Z24 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv
 Z25 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../pkg/types.sv
 !i122 0
@@ -164,7 +164,7 @@ R13
 IQZlZRUdb=93a6Q3<8F`5:3
 S1
 R1
-w1758751632
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/cpu.sv
 !i122 0
@@ -199,7 +199,7 @@ R13
 Ib]nKeCMm?<LXJE7_O6aXk2
 S1
 R1
-w1760554374
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/decode.sv
 !i122 0
@@ -234,7 +234,7 @@ R13
 IGLS<>eI@Kc[D8efTkk5i=2
 S1
 R1
-w1760554442
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/execute.sv
 !i122 0
@@ -269,7 +269,7 @@ R13
 IGY3BV^=n?z0>mCW5HgNdA3
 S1
 R1
-w1760554649
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/fetch.sv
 !i122 0
@@ -304,7 +304,7 @@ R13
 IZ=QL?V08<_779@MS6IY7P2
 S1
 R1
-R14
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/Forward.sv
 !i122 0
@@ -544,7 +544,7 @@ R13
 IcUdo@1lHlGC^giI^]fKdH1
 S1
 R1
-w1758733504
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/memstage.sv
 !i122 0
@@ -598,7 +598,7 @@ R13
 Im=z;>dJk^]Y92?[2aoMCJ1
 S1
 R1
-w1761779419
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/monitor.sv
 !i122 0
@@ -2818,7 +2818,7 @@ R13
 IFEQe@SUT27XSco3?`IO<91
 S1
 R1
-w1762230811
+w1763923771
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hvl/top_tb.sv
 F../hvl/rvfi_reference.svh
@@ -2854,7 +2854,7 @@ R13
 IYUKjFeL[YU>z3hBldo^S82
 S1
 R1
-w1758733562
+R23
 8/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv
 F/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/sim/../hdl/pipeline/writeback.sv
 !i122 0

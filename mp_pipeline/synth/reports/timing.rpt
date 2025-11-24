@@ -1,0 +1,76 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : cpu
+Version: U-2022.12-SP7
+Date   : Mon Nov 24 15:00:07 2025
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+  Startpoint: dmem_rdata[11]
+              (input port clocked by my_clk)
+  Endpoint: ex_mem_reg_reg[alu_out][31]
+            (rising edge-triggered flip-flop clocked by my_clk)
+  Path Group: my_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  cpu                5K_hvratio_1_1        NangateOpenCellLibrary
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock my_clk (rise edge)                            0.000000   0.000000
+  clock network delay (ideal)                         0.000000   0.000000
+  input external delay                                0.500000   0.500000 f
+  dmem_rdata[11] (in)                                 0.000000   0.500000 f
+  U3387/Z (CLKBUF_X1)                                 0.035628   0.535628 f
+  U4046/ZN (NAND2_X1)                                 0.031181   0.566809 r
+  U4047/ZN (OAI21_X1)                                 0.031143   0.597952 f
+  U4048/ZN (OR4_X2)                                   0.126037   0.723989 f
+  U3310/ZN (AOI21_X1)                                 0.050608   0.774597 r
+  U4433/ZN (NAND2_X1)                                 0.036384   0.810981 f
+  U4435/ZN (AND2_X4)                                  0.063251   0.874232 f
+  U4436/Z (XOR2_X1)                                   0.091663   0.965895 f
+  U4446/ZN (NAND2_X1)                                 0.037096   1.002991 r
+  U4447/ZN (INV_X1)                                   0.023211   1.026202 f
+  U4448/ZN (AOI21_X1)                                 0.050476   1.076678 r
+  U4449/ZN (OAI21_X1)                                 0.036770   1.113448 f
+  U4458/ZN (AOI21_X1)                                 0.052597   1.166045 r
+  U4494/ZN (OAI21_X1)                                 0.035573   1.201618 f
+  U4557/ZN (AOI21_X1)                                 0.043886   1.245504 r
+  U3249/ZN (OR2_X1)                                   0.048134   1.293638 r
+  U3381/ZN (AOI21_X1)                                 0.034886   1.328524 f
+  U4666/ZN (AOI21_X1)                                 0.046307   1.374831 r
+  U4685/ZN (OAI21_X1)                                 0.046283   1.421114 f
+  U3491/ZN (NAND4_X1)                                 0.043697   1.464811 r
+  U3490/ZN (NAND2_X1)                                 0.029379   1.494190 f
+  U6631/CO (FA_X1)                                    0.088717   1.582908 f
+  U6557/CO (FA_X1)                                    0.090643   1.673551 f
+  U4943/CO (FA_X1)                                    0.090643   1.764194 f
+  U4859/CO (FA_X1)                                    0.089117   1.853312 f
+  U4778/ZN (XNOR2_X1)                                 0.055442   1.908754 f
+  U4858/ZN (OAI211_X1)                                0.045796   1.954550 r
+  ex_mem_reg_reg[alu_out][31]/D (DFF_X1)              0.009042   1.963592 r
+  data arrival time                                              1.963592
+
+  clock my_clk (rise edge)                            2.000000   2.000000
+  clock network delay (ideal)                         0.000000   2.000000
+  ex_mem_reg_reg[alu_out][31]/CK (DFF_X1)             0.000000   2.000000 r
+  library setup time                                  -0.035298  1.964702
+  data required time                                             1.964702
+  --------------------------------------------------------------------------
+  data required time                                             1.964702
+  data arrival time                                              -1.963592
+  --------------------------------------------------------------------------
+  slack (MET)                                                    0.001110
+
+
+1

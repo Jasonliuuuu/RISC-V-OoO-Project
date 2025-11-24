@@ -1,0 +1,45 @@
+ 
+****************************************
+Report : area
+Design : cpu
+Version: U-2022.12-SP7
+Date   : Mon Nov 24 15:00:07 2025
+****************************************
+
+Information: Updating design information... (UID-85)
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /storage-home/t/tl152/stdcell_lib/stdcells.db)
+
+Number of ports:                          290
+Number of nets:                         10069
+Number of cells:                         9315
+Number of combinational cells:           7500
+Number of sequential cells:              1810
+Number of macros/black boxes:               0
+Number of buf/inv:                        808
+Number of references:                      48
+
+Combinational area:               8351.070108
+Buf/Inv area:                      492.632000
+Noncombinational area:            9973.403921
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                 18324.474029
+Total area:                 undefined
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area           Local cell area
+                                  -------------------  ---------------------------- 
+Hierarchical cell                 Absolute    Percent  Combi-     Noncombi-  Black-
+                                  Total       Total    national   national   boxes   Design
+--------------------------------  ----------  -------  ---------  ---------  ------  ---------
+cpu                               18324.4740    100.0  4880.5680  3904.3479  0.0000  cpu
+decode/regfile                     9539.5581     52.1  3470.5021  6069.0560  0.0000  regfile
+--------------------------------  ----------  -------  ---------  ---------  ------  ---------
+Total                                                  8351.0701  9973.4039  0.0000
+
+1

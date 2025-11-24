@@ -1,0 +1,685 @@
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version U-2022.12-SP7 for linux64 - Oct 10, 2023 
+
+                    Copyright (c) 1988 - 2023 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+Initializing...
+Current time:       Mon Nov 24 14:59:15 2025
+Hostname:           cobalt.clear8.rice.edu
+CPU Model:          Intel(R) Xeon(R) CPU E5-2640 v4 @ 2.40GHz
+CPU Details:        Cores = 40 : Sockets = 2 : Cache Size = 25600 KB : Freq = 3.40 GHz
+OS:                 Linux 4.18.0-553.71.1.el8_10.x86_64
+RAM:                125 GB (Free  14 GB)
+Swap:                19 GB (Free  19 GB)
+Work Filesystem:    /nfs-share mounted to clearstor.clear.rice.edu:/clear-home-archive/nfs-share
+Tmp Filesystem:     /tmp mounted to /dev/mapper/vg0-tmp
+Work Disk:          1006 GB (Free 871 GB)
+Tmp Disk:             5 GB (Free   5 GB)
+
+CPU Load: 4%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+set hdlin_ff_always_sync_set_reset true
+true
+set hdlin_ff_always_async_set_reset true
+true
+set hdlin_infer_multibit default_all
+default_all
+set hdlin_check_no_latch true
+true
+set_host_options -max_cores 4
+1
+set_app_var report_default_significant_digits 6
+6
+set design_toplevel cpu
+cpu
+# You requested %d cores. However, load on host %s is %0.2y
+suppress_message UIO-231
+# output port '%s' is connected directly to output port '%s'
+suppress_message LINT-31
+# In design '%s', output port '%s' is connected directly to '%s'.
+suppress_message LINT-52
+# '%s' is not connected to any nets
+suppress_message LINT-28
+# output port '%s' is connected directly to output port '%s'
+suppress_message LINT-29
+# a pin on submodule '%s' is connected to logic 1 or logic 0
+suppress_message LINT-32
+# the same net is connected to more than one pin on submodule '%s'
+suppress_message LINT-33
+# '%s' is not connected to any nets
+suppress_message LINT-28
+# In design '%s', cell '%s' does not drive any nets.
+suppress_message LINT-1
+# There are %d potential problems in your design. Please run 'check_design' for more information.
+suppress_message LINT-99
+# In design '%s', net '%s' driven by pin '%s' has no loads.
+suppress_message LINT-2
+# The register '' is a constant and will be removed.
+suppress_message OPT-1206
+# The register '' will be removed.
+suppress_message OPT-1207
+# Can't read link_library file '%s'
+suppress_message UID-3
+# Design '%s' contains %d high-fanout nets.
+suppress_message TIM-134
+# The trip points for the library named %s differ from those in the library named %s.
+suppress_message TIM-164
+# Design has unannotated black box outputs.
+suppress_message PWR-428
+# Skipping clock gating on design %s, since there are no registers.
+suppress_message PWR-806
+# Ungrouping hierarchy %s before Pass 1.
+suppress_message OPT-776
+# Changed wire name %s to %s in module %s.
+suppress_message VO-2
+# Verilog 'assign' or 'tran' statements are written out.
+suppress_message VO-4
+# Verilog writer has added %d nets to module %s using %s as prefix.
+suppress_message VO-11
+# %s DEFAULT branch of CASE statement cannot be reached.
+suppress_message ELAB-311
+# Netlist for always_ff block does not contain a flip-flop.
+suppress_message ELAB-976
+# Netlist for always_comb block is empty.
+suppress_message ELAB-982
+# Netlist for always_ff block is empty.
+suppress_message ELAB-984
+# Netlist for always block is empty.
+suppress_message ELAB-985
+define_design_lib WORK -path ./work
+1
+set alib_library_analysis_path [getenv STD_CELL_ALIB]
+/storage-home/t/tl152/stdcell_lib/alib
+set symbol_library [list generic.sdb]
+generic.sdb
+set synthetic_library [list dw_foundation.sldb]
+dw_foundation.sldb
+set target_library [getenv STD_CELL_LIB]
+/storage-home/t/tl152/stdcell_lib/stdcells.db
+set link_library [list "*" $target_library $synthetic_library]
+* /storage-home/t/tl152/stdcell_lib/stdcells.db dw_foundation.sldb
+set design_clock_pin clk
+clk
+set design_reset_pin rst
+rst
+analyze -library WORK -format sverilog [getenv PKG_SRCS]
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../pkg/types.sv
+Presto compilation completed successfully.
+Loading db file '/storage-home/t/tl152/stdcell_lib/stdcells.db'
+Loading db file '/clear/apps/synopsys-2023/syn/latest/libraries/syn/dw_foundation.sldb'
+1
+set modules [split [getenv HDL_SRCS] " "]
+/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/regfile.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/Forward.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/memstage.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/decode.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/fetch.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/execute.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/writeback.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/Load_hazard_stall.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/ir.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/cmp.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/alu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/cpu.sv /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/freeze.sv
+foreach module $modules {
+   analyze -library WORK -format sverilog "${module}"
+}
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/regfile.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/Forward.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/memstage.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/decode.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/fetch.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/execute.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/writeback.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/Load_hazard_stall.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/ir.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/cmp.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/alu.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/cpu.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/freeze.sv
+Presto compilation completed successfully.
+elaborate $design_toplevel
+Loading db file '/clear/apps/synopsys-2023/syn/latest/libraries/syn/gtech.db'
+Loading db file '/clear/apps/synopsys-2023/syn/latest/libraries/syn/standard.sldb'
+  Loading link library 'NangateOpenCellLibrary'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+
+Inferred memory devices in process
+	in routine cpu line 51 in file
+		'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/cpu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   mem_wb_reg_reg    | Flip-flop |  389  |  Y  | Y  | N  | N  | N  | N  | N  |
+|    if_id_reg_reg    | Flip-flop |  33   |  Y  | Y  | N  | N  | N  | N  | N  |
+|    id_ex_reg_reg    | Flip-flop |  367  |  Y  | Y  | N  | N  | N  | N  | N  |
+|   ex_mem_reg_reg    | Flip-flop |  391  |  Y  | Y  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (cpu)
+Elaborated 1 design.
+Current design is now 'cpu'.
+Information: Building the design 'fetch'. (HDL-193)
+
+Inferred memory devices in process
+	in routine fetch line 33 in file
+		'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/fetch.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       pc_reg        | Flip-flop |  30   |  Y  | Y  | N  | N  | Y  | N  | N  |
+|       pc_reg        | Flip-flop |   2   |  Y  | Y  | N  | N  | N  | Y  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine fetch line 66 in file
+		'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/fetch.sv'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| if_id_reg_before_reg | Flip-flop |  32   |  Y  | Y  | N  | N  | Y  | N  | N  |
+| if_id_reg_before_reg | Flip-flop |   1   |  N  | Y  | N  | N  | Y  | N  | N  |
+================================================================================
+
+Inferred memory devices in process
+	in routine fetch line 82 in file
+		'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/fetch.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|  imem_resp_id_reg   | Flip-flop |   1   |  N  | N  | N  | N  | Y  | N  | N  |
+|  imem_rdata_id_reg  | Flip-flop |  29   |  Y  | Y  | N  | N  | Y  | N  | N  |
+|  imem_rdata_id_reg  | Flip-flop |   3   |  Y  | Y  | N  | N  | N  | Y  | N  |
+===============================================================================
+Presto compilation completed successfully. (fetch)
+Information: Building the design 'decode'. (HDL-193)
+
+Statistics for case statements in always block at line 119 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/decode.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           120            |    user/user     |
+===============================================
+
+Statistics for case statements in always block at line 140 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/decode.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           141            |    user/user     |
+===============================================
+
+Inferred memory devices in process
+	in routine decode line 45 in file
+		'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/decode.sv'.
+===================================================================================
+|      Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===================================================================================
+| imem_rdata_id_delay_reg | Flip-flop |  32   |  Y  | Y  | N  | N  | Y  | N  | N  |
+===================================================================================
+Presto compilation completed successfully. (decode)
+Information: Building the design 'execute'. (HDL-193)
+
+Statistics for case statements in always block at line 29 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/execute.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            31            |    user/user     |
+|            42            |    user/user     |
+===============================================
+
+Statistics for case statements in always block at line 64 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/execute.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            65            |    user/user     |
+===============================================
+
+Statistics for case statements in always block at line 72 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/execute.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            73            |    user/user     |
+===============================================
+
+Statistics for case statements in always block at line 94 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/execute.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            95            |    user/user     |
+===============================================
+Presto compilation completed successfully. (execute)
+Information: Building the design 'memory'. (HDL-193)
+
+Statistics for case statements in always block at line 35 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/memstage.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            43            |    user/user     |
+|            52            |    user/user     |
+|            58            |    user/user     |
+===============================================
+Presto compilation completed successfully. (memory)
+Information: Building the design 'writeback'. (HDL-193)
+
+Statistics for case statements in always block at line 152 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/pipeline/writeback.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           153            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (writeback)
+Information: Building the design 'forward'. (HDL-193)
+Presto compilation completed successfully. (forward)
+Information: Building the design 'stall'. (HDL-193)
+Presto compilation completed successfully. (stall)
+Information: Building the design 'freeze'. (HDL-193)
+Presto compilation completed successfully. (freeze)
+Information: Building the design 'regfile'. (HDL-193)
+
+Inferred memory devices in process
+	in routine regfile line 16 in file
+		'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/regfile.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      data_reg       | Flip-flop | 1024  |  Y  | Y  | N  | N  | Y  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|    regfile/28    |   32   |   32    |      5       |
+|    regfile/30    |   32   |   32    |      5       |
+======================================================
+Presto compilation completed successfully. (regfile)
+Information: Building the design 'alu'. (HDL-193)
+
+Statistics for case statements in always block at line 19 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/alu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            20            |    user/user     |
+===============================================
+Presto compilation completed successfully. (alu)
+Information: Building the design 'cmp'. (HDL-193)
+
+Statistics for case statements in always block at line 19 in file
+	'/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/../hdl/cmp.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            20            |    user/user     |
+===============================================
+Presto compilation completed successfully. (cmp)
+1
+current_design $design_toplevel
+Current design is 'cpu'.
+{cpu}
+check_design
+ 
+****************************************
+check_design summary:
+Version:     U-2022.12-SP7
+Date:        Mon Nov 24 14:59:17 2025
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+No issues found.
+--------------------------------------------------------------------------------
+
+1
+# Wire load model disabled for FreePDK45
+# set_wire_load_model -name "5K_hvratio_1_1"
+# set_wire_load_mode enclosed
+set clk_name $design_clock_pin
+clk
+set clk_period 2
+2
+create_clock -period $clk_period -name my_clk $clk_name
+1
+set_fix_hold [get_clocks my_clk]
+1
+set_input_delay 0.5 [all_inputs] -clock my_clk
+1
+set_output_delay 0.5 [all_outputs] -clock my_clk
+1
+set_load 0.1 [all_outputs]
+1
+set_max_fanout 1 [all_inputs]
+1
+set_fanout_load 8 [all_outputs]
+1
+link
+
+  Linking design 'cpu'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (12 designs)              /nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/cpu.db, etc
+  NangateOpenCellLibrary (library)
+                              /storage-home/t/tl152/stdcell_lib/stdcells.db
+  dw_foundation.sldb (library)
+                              /clear/apps/synopsys-2023/syn/latest/libraries/syn/dw_foundation.sldb
+
+1
+# compile_ultra -gate_clock -retime
+compile_ultra
+Information: Performing leakage power optimization. (PWR-850)
+CPU Load: 3%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+Alib files are up-to-date.
+Information: Running optimization using a maximum of 4 cores. (OPT-1500)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | U-2022.12-DWBB_202212.5 |     *     |
+| Licensed DW Building Blocks        | U-2022.12-DWBB_202212.5 |     *     |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler WLM                                                               |
+| Command Line | compile_ultra                                                                     |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 3867                                   |
+| Number of User Hierarchies                              | 11                                     |
+| Sequential Cell Count                                   | 2334                                   |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 358                                    |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
+
+
+  Simplifying Design 'cpu'
+
+Loaded alib file '/storage-home/t/tl152/stdcell_lib/alib/alib-52/stdcells.db.alib'
+  Building model 'DW01_NAND2'
+Information: Ungrouping 10 of 12 hierarchies before Pass 1 (OPT-775)
+CPU Load: 3%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'cpu'
+Information: Added key list 'DesignWare' to design 'cpu'. (DDB-72)
+Information: In design 'cpu', the register 'fetch/imem_resp_id_reg' is removed because it is merged to 'fetch/if_id_reg_before_reg[valid]'. (OPT-1215)
+ Implement Synthetic for 'cpu'.
+Information: Command 'do_operand_isolation' is obsolete and is being ignored.  Please refer to the replacement command 'set power_enable_datapath_gating true' instead. (INFO-118)
+  Processing 'regfile'
+Information: Added key list 'DesignWare' to design 'regfile'. (DDB-72)
+CPU Load: 3%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Mapping Optimizations  (Ultra High effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+  Mapping Optimization (Phase 2)
+Information: Command 'do_operand_isolation' is obsolete and is being ignored.  Please refer to the replacement command 'set power_enable_datapath_gating true' instead. (INFO-118)
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:30   30958.9      0.62     429.2    1197.3                           1003540.5625      0.00  
+    0:00:30   30931.3      0.81     470.4    1258.9                           1002655.8125      0.00  
+
+  Beginning Constant Register Removal
+  -----------------------------------
+    0:00:31   31514.9      1.60     712.9    1186.2                           1033673.7500      0.00  
+    0:00:31   31514.9      1.60     712.9    1186.2                           1033673.7500      0.00  
+
+  Beginning Global Optimizations
+  ------------------------------
+  Numerical Synthesis (Phase 1)
+  Numerical Synthesis (Phase 2)
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+  Global Optimization (Phase 31)
+  Selecting critical implementations
+  Mapping 'cpu_DW01_add_0'
+  Mapping 'cpu_DW01_add_1'
+  Mapping 'cpu_DP_OP_181_125_4017_3'
+
+  Beginning Isolate Ports
+  -----------------------
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:00:35   18975.6      0.54       4.0      39.8                           399630.2812      0.00  
+    0:00:36   19185.0      0.16       1.0      39.8                           407340.6250      0.00  
+    0:00:36   19185.0      0.16       1.0      39.8                           407340.6250      0.00  
+    0:00:37   19180.5      0.16       1.0      54.9                           407168.3750      0.00  
+    0:00:38   19179.7      0.16       1.0      54.9                           407142.6562      0.00  
+    0:00:38   19179.7      0.16       1.0      54.9                           407142.6562      0.00  
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+    0:00:41   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
+    0:00:41   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
+    0:00:41   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
+    0:00:42   18508.0      0.16       0.9      52.6                           371997.7812      0.00  
+    0:00:42   18508.0      0.16       0.9      52.6                           371997.7812      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+
+
+  Beginning Design Rule Fixing  (max_fanout)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+  Global Optimization (Phase 32)
+  Global Optimization (Phase 33)
+  Global Optimization (Phase 34)
+    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+
+
+  Beginning Leakage Power Optimization  (max_leakage_power 0)
+  ------------------------------------
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+
+                                  TOTAL                                                            
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
+  --------- --------- --------- --------- --------- ------------------------- --------- -----------
+    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:45   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
+    0:00:45   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
+    0:00:45   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
+    0:00:46   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
+    0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
+    0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
+    0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
+    0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
+    0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
+    0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
+    0:00:48   18324.5      0.00       0.0       0.0                           360050.8750      0.00  
+CPU Load: 4%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+Loading db file '/storage-home/t/tl152/stdcell_lib/stdcells.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+CPU Load: 4%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+1
+# compile
+current_design $design_toplevel
+Current design is 'cpu'.
+{cpu}
+report_area -hier > reports/area.rpt
+report_timing -delay max > reports/timing.rpt
+check_design > reports/check.rpt
+write_file -format ddc -hierarchy -output outputs/synth.ddc
+Writing ddc file 'outputs/synth.ddc'.
+1
+write_file -format verilog -hierarchy -output [format "outputs/%s.gate.v" $design_toplevel]
+Writing verilog file '/nfs-share/tl152/ELEC411/RISC-V-OoO-Project/mp_pipeline/synth/outputs/cpu.gate.v'.
+1
+exit
+
+Memory usage for this session 216 Mbytes.
+Memory usage for this session including child processes 608 Mbytes.
+CPU usage for this session 85 seconds ( 0.02 hours ).
+Elapsed time for this session 56 seconds ( 0.02 hours ).
+
+Thank you...
