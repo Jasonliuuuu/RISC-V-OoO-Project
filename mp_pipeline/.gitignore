@@ -1,0 +1,26 @@
+# QuestaSim/Modelsim generated files
+sim/work/
+sim/transcript
+sim/vsim.*
+sim/*.wlf
+sim/*.log
+sim/coverage_report/
+sim/run/*.log
+sim/*.dbg
+sim/*.ucdb
+
+# Synthesis generated files (optional - uncomment if you don't want to track)
+# synth/outputs/*.v
+# synth/reports/*.rpt
+synth/work/
+
+# OS generated files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Editor files
+.vscode/
+.idea/
+*.code-workspace
