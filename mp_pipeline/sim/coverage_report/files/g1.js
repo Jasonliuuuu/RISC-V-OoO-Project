@@ -1,2 +1,0 @@
-var g_data = {"102":{"pr":"/top_tb/mem","ty":2,"dui":11,"dun":"work.random_tb","cvgs":[{"h":["/top_tb/mem/RandInst/instr_cg",1,1,103],"cov":[255,238,98.03],"opts":{"goal":"100","merge_instance":"auto(true)"}}]},"11":{"pr":"work.random_tb","ty":0,"cvgs":[{"h":["work.random_tb::RandInst/instr_cg",1,1,223],"cov":[255,238,98.03],"opts":{"goal":"100","merge_instance":"auto(true)"}}]}};
-processCovergroupsData(g_data);
