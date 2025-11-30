@@ -165,26 +165,50 @@ synth/
 ## Running Synthesis
 
 ### Prerequisites
-```bash
-# Set up FreePDK45 environment
-export STD_CELL_LIB=/path/to/stdcells.db
-export STD_CELL_ALIB=/path/to/stdcell_lib
 
-# Or source the environment script
+**⚠️ IMPORTANT**: You **must** source the FreePDK45 environment before running synthesis!
+
+```bash
+# Source FreePDK45 environment (REQUIRED!)
 source ~/use_freepdk45.sh
 ```
 
+This script sets up:
+- `FREEPDK45`: Path to FreePDK45 library directory
+- `STD_CELL_LIB`: Path to `stdcells.db`
+- `STD_CELL_ALIB`: Path to standard cell alib directory
+
 ### Synthesis Commands
+
+**Option 1: Source and run in one command**
 ```bash
-# Clean previous results
+source ~/use_freepdk45.sh && make synth
+```
+
+**Option 2: Source first, then run**
+```bash
+# 1. Source the library (only once per terminal session)
+source ~/use_freepdk45.sh
+
+# 2. Clean previous results (optional)
 make clean
 
-# Run synthesis
+# 3. Run synthesis
 make synth
 
-# View reports
+# 4. View reports
 cat reports/timing.rpt
 cat reports/area.rpt
+cat reports/power.rpt
+```
+
+### Verification
+```bash
+# Check if synthesis was successful
+ls -lh outputs/
+# You should see:
+# - cpu.gate.v (gate-level netlist)
+# - synth.ddc (design database)
 ```
 
 ## Key Findings

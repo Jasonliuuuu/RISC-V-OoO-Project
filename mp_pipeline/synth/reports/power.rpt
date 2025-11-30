@@ -1,0 +1,40 @@
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : cpu
+Version: U-2022.12-SP7
+Date   : Sun Nov 30 11:06:39 2025
+****************************************
+
+
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /storage-home/t/tl152/stdcell_lib/stdcells.db)
+
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+cpu                    5K_hvratio_1_1    NangateOpenCellLibrary
+
+
+Global Operating Voltage = 1.1  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+cpu                                     306.329 5.78e+03 3.66e+05 6.45e+03 100.0
+  decode/regfile (regfile)               85.719 3.16e+03 1.77e+05 3.42e+03  53.0
+1

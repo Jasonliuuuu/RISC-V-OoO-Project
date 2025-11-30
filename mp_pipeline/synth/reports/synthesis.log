@@ -29,19 +29,19 @@
             Inclusivity and Diversity" (Refer to article 000036315 at
                         https://solvnetplus.synopsys.com)
 Initializing...
-Current time:       Mon Nov 24 14:59:15 2025
+Current time:       Sun Nov 30 11:05:47 2025
 Hostname:           cobalt.clear8.rice.edu
 CPU Model:          Intel(R) Xeon(R) CPU E5-2640 v4 @ 2.40GHz
 CPU Details:        Cores = 40 : Sockets = 2 : Cache Size = 25600 KB : Freq = 3.40 GHz
 OS:                 Linux 4.18.0-553.71.1.el8_10.x86_64
-RAM:                125 GB (Free  14 GB)
+RAM:                125 GB (Free  11 GB)
 Swap:                19 GB (Free  19 GB)
 Work Filesystem:    /nfs-share mounted to clearstor.clear.rice.edu:/clear-home-archive/nfs-share
 Tmp Filesystem:     /tmp mounted to /dev/mapper/vg0-tmp
 Work Disk:          1006 GB (Free 871 GB)
 Tmp Disk:             5 GB (Free   5 GB)
 
-CPU Load: 4%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+CPU Load: 1%, Ram Free: 11 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
 set hdlin_ff_always_sync_set_reset true
 true
 set hdlin_ff_always_async_set_reset true
@@ -368,7 +368,7 @@ check_design
 ****************************************
 check_design summary:
 Version:     U-2022.12-SP7
-Date:        Mon Nov 24 14:59:17 2025
+Date:        Sun Nov 30 11:05:49 2025
 ****************************************
 
                    Name                                            Total
@@ -413,7 +413,7 @@ link
 # compile_ultra -gate_clock -retime
 compile_ultra
 Information: Performing leakage power optimization. (PWR-850)
-CPU Load: 3%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+CPU Load: 1%, Ram Free: 10 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
 Alib files are up-to-date.
 Information: Running optimization using a maximum of 4 cores. (OPT-1500)
 Information: Evaluating DesignWare library utilization. (UISN-27)
@@ -455,7 +455,7 @@ Information: Sequential output inversion is enabled.  SVF file must be used for 
 Loaded alib file '/storage-home/t/tl152/stdcell_lib/alib/alib-52/stdcells.db.alib'
   Building model 'DW01_NAND2'
 Information: Ungrouping 10 of 12 hierarchies before Pass 1 (OPT-775)
-CPU Load: 3%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+CPU Load: 1%, Ram Free: 10 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
 Information: State dependent leakage is now switched from on to off.
 
   Beginning Pass 1 Mapping
@@ -467,7 +467,7 @@ Information: In design 'cpu', the register 'fetch/imem_resp_id_reg' is removed b
 Information: Command 'do_operand_isolation' is obsolete and is being ignored.  Please refer to the replacement command 'set power_enable_datapath_gating true' instead. (INFO-118)
   Processing 'regfile'
 Information: Added key list 'DesignWare' to design 'regfile'. (DDB-72)
-CPU Load: 3%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+CPU Load: 2%, Ram Free: 10 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
 
   Updating timing information
 Information: Updating design information... (UID-85)
@@ -483,12 +483,12 @@ Information: Command 'do_operand_isolation' is obsolete and is being ignored.  P
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
   --------- --------- --------- --------- --------- ------------------------- --------- -----------
     0:00:30   30958.9      0.62     429.2    1197.3                           1003540.5625      0.00  
-    0:00:30   30931.3      0.81     470.4    1258.9                           1002655.8125      0.00  
+    0:00:31   30931.3      0.81     470.4    1258.9                           1002655.8125      0.00  
 
   Beginning Constant Register Removal
   -----------------------------------
     0:00:31   31514.9      1.60     712.9    1186.2                           1033673.7500      0.00  
-    0:00:31   31514.9      1.60     712.9    1186.2                           1033673.7500      0.00  
+    0:00:32   31514.9      1.60     712.9    1186.2                           1033673.7500      0.00  
 
   Beginning Global Optimizations
   ------------------------------
@@ -535,37 +535,37 @@ Information: Command 'do_operand_isolation' is obsolete and is being ignored.  P
 
   Beginning Delay Optimization
   ----------------------------
-    0:00:35   18975.6      0.54       4.0      39.8                           399630.2812      0.00  
-    0:00:36   19185.0      0.16       1.0      39.8                           407340.6250      0.00  
-    0:00:36   19185.0      0.16       1.0      39.8                           407340.6250      0.00  
+    0:00:36   18975.6      0.54       4.0      39.8                           399630.2812      0.00  
+    0:00:37   19185.0      0.16       1.0      39.8                           407340.6250      0.00  
+    0:00:37   19185.0      0.16       1.0      39.8                           407340.6250      0.00  
     0:00:37   19180.5      0.16       1.0      54.9                           407168.3750      0.00  
     0:00:38   19179.7      0.16       1.0      54.9                           407142.6562      0.00  
-    0:00:38   19179.7      0.16       1.0      54.9                           407142.6562      0.00  
+    0:00:39   19179.7      0.16       1.0      54.9                           407142.6562      0.00  
 
   Beginning WLM Backend Optimization
   --------------------------------------
-    0:00:41   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
-    0:00:41   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
-    0:00:41   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
-    0:00:42   18508.0      0.16       0.9      52.6                           371997.7812      0.00  
-    0:00:42   18508.0      0.16       0.9      52.6                           371997.7812      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:42   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
+    0:00:42   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
+    0:00:42   18695.0      0.16       1.0      52.6                           384349.7812      0.00  
+    0:00:43   18508.0      0.16       0.9      52.6                           371997.7812      0.00  
+    0:00:43   18508.0      0.16       0.9      52.6                           371997.7812      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
 
 
   Beginning Design Rule Fixing  (max_fanout)  (max_capacitance)
@@ -575,12 +575,12 @@ Information: Command 'do_operand_isolation' is obsolete and is being ignored.  P
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
   --------- --------- --------- --------- --------- ------------------------- --------- -----------
-    0:00:43   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
+    0:00:44   18756.5      0.00       0.0      52.6                           380545.1875      0.00  
   Global Optimization (Phase 32)
   Global Optimization (Phase 33)
   Global Optimization (Phase 34)
-    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
-    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:44   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:44   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
 
 
   Beginning Leakage Power Optimization  (max_leakage_power 0)
@@ -590,10 +590,10 @@ Information: Command 'do_operand_isolation' is obsolete and is being ignored.  P
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
   --------- --------- --------- --------- --------- ------------------------- --------- -----------
-    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
-    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
-    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
-    0:00:43   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:44   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:44   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:44   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
+    0:00:44   18765.5      0.00       0.0       0.0                           380596.3438      0.00  
     0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
     0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
     0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
@@ -618,10 +618,10 @@ Information: Command 'do_operand_isolation' is obsolete and is being ignored.  P
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE   MIN DELAY 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER      COST    
   --------- --------- --------- --------- --------- ------------------------- --------- -----------
-    0:00:44   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
-    0:00:45   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
-    0:00:45   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
-    0:00:45   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
+    0:00:45   18616.3      0.00       0.0       0.0                           371202.4688      0.00  
+    0:00:46   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
+    0:00:46   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
+    0:00:46   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
     0:00:46   18359.6      0.00       0.0       0.0                           361024.7812      0.00  
     0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
     0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
@@ -630,7 +630,7 @@ Information: Command 'do_operand_isolation' is obsolete and is being ignored.  P
     0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
     0:00:47   18326.3      0.00       0.0       0.0                           360157.3438      0.00  
     0:00:48   18324.5      0.00       0.0       0.0                           360050.8750      0.00  
-CPU Load: 4%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+CPU Load: 3%, Ram Free: 11 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
 Loading db file '/storage-home/t/tl152/stdcell_lib/stdcells.db'
 
 
@@ -641,7 +641,7 @@ Note: Symbol # after min delay cost means estimated hold TNS across all active s
   ---------------------
 Information: State dependent leakage is now switched from off to on.
 Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
-CPU Load: 4%, Ram Free: 14 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
+CPU Load: 3%, Ram Free: 11 GB, Swap Free: 19 GB, Work Disk Free: 871 GB, Tmp Disk Free: 5 GB
 Information: Total number of MV cells in the design.
 ----------------------------------------------------------------------------------------------------
  MV Cells                                           Total Number                                   
@@ -668,6 +668,7 @@ Current design is 'cpu'.
 {cpu}
 report_area -hier > reports/area.rpt
 report_timing -delay max > reports/timing.rpt
+report_power -hier > reports/power.rpt
 check_design > reports/check.rpt
 write_file -format ddc -hierarchy -output outputs/synth.ddc
 Writing ddc file 'outputs/synth.ddc'.
@@ -679,7 +680,7 @@ exit
 
 Memory usage for this session 216 Mbytes.
 Memory usage for this session including child processes 608 Mbytes.
-CPU usage for this session 85 seconds ( 0.02 hours ).
-Elapsed time for this session 56 seconds ( 0.02 hours ).
+CPU usage for this session 86 seconds ( 0.02 hours ).
+Elapsed time for this session 55 seconds ( 0.02 hours ).
 
 Thank you...

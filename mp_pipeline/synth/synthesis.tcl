@@ -109,6 +109,7 @@ current_design $design_toplevel
 
 report_area -hier > reports/area.rpt
 report_timing -delay max > reports/timing.rpt
+report_power -hier > reports/power.rpt
 check_design > reports/check.rpt
 
 write_file -format ddc -hierarchy -output outputs/synth.ddc
