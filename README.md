@@ -119,24 +119,27 @@ In addition to the verified baseline pipeline, this project prototyped an experi
 - Free List  
 - Commit-time physical register reclamation  
 
+This work is under the different branch - "rename -unit" but not merged to the main branch.
+
 Although short programs executed correctly, the free-list reclaim logic caused deadlock after ~300 instructions.  
 This work provides a foundation for future experimentation with out-of-order techniques.
 
 ---
 
 ## Repository Structure
-mp_pipeline
-├── bin
-├── doc
-├── hdl
-├── hvl
-├── lint
-├── pkg
-├── sim
-├── synth
-├── testcode
+```text
+mp_pipeline/
+├── bin/
+├── doc/
+├── hdl/
+├── hvl/
+├── lint/
+├── pkg/
+├── sim/
+├── synth/
+├── testcode/
 └── .gitignore
-
+```
 
 ---
 
