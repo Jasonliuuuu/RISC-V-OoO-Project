@@ -1,4 +1,6 @@
-# ECE 411: mp_pipeline GUIDE
+# GUIDANCE of mp_pipeline
+
+This is the guidance to help you get understand the project more in detail. You can even remake the project based on this guidance.
 
 ## Pipelined RV32I Processor
 

@@ -1,79 +1,149 @@
-# RISC-V-Processor
+# Capstone - RV32I Five-Stage Pipelined Processor  
+RICE University — ELEC 594 Capstone Project  
+Author: Tsung-Yu Liu  
+Advisor: Prof. Varman  
 
-This project implements a 32-bit RISC-V processor with both pipelined and out-of-order versions. It also includes support for memory hierarchy, simulation, synthesis, and formal verification.
-
-## 🔁 Project Structure
-
-### `mp_setup/`
-This is the **setup environment**. It helps you become familiar with the design flow:
-- RTL simulation with QuestaSim
-- Linting using Spyglass
-- Synthesis flow using Design Compiler
-- Directories:
-  - `hdl/`: RTL source files for testing
-  - `hvl/`: Testbenches and simulation drivers
-  - `synth/`: Synthesis scripts (e.g. `synthesis.tcl`)
-  - `lint/`: Spyglass scripts for static lint check
-  - `sim/`: Simulation Makefile and logs
-  - `doc/`: Contains diagrams and flow documentation
-
-### `mp_pipeline/`
-Implements a **pipelined in-order RISC-V processor**.
-- `hdl/`: Main processor modules
-- `sim/`, `synth/`: Simulation and synthesis support
-- `testcode/`: Simple assembly or test programs
-
-### `mp_cache/`
-Implements a basic **memory hierarchy**:
-- Instruction and data cache (I$ and D$)
-- May include SRAM or tag logic for set-associative caches
-
-### `mp_verif/`
-Verification infrastructure:
-- SystemVerilog testbench framework
-- Constrained random instruction generation (`randinst.svh`)
-- Functional coverage model (`instr_cg.svh`)
-- RVFI-based verification and Spike trace comparison
-- Sub-tasks:
-  - `sv_refresher/`: LFSR module
-  - `common_issues/`: Buggy ALU to debug and fix
-  - `comb_loop/`: Fix combinational loop
-  - `constr_rand_cov/`: Write constraints and coverage
-  - `main_verif/`: Run verification on a multicycle RISC-V CPU
-
-### `out-of-order-final-version/`
-Implements the **final out-of-order RISC-V processor**, including:
-- Tomasulo-style execution
-- Reservation stations, ROB, and renaming logic
-- Integrated instruction and data memory
-- Complete RTL files and simulation support
+This repository contains the implementation and verification environment for a fully functional in-order 5-stage pipelined RV32I processor.  
+The project builds upon the UIUC ECE 411 `mp_pipeline` framework and extends it with a complete verification flow using RVFI and Spike.
 
 ---
 
-## 🔧 Design Flow
+## Overview
 
-1. **RTL Coding**: Design modules in SystemVerilog (found in `hdl/`)
-2. **Linting**: Use Spyglass (e.g., `make lint`) to catch structural RTL issues
-3. **Simulation**: Run testbenches with Questa (`make run_alu_tb`)
-4. **Synthesis**: Use Design Compiler with `.lib` and `.db` files to synthesize and check timing
-5. **Formal Verification**: Use RVFI and Spike for functional correctness
-6. **Final Integration**: Combine everything into the `out-of-order-final-version`
+This CPU implements the full RV32I ISA (except `FENCE*`, `ECALL`, `EBREAK`, and `CSR*`) using a classical **5-stage pipeline**:
+
+1. **Instruction Fetch (IF)**
+2. **Instruction Decode (ID)**
+3. **Execute (EX)**
+4. **Memory (MEM)**
+5. **Writeback (WB)**
+
+All major hazard types—**data**, **control**, and **structural**—are resolved with no unnecessary stalls. The pipeline supports:
+
+- Full EX/MEM and MEM/WB forwarding  
+- Load-use stall detection  
+- Branch flush  
+- Harvard-style dual memory ports (instruction + data)  
+
+The processor boots at program counter:  
+0x60000000
 
 ---
 
-## 📦 Requirements
+## Pipeline Diagram
 
-- Synopsys Spyglass (for linting)
-- Synopsys Design Compiler (for synthesis)
-- QuestaSim (for simulation)
-- Spike (for golden RISC-V trace comparison)
-- Python/Make (build automation)
+<p align="center">
+  <img src="mp_pipeline/doc/images/pipeline_stages.svg" width="500"/>
+  <p align="center">Figure 1: Pipeline block diagram</p>
+</p>
 
 ---
 
-## ✍️ Author
+## Memory Interface Model
 
-**Tsungyu Liu**  
-Rice University · Master of Electrical & Computer Engineering  
-Email: tl152@rice.edu
-GitHub: [@Jasonliuuuu](https://github.com/Jasonliuuuu)
+Although the DUT exposes a realistic memory interface, this project does **not** implement a hardware memory subsystem.  
+Instead, the testbench provides:
+
+- **Instruction Memory:** Associative array preloaded with randomized programs  
+- **Data Memory:** Logical interface only; out-of-range accesses return randomized values  
+
+Timing diagrams for reads and writes are shown below:
+
+<p align="center"><img src="mp_pipeline/doc/images/mem_read_wo_stall.svg" width="450"/></p>
+<p align="center"><img src="mp_pipeline/doc/images/mem_write_wo_stall.svg" width="450"/></p>
+<p align="center"><img src="mp_pipeline/doc/images/mem_mixed_wo_stall.svg" width="450"/></p>
+<p align="center"><img src="mp_pipeline/doc/images/mem_read_w_stall.svg" width="450"/></p>
+<p align="center"><img src="mp_pipeline/doc/images/mem_write_w_stall.svg" width="450"/></p>
+<p align="center"><img src="mp_pipeline/doc/images/mem_mixed_w_stall.svg" width="450"/></p>
+
+Memory interface rules:
+
+- All accesses are **32-bit aligned**
+- Load and store cannot be asserted simultaneously
+- Only testbench models memory; DUT never stores real data internally
+
+---
+
+## RVFI Integration and Reference-Model Verification
+
+This design integrates the **RISC-V Formal Interface (RVFI)** for instruction-level correctness checking.
+
+- RVFI signals are wired throughout the pipeline and mapped using  
+  `hvl/rvfi_reference.json`
+- The testbench compares DUT outputs against the **Spike ISA simulator**
+- Every retired instruction is validated cycle-by-cycle for full architectural correctness
+
+This enables industrial-style reference checking and guarantees ISA compliance.
+
+---
+
+## Verification Summary
+
+The verification flow includes:
+
+- **Constrained-random instruction generator**
+- **Coverage-driven testbench (opcode, funct3, funct7, registers, cross-coverage)**
+- **RVFI + Spike instruction-by-instruction checking**
+- **Waveform-level debugging for structural and data hazards**
+
+The processor successfully executed **60,000** randomized instructions with:
+
+- **0 mismatches** in RVFI reference checking  
+- **98.03% overall functional coverage**  
+- **100% field-level coverage** (opcode, funct3, funct7, register indices)
+
+---
+
+## Synthesis (FreePDK45)
+
+The baseline CPU (without renaming) was synthesized using **Synopsys Design Compiler** targeting the **FreePDK45 45nm** standard cell library.
+
+Key results:
+
+- **Max frequency:** 509 MHz  
+- **Critical path:** 1.96 ns (Load → ALU forwarding path)  
+- **Total standard cells:** 9,315  
+- **Area:** 18,324 µm²  
+
+These results provide a quantitative profile for future microarchitectural enhancements.
+
+---
+
+## Project Extensions
+
+In addition to the verified baseline pipeline, this project prototyped an experimental:
+
+### **Register Renaming Unit**
+- Physical Register File (PRF)
+- Rename Map Table (RMT)
+- Free List  
+- Commit-time physical register reclamation  
+
+Although short programs executed correctly, the free-list reclaim logic caused deadlock after ~300 instructions.  
+This work provides a foundation for future experimentation with out-of-order techniques.
+
+---
+
+## Repository Structure
+mp_pipeline
+├── bin
+├── doc
+├── hdl
+├── hvl
+├── lint
+├── pkg
+├── sim
+├── synth
+├── testcode
+└── .gitignore
+
+
+---
+
+## Acknowledgments
+
+This project was completed as part of the **ELEC 594 Capstone** at Rice University under the guidance of **Prof. Varman**.
+
+Base instructional material and pipeline framework adapted from the **UIUC ECE 411 mp_pipeline** project.
+
+---
